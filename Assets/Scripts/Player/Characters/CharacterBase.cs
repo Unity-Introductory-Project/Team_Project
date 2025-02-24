@@ -36,6 +36,11 @@ public abstract class CharacterBase : MonoBehaviour
         else StopSlide();
 
         CheckFalling();
+
+        /*if(life <= 0)
+        {
+            Dead();
+        }*/ //죽음 확인 위한 함수
     }
     /// <summary>
     /// 자동 이동하는 속도 조절 함수. 지금은 시간에 따라 빨라짐
@@ -143,7 +148,14 @@ public abstract class CharacterBase : MonoBehaviour
     /// </summary>
     protected virtual void Dead()
     {
-        animator.SetTrigger("Death");
+        speed = 0;
+        animator.SetBool("isDead", true);
+    }
+
+    protected virtual void Revive()
+    {
+        speed = 2f;
+        animator.SetBool("isDead", false);
     }
 
     public abstract void Ability();
