@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6579743216954338881}
   - component: {fileID: 1114830226239548010}
   - component: {fileID: 506545829589307768}
-  - component: {fileID: 1563982096459313246}
+  - component: {fileID: 3348539657108765670}
   - component: {fileID: 3444353622886577878}
   - component: {fileID: 5364428407119584230}
   m_Layer: 0
@@ -109,7 +109,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1563982096459313246
+--- !u!114 &3348539657108765670
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,9 +118,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7815033665325022169}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2adf79217a7d49246949d88ddfb5d1e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 9bdf1093b2d32894f8462a1c57e3f22a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  life: 100
+  speed: 7
+  jumpHeight: 5
   jumpCount: 0
 --- !u!61 &3444353622886577878
 BoxCollider2D:
