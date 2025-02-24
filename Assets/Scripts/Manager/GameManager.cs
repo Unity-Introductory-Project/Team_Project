@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     {
         uiManager = FindFirstObjectByType<UIManager>();
         gameUI = FindFirstObjectByType<GameUI>();
-        gameOverUI = FindFirstObjectByType<GameOverUI>();
+        gameOverUI = FindObjectOfType<GameOverUI>(true);
 
         soundManager = FindFirstObjectByType<SoundManager>();
 
