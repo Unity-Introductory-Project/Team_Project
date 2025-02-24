@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class GroundSpawner : MonoBehaviour
 {
+    public CoinSpawner coinSpawner; // 코인 스포너 참조 추가
     public GameObject groundPrefab; // 생성할 Ground 프리팹
     public Transform groundParent; // Ground를 저장할 Grid 오브젝트
     public int count = 0; // 처음 생성할 Ground 개수
@@ -10,6 +11,7 @@ public class GroundSpawner : MonoBehaviour
     public float Hole = 0f; // 밑으로 빠지는 구멍 만들기 위해 추가
     public Transform player; // 플레이어
     public List<GameObject> groundList = new List<GameObject>(); // 생성된 Ground 오브젝트를 저장할 리스트
+    private bool isFirstGround = true; // 첫 번째 Ground 여부 체크
 
     void Start()
     {
@@ -54,6 +56,12 @@ public class GroundSpawner : MonoBehaviour
 
         GameObject ground = Instantiate(groundPrefab, new Vector3(xPos, yPos, 0), Quaternion.identity, groundParent);
         groundList.Add(ground);
+        if (!isFirstGround && coinSpawner != null)
+        {
+            coinSpawner.SpawnCoins(ground.transform.position, offsetX);
+        }
+        
+        isFirstGround = false; // 첫 번째 Ground 생성 후 false로 변경
     }
 
     void DestroyOldestGround()
