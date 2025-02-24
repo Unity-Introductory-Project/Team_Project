@@ -1,6 +1,8 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1829130394355800612
+
+--- !u!1 &4591730386256987212
+
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,41 +42,42 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6294100276629611153}
-  - component: {fileID: 351235673220498797}
-  - component: {fileID: 4652609420046890932}
-  - component: {fileID: 762673291350956227}
-  - component: {fileID: 1828695102828427854}
-  - component: {fileID: 8096426265014761154}
+  - component: {fileID: 7756747412192145546}
+  - component: {fileID: 3433209302975428018}
+  - component: {fileID: 8399676686861537100}
+  - component: {fileID: 437179533100002024}
+  - component: {fileID: 1162199707667039899}
+  - component: {fileID: 1040136749698316630}
+
   m_Layer: 0
-  m_Name: Model
+  m_Name: Player_Warrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6294100276629611153
+
+--- !u!4 &7756747412192145546
+
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9046333505897176651}
+  m_GameObject: {fileID: 4591730386256987212}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.86, y: 0.22, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2666723875879927719}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &351235673220498797
-SpriteRenderer:
-  m_ObjectHideFlags: 0
+--- !u!212 &3433209302975428018
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9046333505897176651}
+  m_GameObject: {fileID: 4591730386256987212}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -120,14 +123,14 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &4652609420046890932
+--- !u!95 &8399676686861537100
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9046333505897176651}
+  m_GameObject: {fileID: 4591730386256987212}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 312496b25d842af4a938e96c7d5aaee0, type: 2}
@@ -141,14 +144,14 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!50 &762673291350956227
+--- !u!50 &437179533100002024
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9046333505897176651}
+  m_GameObject: {fileID: 4591730386256987212}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -168,13 +171,13 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &1828695102828427854
+--- !u!61 &1162199707667039899
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9046333505897176651}
+  m_GameObject: {fileID: 4591730386256987212}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -213,13 +216,13 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.13287774, y: 0.34952724}
   m_EdgeRadius: 0
---- !u!114 &8096426265014761154
+--- !u!114 &1040136749698316630
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9046333505897176651}
+  m_GameObject: {fileID: 4591730386256987212}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bdf1093b2d32894f8462a1c57e3f22a, type: 3}
