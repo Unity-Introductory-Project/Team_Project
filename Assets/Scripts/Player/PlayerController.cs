@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
             jumpCount++;
             isJump = true;
-            animator.Play("jump", 0, 0);
+            //animator.Play("jump", 0, 0);
             animator.SetBool("isJump", true);
         }
     }
@@ -63,11 +63,11 @@ public class PlayerController : MonoBehaviour
         if (!isSlide) // 슬라이드 시작할 때만 실행
         {
             isSlide = true;
-            animator.Play("StartSlide", 0, 0);
+            //animator.Play("StartSlide", 0, 0);
             animator.SetBool("isSlide", true);
         }
 
-        animator.Play("KeepSlide", 0, 0);
+        //animator.Play("KeepSlide", 0, 0);
     }
 
     void StopSlide()
