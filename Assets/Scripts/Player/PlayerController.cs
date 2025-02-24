@@ -32,18 +32,10 @@ public class PlayerController : MonoBehaviour
         AutoMove();
 
         if (Input.GetKeyDown(KeyCode.Space)) Jump();
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) Slide();
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) Slide();
         else StopSlide();
 
-        if (isGround)
-        { 
-            jumpCount = 0; 
-            animator.SetBool("isJump", false); 
-        }
-        else
-        {
-            animator.SetBool("isJump", true); // 공중에 있는 경우 isJump 유지
-        }
+        CheckFalling();
     }
 
     void AutoMove()
@@ -59,6 +51,8 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
             jumpCount++;
+            animator.Play("jump", 0, 0);
+            animator.SetBool("isJump", true);
         }
     }
 
@@ -77,6 +71,21 @@ public class PlayerController : MonoBehaviour
         {
             isSlide = false;
             animator.SetBool("isSlide", false);
+        }
+    }
+
+    void CheckFalling()
+    {
+        if(rb.velocity.y < 0.0f && !isGround )
+        {
+            animator.SetBool("isJump", false);
+            animator.SetBool("isFall", true);
+        }
+        else if (isGround) // 착지하면 애니메이션 초기화
+        {
+            animator.SetBool("isJump", false);
+            animator.SetBool("isFall", false);
+            jumpCount = 0;
         }
     }
 
