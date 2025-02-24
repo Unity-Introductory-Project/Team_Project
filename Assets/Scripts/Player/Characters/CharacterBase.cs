@@ -60,7 +60,7 @@ public abstract class CharacterBase : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
             jumpCount++;
-            animator.Play("jump", 0, 0);
+            //animator.Play("jump", 0, 0);
             animator.SetBool("isJump", true);
         }
     }
@@ -72,11 +72,11 @@ public abstract class CharacterBase : MonoBehaviour
         if (!isSlide) // 슬라이드 시작할 때만 실행
         {
             isSlide = true;
-            animator.Play("StartSlide", 0, 0);
+            //animator.Play("StartSlide", 0, 0);
             animator.SetBool("isSlide", true);
         }
 
-        animator.Play("KeepSlide", 0, 0);
+        //animator.Play("KeepSlide", 0, 0);
     }
     /// <summary>
     /// 슬라이드 버튼을 그만 눌렀을 때 원래대로 돌아오도록 만드는 함수
