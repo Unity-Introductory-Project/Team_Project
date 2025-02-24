@@ -131,6 +131,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1040136749698316630, guid: 63f581bd981b0ac489a2872c8b8ed4ee, type: 3}
+      propertyPath: life
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1040136749698316630, guid: 63f581bd981b0ac489a2872c8b8ed4ee, type: 3}
+      propertyPath: speed
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4591730386256987212, guid: 63f581bd981b0ac489a2872c8b8ed4ee, type: 3}
       propertyPath: m_Name
       value: Player_Warrior
