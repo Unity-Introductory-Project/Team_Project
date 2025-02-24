@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
+    SoundManager soundManager;
+
     GameUI gameUI;
     PauseUI pauseUI;
     GameOverUI gameOverUI;
 
     private void Awake()
     {
+        soundManager = FindFirstObjectByType<SoundManager>();
+
         gameUI = FindFirstObjectByType<GameUI>();
-        pauseUI = FindFirstObjectByType<PauseUI>();
-        gameOverUI = FindFirstObjectByType<GameOverUI>();
+        pauseUI = FindObjectOfType<PauseUI>(true);
+        gameOverUI = FindObjectOfType<GameOverUI>(true);
     }
 
     public void InGame()//게임 중
@@ -34,5 +39,16 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 0f;
         gameOverUI.gameObject.SetActive(true);
         pauseUI.gameObject.SetActive(false);
+    }
+
+    public void Restart()//게임 재시작
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("InGame");
+    }
+
+    public void Resume()//게임 재개
+    {
+        InGame();
     }
 }
