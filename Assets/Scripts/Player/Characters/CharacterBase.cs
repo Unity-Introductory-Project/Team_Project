@@ -2,22 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public abstract class CharacterBase : MonoBehaviour
 {
-    private float life = 100f;
-    private float speed = 2f;
-    private float jumpHeight = 5f;
+    public float life = 100f;
+    public float speed = 2f;
+    public float jumpHeight = 5f;
     private bool isSlide = false;
-    private bool isJump = false;
     public int jumpCount = 0;
-    private int fullJumpCount = 1;
+    protected int fullJumpCount = 1;
     private bool isGround = false;
 
     private Rigidbody2D rb;
     private Animator animator;
     private BoxCollider2D colider;
     
-    void Start()
+    public virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -28,7 +27,7 @@ public class PlayerController : MonoBehaviour
         if (colider == null) Debug.LogError("BoxCollider2D가 없습니다!");
     }
 
-    void Update()
+    public virtual void Update()
     {
         AutoMove();
 
@@ -38,13 +37,17 @@ public class PlayerController : MonoBehaviour
 
         CheckFalling();
     }
-
-    void AutoMove()
+    /// <summary>
+    /// 자동 이동하는 속도 조절 함수. 지금은 시간에 따라 빨라짐
+    /// </summary>
+    protected virtual void AutoMove()
     {
         transform.position += Vector3.right * speed * Time.deltaTime;
     }
-
-    void Jump()
+    /// <summary>
+    /// 점프 함수.
+    /// </summary>
+    protected virtual void Jump()
     {
         if (rb == null) return;
 
@@ -52,13 +55,14 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
             jumpCount++;
-            isJump = true;
             animator.Play("jump", 0, 0);
             animator.SetBool("isJump", true);
         }
     }
-
-    void Slide()
+    /// <summary>
+    /// 슬라이딩 함수 계속 누르면 계속 슬라이드하도록 설정
+    /// </summary>
+    protected virtual void Slide()
     {
         if (!isSlide) // 슬라이드 시작할 때만 실행
         {
@@ -69,8 +73,10 @@ public class PlayerController : MonoBehaviour
 
         animator.Play("KeepSlide", 0, 0);
     }
-
-    void StopSlide()
+    /// <summary>
+    /// 슬라이드 버튼을 그만 눌렀을 때 원래대로 돌아오도록 만드는 함수
+    /// </summary>
+    protected virtual void StopSlide()
     {
         if (isSlide) 
         {
@@ -78,8 +84,10 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isSlide", false);
         }
     }
-
-    void CheckFalling()
+    /// <summary>
+    /// 점프 후 떨어지고 있는지 확인하여 떨어지고 있으면 그에 맞는 애니메이션 상태 설정.
+    /// </summary>
+    protected void CheckFalling()
     {
         if(rb.velocity.y < 0.0f && !isGround )
         {
@@ -88,27 +96,56 @@ public class PlayerController : MonoBehaviour
         }
         else if (isGround) // 착지하면 애니메이션 초기화
         {
-            isJump = false;
             animator.SetBool("isJump", false);
             animator.SetBool("isFall", false);
             jumpCount = 0;
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    public virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground")) // "Ground" 태그 확인
         {
             isGround = true;
         }
+        if(collision.gameObject.CompareTag("Obstacle"))
+        {
+            Damaged(10f);
+        }
     }
-
-    void OnCollisionExit2D(Collision2D collision)
+    public virtual void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground")) // "Ground"에서 벗어날 때
         {
             isGround = false;
         }
     }
+
+    /// <summary>
+    /// 데미지 계산 함수
+    /// </summary>
+    /// <param name="damage"></param>
+    protected virtual void Damaged(float damage)
+    {
+        if(life <= damage)
+        {
+            life = 0;
+            Dead();
+        }
+        else
+        {
+            life -= damage;
+        }
+    }
+
+    /// <summary>
+    /// 체력이 0이 되었을 때 애니메이션 처리 등을 하기 위한 함수
+    /// </summary>
+    protected virtual void Dead()
+    {
+        animator.SetTrigger("Death");
+    }
+
+    public abstract void Ability();
 
 }
