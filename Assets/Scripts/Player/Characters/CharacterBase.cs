@@ -16,6 +16,7 @@ public abstract class CharacterBase : MonoBehaviour
     private Animator animator;
     private BoxCollider2D colider;
     
+    
     public virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -37,10 +38,10 @@ public abstract class CharacterBase : MonoBehaviour
 
         CheckFalling();
 
-        /*if(life <= 0)
+        if(life <= 0)
         {
             Dead();
-        }*/ //죽음 확인 위한 함수
+        }//죽음 확인 위한 함수
     }
     /// <summary>
     /// 자동 이동하는 속도 조절 함수. 지금은 시간에 따라 빨라짐
