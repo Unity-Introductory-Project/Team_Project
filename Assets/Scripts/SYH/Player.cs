@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
 
         if (animator == null) // 애니메이터 컴포넌트가 없다면
         {
-            Debug.LogError("Not Founded Animator"); // 에러 메시지 출력
+            // Debug.LogError("Not Founded Animator"); // 에러 메시지 출력
         }
 
         if (_rigidbody == null) // 리지드바디 컴포넌트가 없다면
