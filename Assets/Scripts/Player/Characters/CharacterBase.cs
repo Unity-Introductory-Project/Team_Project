@@ -57,7 +57,7 @@ public abstract class CharacterBase : MonoBehaviour
     {
         if (rb == null) return;
 
-        if (jumpCount < fullJumpCount)
+        if (jumpCount < fullJumpCount && life > 0)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
             jumpCount++;
