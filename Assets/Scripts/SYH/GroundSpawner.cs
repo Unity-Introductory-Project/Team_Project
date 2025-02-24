@@ -50,7 +50,7 @@ public class GroundSpawner : MonoBehaviour
 
     void CreateGround(float xPos, bool isFirstGround = false)
     {
-        float yPos = isFirstGround ? 0f : new float[] { 0f, 2.5f, 5f }[Random.Range(0, 3)]; // 첫 번째 Ground는 Y=0 고정
+        float yPos = isFirstGround ? 0f : new float[] { 0f, 2f,}[Random.Range(0, 2)]; // 첫 번째 Ground는 Y=0 고정
 
         GameObject ground = Instantiate(groundPrefab, new Vector3(xPos, yPos, 0), Quaternion.identity, groundParent);
         groundList.Add(ground);
