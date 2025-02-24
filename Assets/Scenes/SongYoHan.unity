@@ -856,7 +856,8 @@ MonoBehaviour:
   groundParent: {fileID: 338570462}
   count: 1
   offsetX: 17
-  offsetY: 0
+  offsetY: 2.5
+  Hole: 0
   player: {fileID: 897490328}
   groundList: []
 --- !u!1 &519295344
@@ -1250,7 +1251,7 @@ Transform:
   m_GameObject: {fileID: 897490326}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.578, y: -2.683, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1270,7 +1271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flapForce: 6
-  forwardSpeed: 3
+  forwardSpeed: 5
   isDead: 0
   godMode: 1
 --- !u!58 &897490331
@@ -1969,7 +1970,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 897490328}
-  offsetX: 5
+  offsetX: 2
 --- !u!1 &2089402551
 GameObject:
   m_ObjectHideFlags: 0
