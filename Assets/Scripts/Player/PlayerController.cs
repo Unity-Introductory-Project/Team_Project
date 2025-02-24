@@ -8,8 +8,9 @@ public class PlayerController : MonoBehaviour
     private float speed = 2f;
     private float jumpHeight = 5f;
     private bool isSlide = false;
+    private bool isJump = false;
     public int jumpCount = 0;
-    private int fullJumpCount = 2;
+    private int fullJumpCount = 1;
     private bool isGround = false;
 
     private Rigidbody2D rb;
@@ -32,7 +33,7 @@ public class PlayerController : MonoBehaviour
         AutoMove();
 
         if (Input.GetKeyDown(KeyCode.Space)) Jump();
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) Slide();
+        if (!isJump&&Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) Slide();
         else StopSlide();
 
         CheckFalling();
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
             jumpCount++;
+            isJump = true;
             animator.Play("jump", 0, 0);
             animator.SetBool("isJump", true);
         }
@@ -58,16 +60,19 @@ public class PlayerController : MonoBehaviour
 
     void Slide()
     {
-        if (isSlide) return;
+        if (!isSlide) // 슬라이드 시작할 때만 실행
+        {
+            isSlide = true;
+            animator.Play("StartSlide", 0, 0);
+            animator.SetBool("isSlide", true);
+        }
 
-        isSlide = true;
-        animator.SetBool("isSlide", true);
-
+        animator.Play("KeepSlide", 0, 0);
     }
 
     void StopSlide()
     {
-        if (isSlide)
+        if (isSlide) 
         {
             isSlide = false;
             animator.SetBool("isSlide", false);
@@ -83,6 +88,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (isGround) // 착지하면 애니메이션 초기화
         {
+            isJump = false;
             animator.SetBool("isJump", false);
             animator.SetBool("isFall", false);
             jumpCount = 0;
