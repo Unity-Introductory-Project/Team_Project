@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
         AutoMove();
 
         if (Input.GetKeyDown(KeyCode.Space)) Jump();
-        if (!isJump&&Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) Slide();
+        if (isGround&&Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) Slide();
         else StopSlide();
 
         CheckFalling();
