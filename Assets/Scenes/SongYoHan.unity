@@ -367,11 +367,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinPrefab: {fileID: 781177506018075039, guid: 7373a9b5b7355442a9b0fb7aa4e27d82, type: 3}
   coinParent: {fileID: 486030440}
-  player: {fileID: 897490328}
-  maxCoinsPerGround: 20
-  minY: -2.5
-  maxY: -2.5
-  coinSpacing: 3
+  coinsPerGround: 13
+  coinSpacing: 1.5
 --- !u!1 &634245257
 GameObject:
   m_ObjectHideFlags: 0
