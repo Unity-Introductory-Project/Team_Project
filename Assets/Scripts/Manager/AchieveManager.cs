@@ -96,64 +96,104 @@ public class AchieveManager : MonoBehaviour
         achievements.Add(new AchieveData
         {
             id = "survive_30",
-            title = "살아남기",
-            description = "30초 동안 생존하기",
+            title = "초보 생존자",
+            description = "30초 동안 살아남기. 아직 시작일 뿐이다.",
             type = AchieveType.SurviveTime,
             requiredAmount = 30,
             unlocked = false
         });
-        
+
         achievements.Add(new AchieveData
         {
             id = "survive_60",
-            title = "끈질긴 생존자",
-            description = "1분 동안 생존하기",
+            title = "끈질긴 바퀴벌레",
+            description = "1분 동안 살아남기. 핵폭발에도 살아남는다는데...",
             type = AchieveType.SurviveTime,
             requiredAmount = 60,
             unlocked = false
         });
-        
-        // 사과 수집 업적
+
+        // 사과 수집 업적 (아이폰 패러디)
         achievements.Add(new AchieveData
         {
             id = "apple_10",
-            title = "사과 수집가",
-            description = "사과 10개 모으기",
+            title = "iCollector",
+            description = "사과 10개 모으기. 혁신적인 컬렉션.",
             type = AchieveType.AppleCount,
             requiredAmount = 10,
             unlocked = false
         });
-        
+
+        achievements.Add(new AchieveData
+        {
+            id = "apple_20",
+            title = "Genius Bar",
+            description = "사과 20개 모으기. 프리미엄 사과만 취급합니다.",
+            type = AchieveType.AppleCount,
+            requiredAmount = 20,
+            unlocked = false
+        });
+
         // 점프 업적
         achievements.Add(new AchieveData
         {
             id = "jump_20",
-            title = "점프 마스터",
-            description = "20번 점프하기",
+            title = "차가운 발바닥",
+            description = "20번 점프하기. 바닥이 용암인가요?",
             type = AchieveType.JumpCount,
             requiredAmount = 20,
             unlocked = false
         });
-        
+
+        achievements.Add(new AchieveData
+        {
+            id = "jump_50",
+            title = "중력 부정론자",
+            description = "50번 점프하기. 뉴턴이 사과를 보면 화낼 거예요.",
+            type = AchieveType.JumpCount,
+            requiredAmount = 50,
+            unlocked = false
+        });
+
         // 슬라이드 업적
         achievements.Add(new AchieveData
         {
             id = "slide_15",
-            title = "슬라이드 달인",
-            description = "15번 슬라이드하기",
+            title = "미끄럼틀 마스터",
+            description = "15번 슬라이드하기. 바지가 닳아 버렸어요.",
             type = AchieveType.SlideCount,
             requiredAmount = 15,
             unlocked = false
         });
-        
+
+        achievements.Add(new AchieveData
+        {
+            id = "slide_30",
+            title = "완벽한 슬라이딩",
+            description = "30번 슬라이드하기. 야구 선수들도 부러워할 실력!",
+            type = AchieveType.SlideCount,
+            requiredAmount = 30,
+            unlocked = false
+        });
+
         // 사망 업적
         achievements.Add(new AchieveData
         {
             id = "death_3",
-            title = "불굴의 의지",
-            description = "3번 사망 후에도 계속하기",
+            title = "불사신의 첫 걸음",
+            description = "3번 사망 후에도 계속하기. 죽음은 그저 작은 불편함일 뿐.",
             type = AchieveType.DeathCount,
             requiredAmount = 3,
+            unlocked = false
+        });
+
+        achievements.Add(new AchieveData
+        {
+            id = "death_9",
+            title = "고양이 보스",
+            description = "9번 사망 후에도 계속하기. 아홉 개의 목숨을 모두 썼네요!",
+            type = AchieveType.DeathCount,
+            requiredAmount = 9,
             unlocked = false
         });
         
