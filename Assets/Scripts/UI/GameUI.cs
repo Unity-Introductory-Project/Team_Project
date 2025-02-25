@@ -18,7 +18,7 @@ public class GameUI : MonoBehaviour
 
     public void UpdateHPBar(float percentage)//체력 반영
     {
-        hpBar.value = percentage;
+        hpBar.value = 1 - percentage;
     }
 
     public void UpdateScore(float score)//점수 반영
