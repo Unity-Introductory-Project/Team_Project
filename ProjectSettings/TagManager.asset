@@ -9,6 +9,7 @@ TagManager:
   - Mute
   - Loud
   - Apple
+  - Fill
   layers:
   - Default
   - TransparentFX
