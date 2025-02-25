@@ -21,7 +21,6 @@ public class TitleAchieveUI : MonoBehaviour
     [SerializeField] private Button confirmButton;
     [SerializeField] private Button cancelButton;
     
-    // 간격 설정 (Inspector에서 조정 가능)
     [Header("레이아웃 설정")]
     [SerializeField] private float itemSpacing = 20f; // 아이템 간 간격
     
@@ -152,8 +151,6 @@ public class TitleAchieveUI : MonoBehaviour
             return;
         }
         
-        Debug.Log($"업적 수: {achievements.Count}");
-        
         // 각 업적에 대한 UI 항목 생성
         foreach (AchieveData achievement in achievements)
         {
@@ -184,7 +181,7 @@ public class TitleAchieveUI : MonoBehaviour
         layoutGroup.childForceExpandWidth = true;
         layoutGroup.childForceExpandHeight = false;
         layoutGroup.childControlWidth = true;
-        layoutGroup.childControlHeight = false; // 높이는 원본 유지
+        layoutGroup.childControlHeight = false; // 높이는 직접 제어
         
         // ContentSizeFitter 추가
         ContentSizeFitter sizeFitter = contentTransform.gameObject.AddComponent<ContentSizeFitter>();
@@ -199,34 +196,28 @@ public class TitleAchieveUI : MonoBehaviour
         GameObject item = Instantiate(achieveItemPrefab, contentTransform);
         achieveItems.Add(item);
         
-        Debug.Log($"업적 생성: {achievement.title}");
-        
-        // RectTransform 설정 - 원본 높이 유지하면서 레이아웃에 맞게 조정
+        // RectTransform 설정
         RectTransform rectTransform = item.GetComponent<RectTransform>();
         if (rectTransform != null)
         {
-            // 프리팹 원본 높이(303.545) 유지
-            rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, 303.545f);
-            
-            // 배치를 위한 앵커 설정
+            rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, 170f);
             rectTransform.anchorMin = new Vector2(0, 1);
             rectTransform.anchorMax = new Vector2(1, 1);
-            rectTransform.pivot = new Vector2(0.5f, 1);
+            rectTransform.pivot = new Vector2(0, 1);
+            rectTransform.anchoredPosition = Vector2.zero;
         }
         
         // 배경 이미지 설정
         Image itemBg = item.GetComponent<Image>();
         if (itemBg != null)
         {
-            // 원본 색상 유지하되 불투명도 확보
             Color color = itemBg.color;
-            color.a = 1f; // 완전 불투명으로 설정
+            color.a = 1f;
             itemBg.color = color;
             
-            // 달성한 업적은 약간 다른 색상으로 표시
             if (achievement.unlocked)
             {
-                itemBg.color = new Color(0.9f, 1f, 0.9f, 1f); // 연한 녹색 배경
+                itemBg.color = new Color(0.9f, 1f, 0.9f, 1f);
             }
         }
         
@@ -234,8 +225,6 @@ public class TitleAchieveUI : MonoBehaviour
         TextMeshProUGUI titleText = item.transform.Find("TitleText")?.GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI descText = item.transform.Find("DescriptionText")?.GetComponent<TextMeshProUGUI>();
         Image iconImage = item.transform.Find("Icon")?.GetComponent<Image>();
-        Slider progressSlider = item.transform.Find("ProgressBar")?.GetComponent<Slider>();
-        TextMeshProUGUI progressText = item.transform.Find("ProgressText")?.GetComponent<TextMeshProUGUI>();
         
         // 정보 설정
         if (titleText != null)
@@ -243,7 +232,7 @@ public class TitleAchieveUI : MonoBehaviour
             titleText.text = achievement.title;
             if (achievement.unlocked)
             {
-                titleText.color = new Color(0.2f, 0.8f, 0.2f); // 달성 업적은 녹색 텍스트
+                titleText.color = new Color(0.2f, 0.8f, 0.2f);
             }
         }
         
@@ -268,26 +257,80 @@ public class TitleAchieveUI : MonoBehaviour
             ? (float)currentValue / achievement.requiredAmount
             : 0f;
         
-        // 진행 바 업데이트
-        if (progressSlider != null)
+        // 이제 ProgressBar를 직접 찾아서 처리
+        Transform progressBarTr = item.transform.Find("ProgressBar");
+        
+        if (progressBarTr != null)
         {
-            progressSlider.value = progress;
-            
-            // 달성했을 경우 색상 변경 (선택적)
-            Image fillImage = progressSlider.fillRect?.GetComponent<Image>();
-            if (fillImage != null && achievement.unlocked)
+            // ProgressBar에 슬라이더가 없는 것 같으므로 직접 Fill 이미지 조정
+            Transform fillArea = progressBarTr.Find("Fill Area");
+            if (fillArea != null)
             {
-                fillImage.color = new Color(0.2f, 0.8f, 0.2f); // 녹색으로 변경
+                Transform fill = fillArea.Find("Fill");
+                if (fill != null)
+                {
+                    Image fillImage = fill.GetComponent<Image>();
+                    if (fillImage != null)
+                    {
+                        // Fill 이미지 색상 설정
+                        fillImage.color = achievement.unlocked 
+                            ? new Color(0.2f, 0.8f, 0.2f) // 달성: 녹색
+                            : new Color(0.0f, 0.6f, 1.0f); // 진행중: 파란색
+                    }
+                    
+                    // Fill RectTransform 직접 조정 (여기가 핵심)
+                    RectTransform fillRect = fill.GetComponent<RectTransform>();
+                    if (fillRect != null)
+                    {
+                        // X 앵커 값을 진행도에 맞게 설정 (이 부분이 프로그레스바 표시를 제어)
+                        Vector2 anchorMax = fillRect.anchorMax;
+                        anchorMax.x = progress;
+                        fillRect.anchorMax = anchorMax;
+                    }
+                }
             }
+            
+            // 만약 슬라이더 컴포넌트를 추가하고 싶다면:
+            /*
+            Slider slider = progressBarTr.gameObject.GetComponent<Slider>();
+            if (slider == null)
+            {
+                slider = progressBarTr.gameObject.AddComponent<Slider>();
+                slider.direction = Slider.Direction.LeftToRight;
+                slider.minValue = 0f;
+                slider.maxValue = 1f;
+                
+                // Fill Rect 설정
+                Transform fillArea = progressBarTr.Find("Fill Area");
+                if (fillArea != null)
+                {
+                    Transform fill = fillArea.Find("Fill");
+                    if (fill != null)
+                    {
+                        slider.fillRect = fill.GetComponent<RectTransform>();
+                    }
+                }
+                
+                // Background 설정
+                Transform background = progressBarTr.Find("Background");
+                if (background != null)
+                {
+                    slider.targetGraphic = background.GetComponent<Image>();
+                }
+            }
+            
+            slider.value = progress;
+            */
         }
         
         // 진행 텍스트 업데이트
+        TextMeshProUGUI progressText = item.transform.Find("ProgressText")?.GetComponent<TextMeshProUGUI>();
         if (progressText != null)
         {
             try
             {
                 if (achievement.unlocked)
-                    progressText.text = "Complete! (100%)";  // 영어로 표시
+                    progressText.text = "Complete! (100%)";
                 else
                     progressText.text = $"{currentValue} / {achievement.requiredAmount} ({progress * 100:F0}%)";
             }
