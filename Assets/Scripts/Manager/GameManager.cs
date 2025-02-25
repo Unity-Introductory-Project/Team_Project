@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     UIManager uiManager;
     GameUI gameUI;
     GameOverUI gameOverUI;
+    AchieveManager achieveManager;
 
     SoundManager soundManager;
 
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
         uiManager = FindFirstObjectByType<UIManager>();
         gameUI = FindFirstObjectByType<GameUI>();
         gameOverUI = FindObjectOfType<GameOverUI>(true);
+        achieveManager = AchieveManager.Instance;
 
         soundManager = FindFirstObjectByType<SoundManager>();
 
@@ -55,13 +57,19 @@ public class GameManager : MonoBehaviour
             gameOverUI.PlayTime(time);
             gameOverUI.Score(score);
             soundManager.StopBGM();
+
+            // 업적 매니저에 사망 알림
+            if (achieveManager != null)
+            {
+                achieveManager.AddDeath();
+            }
         }
     }
 
     public void ExitGame()//타이틀로 돌아가기
     {
         Debug.Log("ExitGame");
-        //SceneManager.LoadScene("TitleScene");
+        SceneManager.LoadScene("TitleScene");
     }
 
     public void ChangeHP(float currentHP)//체력 감소
@@ -72,5 +80,26 @@ public class GameManager : MonoBehaviour
     public void ChangeScore(float currentScore)//점수 증가
     {
         score += currentScore;
+    }
+
+    // 외부 접근을 위한 Getter 매서드
+    public float GetHP()
+    {
+        return hp;
+    }
+    
+    public float GetScore()
+    {
+        return score;
+    }
+    
+    public float GetTime()
+    {
+        return time;
+    }
+    
+    public bool IsDead()
+    {
+        return isDead;
     }
 }
