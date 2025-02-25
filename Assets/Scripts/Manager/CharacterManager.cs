@@ -19,7 +19,7 @@ public class CharacterManager : MonoBehaviour
     {
         // 싱글턴 적용 (게임에서 단 하나의 인스턴스만 유지)
         if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        else Destroy(gameObject);   
     }
 
     private void Start()
@@ -69,6 +69,11 @@ public class CharacterManager : MonoBehaviour
         if(BGSpawner != null)
         {
             BGSpawner.SetPlayer(currentPlayer.transform);
+        }
+
+        if(GameManager.Instance != null)
+        {
+            GameManager.Instance.SetPlayer(currentPlayer.GetComponent<CharacterBase>());
         }
     }
 }

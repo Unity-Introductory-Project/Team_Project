@@ -7,7 +7,7 @@ using UnityEngine.SocialPlatforms.Impl;
 public class GameManager : MonoBehaviour
 {   
     public static GameManager Instance { get; private set; }
-    CharacterBase Player;
+    public CharacterBase Player;
     UIManager uiManager;
     GameUI gameUI;
     GameOverUI gameOverUI;
@@ -47,8 +47,10 @@ public class GameManager : MonoBehaviour
         soundManager.PlayBGM();
     }
 
+
     public void Update()
     {
+        if (Player == null || isDead) return;
         ChangeScore(Time.deltaTime);
 
         gameUI.UpdateHPBar(Player.life / Player.maxlife);
@@ -93,5 +95,9 @@ public class GameManager : MonoBehaviour
     public bool IsDead()
     {
         return isDead;
+    }
+    public void SetPlayer(CharacterBase newPlayer)
+    {
+        Player = newPlayer;
     }
 }
