@@ -11,7 +11,7 @@ public class Arrow : MonoBehaviour
 
     public void SetTarget(Vector3 predictedPos)
     {
-        targetDirection = (predictedPos - transform.position).normalized;
+        targetDirection = Vector3.left;
 
         float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
@@ -45,7 +45,7 @@ public class Arrow : MonoBehaviour
         lineRenderer.positionCount = 2;
 
         lineRenderer.SetPosition(0, transform.position); // 화살 출발 위치
-        lineRenderer.SetPosition(1, targetPosition); // 목표 위치
+        lineRenderer.SetPosition(1, transform.position + (Vector3.left * 10f)); // 왼쪽 방향으로 이동 경로 표시
 
         // 0.5초 후 라인 삭제
         Destroy(lineObject, 0.5f);
