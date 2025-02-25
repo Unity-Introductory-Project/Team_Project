@@ -180,7 +180,7 @@ public abstract class CharacterBase : MonoBehaviour
     /// 데미지 계산 함수
     /// </summary>
     /// <param name="damage"></param>
-    protected virtual void Damaged(float damage)
+    public virtual void Damaged(float damage)
     {
         if(life <= damage)
         {
