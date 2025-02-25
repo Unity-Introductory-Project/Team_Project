@@ -193,7 +193,7 @@ public abstract class CharacterBase : MonoBehaviour
             life = 0;
             Dead();
         }
-        else if(life == maxlife)
+        else if(life == maxlife&&value > 0)
         {
             life = maxlife;
         }
