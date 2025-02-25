@@ -878,7 +878,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -5
   m_TargetDisplay: 0
 --- !u!224 &188831125
 RectTransform:
@@ -4390,7 +4390,7 @@ AudioSource:
   m_GameObject: {fileID: 1617343325}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: 1ebbe2b3124b9c248bb7170f1e8fbccc, type: 2}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 22e7513307a042a45b3741f9a65aa9c8, type: 2}
   m_audioClip: {fileID: 8300000, guid: 281954e697fb875499d8ddc6dc9264c5, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -4490,6 +4490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgm: {fileID: 1617343326}
+  audioMixer: {fileID: 24100000, guid: 22e7513307a042a45b3741f9a65aa9c8, type: 2}
   bgmSlider: {fileID: 806894137}
   loud: {fileID: 1990837640}
   mute: {fileID: 967086642}
