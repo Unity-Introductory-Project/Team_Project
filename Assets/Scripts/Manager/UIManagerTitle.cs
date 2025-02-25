@@ -22,6 +22,7 @@ public class UIManagerTitle : MonoBehaviour
 
     public void Exit()
     {
+        Debug.Log("Exit");
         Application.Quit();
     }
 }
