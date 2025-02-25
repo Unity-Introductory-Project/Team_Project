@@ -1146,7 +1146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d93ddfaabc30a4f2ba8c4727b29414bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appleSpawner: {fileID: 0}
+  appleSpawner: {fileID: 1683122420}
   groundPrefab: {fileID: 9039820299540386060, guid: c87e0e6a8ec3941349d5b572a718c9cd, type: 3}
   groundParent: {fileID: 348589053}
   count: 1
@@ -5148,7 +5148,7 @@ GameObject:
   - component: {fileID: 1683122421}
   - component: {fileID: 1683122420}
   m_Layer: 0
-  m_Name: CoinSpawner
+  m_Name: AppleSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5166,10 +5166,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 883de8e3bb7cb461a849d93c5f0f1b64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ApplePrefab: {fileID: 0}
-  PoisonApplePrefab: {fileID: 0}
-  AppleParent: {fileID: 0}
-  ApplePerGround: 0
+  ApplePrefab: {fileID: 8966196246584700997, guid: 39688f1e62e74474cb8775e047a303e5, type: 3}
+  PoisonApplePrefab: {fileID: 781177506018075039, guid: 7373a9b5b7355442a9b0fb7aa4e27d82, type: 3}
+  AppleParent: {fileID: 1683122421}
+  ApplePerGround: 12
   AppleSpacing: 1.5
   PoisonAppleChance: 0.2
 --- !u!4 &1683122421
@@ -5724,7 +5724,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -159.99991, y: 120}
+  m_AnchoredPosition: {x: -159.99988, y: 120}
   m_SizeDelta: {x: -1700, y: -780}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1851136643
