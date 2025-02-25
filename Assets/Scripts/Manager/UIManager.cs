@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
         gameOverUI = FindObjectOfType<GameOverUI>(true);
     }
 
-    public void InGame()//���� ��
+    public void InGame()//게임 중
     {
         Time.timeScale = 1f;
         gameUI.gameObject.SetActive(true);
@@ -32,26 +32,26 @@ public class UIManager : MonoBehaviour
         gameOverUI.gameObject.SetActive(false);
     }
 
-    public void Pause()//�Ͻ�����
+    public void Pause()//일시정지
     {
         Time.timeScale = 0f;
         pauseUI.gameObject.SetActive(true);
     }
     
-    public void GameOver()//���� ����
+    public void GameOver()//게임 종료
     {
         Time.timeScale = 0f;
         gameOverUI.gameObject.SetActive(true);
         pauseUI.gameObject.SetActive(false);
     }
 
-    public void Restart()//���� �����
+    public void Restart()//게임 재시작
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("InGame");
+        SceneManager.LoadScene("MainScene");
     }
 
-    public void Resume()//���� �簳
+    public void Resume()//게임 재개
     {
         InGame();
     }
