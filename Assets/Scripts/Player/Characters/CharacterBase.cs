@@ -213,7 +213,6 @@ public abstract class CharacterBase : MonoBehaviour
     /// <param name="damage"></param>
     public virtual void ChangeHp(float value)
     {
-        Debug.Log($" {gameObject.name}의 hp {value} 변동! 현재 체력: {life}");
         if (life <= value)
         {
             life = 0;
