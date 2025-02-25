@@ -42,7 +42,11 @@ public abstract class CharacterBase : MonoBehaviour
         {
             Dead();
         }//죽음 확인 위한 함수
+
+        Damaged(Time.deltaTime); //시간이 지나면 자동으로 체력 감소
     }
+
+
     /// <summary>
     /// 자동 이동하는 속도 조절 함수. 지금은 시간에 따라 빨라짐
     /// </summary>
@@ -50,6 +54,7 @@ public abstract class CharacterBase : MonoBehaviour
     {
         transform.position += Vector3.right * speed * Time.deltaTime;
     }
+
     /// <summary>
     /// 점프 함수.
     /// </summary>
@@ -65,6 +70,7 @@ public abstract class CharacterBase : MonoBehaviour
             animator.SetBool("isJump", true);
         }
     }
+
     /// <summary>
     /// 슬라이딩 함수 계속 누르면 계속 슬라이드하도록 설정
     /// </summary>
@@ -79,6 +85,7 @@ public abstract class CharacterBase : MonoBehaviour
 
         //animator.Play("KeepSlide", 0, 0);
     }
+
     /// <summary>
     /// 슬라이드 버튼을 그만 눌렀을 때 원래대로 돌아오도록 만드는 함수
     /// </summary>
@@ -90,6 +97,7 @@ public abstract class CharacterBase : MonoBehaviour
             animator.SetBool("isSlide", false);
         }
     }
+
     /// <summary>
     /// 점프 후 떨어지고 있는지 확인하여 떨어지고 있으면 그에 맞는 애니메이션 상태 설정.
     /// </summary>
@@ -108,6 +116,10 @@ public abstract class CharacterBase : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 충돌 확인 메서드
+    /// </summary>
+    /// <param name="collision"></param>
     public virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground")) // "Ground" 태그 확인
@@ -118,7 +130,16 @@ public abstract class CharacterBase : MonoBehaviour
         {
             Damaged(10f);
         }
+        if(collision.gameObject.CompareTag("Apple"))
+        {
+            Damaged(-10f);
+        }
     }
+
+    /// <summary>
+    /// 땅에서 벗어남 확인 메서드
+    /// </summary>
+    /// <param name="collision"></param>
     public virtual void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground")) // "Ground"에서 벗어날 때
