@@ -10,6 +10,7 @@ TagManager:
   - Loud
   - Apple
   - Fill
+  - PoisonApple
   layers:
   - Default
   - TransparentFX
