@@ -58,4 +58,8 @@ public class ArrowSpawner : MonoBehaviour
         return new Vector3(cameraRight + spawnOffsetX, spawnY, 0);
 
     }
+    public void SetPlayerTarget(Transform newPlayer)
+    {
+        player = newPlayer;
+    }
 }

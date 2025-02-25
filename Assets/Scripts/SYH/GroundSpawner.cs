@@ -24,7 +24,6 @@ public class GroundSpawner : MonoBehaviour
             CreateGround(i * offsetX);
         }
     }
-
     void Update()
     {
         if (player != null && groundList.Count > 0) // 플레이어가 존재하고 Ground가 1개 이상이라면
@@ -68,5 +67,10 @@ public class GroundSpawner : MonoBehaviour
     {
         Destroy(groundList[0]); // 가장 오래된 Ground 삭제
         groundList.RemoveAt(0); // 리스트에서 삭제
+    }
+
+    public void SetPlayer(Transform newPlayer)
+    {
+        player = newPlayer;
     }
 }

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1352208346521103459}
   m_Layer: 0
   m_Name: Player_Boy
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,9 +167,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   life: 100
-  speed: 2
+  speed: 5
   jumpHeight: 5
   jumpCount: 0
+  maxlife: 100
 --- !u!50 &1352208346521103459
 Rigidbody2D:
   serializedVersion: 4
