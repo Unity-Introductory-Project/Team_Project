@@ -12,9 +12,6 @@ public class UIManager : MonoBehaviour
     PauseUI pauseUI;
     GameOverUI gameOverUI;
 
-
-    //public TextMeshProUGUI OptionText;
-    //void Start()
     private void Awake()
     {
         soundManager = FindFirstObjectByType<SoundManager>();

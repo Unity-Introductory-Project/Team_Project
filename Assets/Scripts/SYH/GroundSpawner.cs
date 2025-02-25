@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class GroundSpawner : MonoBehaviour
 {
-    public CoinSpawner coinSpawner; // 코인 스포너 참조 추가
+    public AppleSpawner appleSpawner; // 코인 스포너 참조 추가
     public GameObject groundPrefab; // 생성할 Ground 프리팹
     public Transform groundParent; // Ground를 저장할 Grid 오브젝트
     public int count = 0; // 처음 생성할 Ground 개수
@@ -56,9 +56,9 @@ public class GroundSpawner : MonoBehaviour
 
         GameObject ground = Instantiate(groundPrefab, new Vector3(xPos, yPos, 0), Quaternion.identity, groundParent);
         groundList.Add(ground);
-        if (!isFirstGround && coinSpawner != null)
+        if (!isFirstGround && appleSpawner != null)
         {
-            coinSpawner.SpawnCoins(ground.transform.position, offsetX);
+            appleSpawner.SpawnApples(ground.transform.position, offsetX);
         }
         
         isFirstGround = false; // 첫 번째 Ground 생성 후 false로 변경
