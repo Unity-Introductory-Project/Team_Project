@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class NewBehaviourScript : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     SoundManager soundManager;
 
@@ -24,7 +24,7 @@ public class NewBehaviourScript : MonoBehaviour
         gameOverUI = FindObjectOfType<GameOverUI>(true);
     }
 
-    public void InGame()//°ÔÀÓ Áß
+    public void InGame()//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     {
         Time.timeScale = 1f;
         gameUI.gameObject.SetActive(true);
@@ -32,26 +32,26 @@ public class NewBehaviourScript : MonoBehaviour
         gameOverUI.gameObject.SetActive(false);
     }
 
-    public void Pause()//ÀÏ½ÃÁ¤Áö
+    public void Pause()//ï¿½Ï½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         Time.timeScale = 0f;
         pauseUI.gameObject.SetActive(true);
     }
     
-    public void GameOver()//°ÔÀÓ Á¾·á
+    public void GameOver()//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         Time.timeScale = 0f;
         gameOverUI.gameObject.SetActive(true);
         pauseUI.gameObject.SetActive(false);
     }
 
-    public void Restart()//°ÔÀÓ Àç½ÃÀÛ
+    public void Restart()//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("InGame");
     }
 
-    public void Resume()//°ÔÀÓ Àç°³
+    public void Resume()//ï¿½ï¿½ï¿½ï¿½ ï¿½ç°³
     {
         InGame();
     }

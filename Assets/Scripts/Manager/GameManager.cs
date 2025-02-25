@@ -6,7 +6,7 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
-    //UIManager uiManager;
+    UIManager uiManager;
     GameUI gameUI;
     GameOverUI gameOverUI;
 
@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        //uiManager = FindFirstObjectByType<UIManager>();
+        uiManager = FindFirstObjectByType<UIManager>();
         gameUI = FindFirstObjectByType<GameUI>();
         gameOverUI = FindObjectOfType<GameOverUI>(true);
 
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-        //uiManager.InGame();
+        uiManager.InGame();
         soundManager.PlayBGM();
     }
 
@@ -51,25 +51,25 @@ public class GameManager : MonoBehaviour
         if (hp <= 0)
         {
             isDead = true;
-            //uiManager.GameOver();
+            uiManager.GameOver();
             gameOverUI.PlayTime(time);
             gameOverUI.Score(score);
             soundManager.StopBGM();
         }
     }
 
-    public void ExitGame()//Å¸ÀÌÆ²·Î µ¹¾Æ°¡±â
+    public void ExitGame()//Å¸ï¿½ï¿½Æ²ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½
     {
         Debug.Log("ExitGame");
         //SceneManager.LoadScene("TitleScene");
     }
 
-    public void ChangeHP(float currentHP)//Ã¼·Â º¯°æ
+    public void ChangeHP(float currentHP)//Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         hp -= currentHP;
     }
 
-    public void ChangeScore(float currentScore)//Á¡¼ö º¯°æ
+    public void ChangeScore(float currentScore)//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         score += currentScore;
     }
