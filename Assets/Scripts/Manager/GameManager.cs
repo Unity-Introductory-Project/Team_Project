@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 
         time += Time.deltaTime;
 
-        if (hp <= 0)
+        if (hp <= 0 && isDead == false)
         {
             isDead = true;
             uiManager.GameOver();
