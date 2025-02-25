@@ -415,6 +415,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_Warrior
       objectReference: {fileID: 0}
+    - target: {fileID: 4591730386256987212, guid: 63f581bd981b0ac489a2872c8b8ed4ee, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 7756747412192145546, guid: 63f581bd981b0ac489a2872c8b8ed4ee, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.86
@@ -1139,7 +1143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d93ddfaabc30a4f2ba8c4727b29414bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinSpawner: {fileID: 1683122420}
+  appleSpawner: {fileID: 0}
   groundPrefab: {fileID: 9039820299540386060, guid: c87e0e6a8ec3941349d5b572a718c9cd, type: 3}
   groundParent: {fileID: 348589053}
   count: 1
@@ -1917,6 +1921,7 @@ GameObject:
   - component: {fileID: 623092089}
   - component: {fileID: 623092088}
   - component: {fileID: 623092091}
+  - component: {fileID: 623092092}
   - component: {fileID: 623092087}
   m_Layer: 0
   m_Name: Main Camera
@@ -2014,6 +2019,18 @@ MonoBehaviour:
   player: {fileID: 47797450}
   smoothSpeed: 5
   offset: {x: 5, y: 0, z: -10}
+--- !u!114 &623092092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623092086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 466083ee1dbfadb43adda07eac6f13dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &666061066
 GameObject:
   m_ObjectHideFlags: 0
@@ -4626,10 +4643,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 883de8e3bb7cb461a849d93c5f0f1b64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinPrefab: {fileID: 781177506018075039, guid: 7373a9b5b7355442a9b0fb7aa4e27d82, type: 3}
-  coinParent: {fileID: 1683122421}
-  coinsPerGround: 13
-  coinSpacing: 1.5
+  ApplePrefab: {fileID: 0}
+  PoisonApplePrefab: {fileID: 0}
+  AppleParent: {fileID: 0}
+  ApplePerGround: 0
+  AppleSpacing: 1.5
+  PoisonAppleChance: 0.2
 --- !u!4 &1683122421
 Transform:
   m_ObjectHideFlags: 0
@@ -5022,6 +5041,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1811890786}
   m_CullTransparentMesh: 1
+--- !u!1 &1817475835
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1817475837}
+  - component: {fileID: 1817475836}
+  m_Layer: 0
+  m_Name: ArrowSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1817475836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817475835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bc90dbb4dc9dfd449fef9e0814738e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrowPrefab: {fileID: 987083297778883385, guid: e5fc1ed075824704aaad9df90e1ff04e, type: 3}
+  player: {fileID: 47797450}
+  spawnInterval: 1
+  spawnDistance: 10
+--- !u!4 &1817475837
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817475835}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1831748586
 GameObject:
   m_ObjectHideFlags: 0
@@ -5237,12 +5304,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 965b9a48c0c79ca4b898cdb190819b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  restartButton: {fileID: 1149348814}
-  exitButton: {fileID: 494769602}
-  playMinuteText: {fileID: 33367404}
-  playSecondText: {fileID: 668840289}
-  scoreText: {fileID: 540071642}
-  highScoreText: {fileID: 1772539885}
 --- !u!114 &1949516821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5696,3 +5757,4 @@ SceneRoots:
   - {fileID: 1108676999}
   - {fileID: 1388561092}
   - {fileID: 1683122421}
+  - {fileID: 1817475837}

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public abstract class CharacterBase : MonoBehaviour
 {
-    public float life = 100f;
+    public float life = 100;
     public float speed = 2f;
     public float jumpHeight = 5f;
     private bool isSlide = false;
     public int jumpCount = 0;
     protected int fullJumpCount = 1;
     private bool isGround = false;
-
+    public float maxlife = 100f;
     private Rigidbody2D rb;
     private Animator animator;
     private BoxCollider2D colider;
@@ -19,6 +19,7 @@ public abstract class CharacterBase : MonoBehaviour
     
     public virtual void Start()
     {
+        life = maxlife;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         colider = GetComponent<BoxCollider2D>();
@@ -43,9 +44,8 @@ public abstract class CharacterBase : MonoBehaviour
             Dead();
         }//죽음 확인 위한 함수
 
-        Damaged(Time.deltaTime); //시간이 지나면 자동으로 체력 감소
+        ChangeHp(-(Time.deltaTime));
     }
-
 
     /// <summary>
     /// 자동 이동하는 속도 조절 함수. 지금은 시간에 따라 빨라짐
@@ -135,14 +135,19 @@ public abstract class CharacterBase : MonoBehaviour
                 }
             }
         }
-        
-        if(collision.gameObject.CompareTag("Obstacle"))
+    }
+
+    public virtual void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Obstacle"))
         {
-            Damaged(10f);
+            Debug.Log("장애물(Obstacle) 충돌 감지됨!");
+            ChangeHp(-10f);
         }
-        if(collision.gameObject.CompareTag("Apple"))
+        if (collider.CompareTag("Apple"))
         {
-            Damaged(-10f);
+            Debug.Log("사과(Apple) 충돌 감지됨! 체력 회복!");
+            ChangeHp(10f);
         }
     }
 
@@ -180,16 +185,21 @@ public abstract class CharacterBase : MonoBehaviour
     /// 데미지 계산 함수
     /// </summary>
     /// <param name="damage"></param>
-    protected virtual void Damaged(float damage)
+    public virtual void ChangeHp(float value)
     {
-        if(life <= damage)
+        Debug.Log($" {gameObject.name}의 hp {value} 변동! 현재 체력: {life}");
+        if (life <= value)
         {
             life = 0;
             Dead();
         }
+        else if(life == maxlife)
+        {
+            life = maxlife;
+        }
         else
         {
-            life -= damage;
+            life += value;
         }
     }
 
