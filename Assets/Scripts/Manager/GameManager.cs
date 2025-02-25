@@ -6,7 +6,7 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
-    //UIManager uiManager;
+    UIManager uiManager;
     GameUI gameUI;
     GameOverUI gameOverUI;
 
@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        //uiManager = FindFirstObjectByType<UIManager>();
+        uiManager = FindFirstObjectByType<UIManager>();
         gameUI = FindFirstObjectByType<GameUI>();
         gameOverUI = FindObjectOfType<GameOverUI>(true);
 
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-        //uiManager.InGame();
+        uiManager.InGame();
         soundManager.PlayBGM();
     }
 
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         if (hp <= 0)
         {
             isDead = true;
-            //uiManager.GameOver();
+            uiManager.GameOver();
             gameOverUI.PlayTime(time);
             gameOverUI.Score(score);
             soundManager.StopBGM();
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
     public void ExitGame()//타이틀로 돌아가기
     {
         Debug.Log("ExitGame");
-        //SceneManager.LoadScene("TitleScene");
+        SceneManager.LoadScene("TitleScene");
     }
 
     public void ChangeHP(float currentHP)//체력 변경
