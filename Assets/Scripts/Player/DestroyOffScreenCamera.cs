@@ -44,7 +44,7 @@ public class DestroyOffScreenObjects : MonoBehaviour
             CharacterBase player = collision.GetComponent<CharacterBase>();
             if (player != null)
             {
-                player.Damaged(player.life);
+                player.ChangeHp(player.life);
             }
         }
         else
