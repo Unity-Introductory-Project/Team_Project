@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
     public void ExitGame()//타이틀로 돌아가기
     {
         Debug.Log("ExitGame");
-        //SceneManager.LoadScene("TitleScene");
+        SceneManager.LoadScene("TitleScene");
     }
 
     public void ChangeHP(float currentHP)//체력 감소
