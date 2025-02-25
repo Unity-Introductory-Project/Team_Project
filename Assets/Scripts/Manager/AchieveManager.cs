@@ -51,13 +51,14 @@ public class AchieveManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             LoadStats();
+            LoadAchievements();
             
             // 업적 목록이 비어있으면 초기화
             if (achievements.Count == 0)
             {
                 InitializeAchievements();
             }
-            
+
             // 현재 게임의 생존 시간 초기화
             surviveTime = 0;
         }
@@ -279,6 +280,31 @@ public class AchieveManager : MonoBehaviour
     public void ResetCurrentGameStats()
     {
         surviveTime = 0;
+    }
+
+    /// <summary>
+    /// 모든 업적 및 통계 리셋
+    /// </summary>
+    public void ResetAllAchievements()
+    {
+        // 통계 초기화
+        surviveTime = 0;
+        appleCount = 0;
+        jumpCount = 0;
+        slideCount = 0;
+        deathCount = 0;
+        
+        // 업적 잠금 상태로 초기화
+        foreach (AchieveData achievement in achievements)
+        {
+            achievement.unlocked = false;
+        }
+        
+        // 저장
+        SaveStats();
+        SaveAchievements();
+        
+        Debug.Log("모든 업적과 통계가 초기화되었습니다.");
     }
     
     // 외부에서 호출할 수 있는 메서드들
