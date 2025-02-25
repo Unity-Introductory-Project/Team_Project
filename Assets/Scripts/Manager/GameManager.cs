@@ -5,30 +5,37 @@ using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
-{
+{   
+    public static GameManager Instance { get; private set; }
+    CharacterBase Player;
     UIManager uiManager;
     GameUI gameUI;
     GameOverUI gameOverUI;
     AchieveManager achieveManager;
-
     SoundManager soundManager;
 
-    float maxHP = 100;
-    float hp;
     float score;
     bool isDead;
     float time;
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogError("GameManager가 이미 존재합니다!");
+            Destroy(gameObject);
+        }
+        
         uiManager = FindFirstObjectByType<UIManager>();
         gameUI = FindFirstObjectByType<GameUI>();
         gameOverUI = FindObjectOfType<GameOverUI>(true);
         achieveManager = AchieveManager.Instance;
-
         soundManager = FindFirstObjectByType<SoundManager>();
-
-        hp = maxHP;
+        Player = FindObjectOfType<CharacterBase>(true);
         score = 0;
         isDead = false;
         time = 0;
@@ -42,15 +49,14 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-        ChangeHP(Time.deltaTime);
         ChangeScore(Time.deltaTime);
 
-        gameUI.UpdateHPBar(hp / maxHP);
+        gameUI.UpdateHPBar(Player.life / Player.maxlife);
         gameUI.UpdateScore(score);
 
         time += Time.deltaTime;
 
-        if (hp <= 0 && isDead == false)
+        if (Player.life <= 0 && isDead == false)
         {
             isDead = true;
             uiManager.GameOver();
@@ -71,28 +77,14 @@ public class GameManager : MonoBehaviour
         Debug.Log("ExitGame");
         SceneManager.LoadScene("TitleScene");
     }
-
-    public void ChangeHP(float currentHP)//체력 감소
-    {
-        hp -= currentHP;
-    }
-
     public void ChangeScore(float currentScore)//점수 증가
     {
         score += currentScore;
     }
-
-    // 외부 접근을 위한 Getter 매서드
-    public float GetHP()
-    {
-        return hp;
-    }
-    
     public float GetScore()
     {
         return score;
     }
-    
     public float GetTime()
     {
         return time;
