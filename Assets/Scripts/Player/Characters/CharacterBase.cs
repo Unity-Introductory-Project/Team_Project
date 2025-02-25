@@ -161,13 +161,18 @@ public abstract class CharacterBase : MonoBehaviour
         if (collider.CompareTag("Apple"))
         {
             Debug.Log("사과(Apple) 충돌 감지됨! 체력 회복!");
-            ChangeHp(10f);
+            ChangeHp(0.5f);
 
             // 업적 매니저에 사과 획득 기록
             if (achieveManager != null)
             {
                 achieveManager.AddApple();
             }
+        }
+        if (collider.CompareTag("PoisonApple"))
+        {
+            Debug.Log("독사과(PoisonApple) 충돌 감지됨! 체력 감소!");
+            ChangeHp(-2f);
         }
        
     }
