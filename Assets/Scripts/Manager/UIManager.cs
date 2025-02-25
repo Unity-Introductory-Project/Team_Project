@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    [SerializeField] AudioSource soundEffect;
+
     SoundManager soundManager;
 
     GameUI gameUI;
@@ -35,6 +37,8 @@ public class UIManager : MonoBehaviour
         image = hpBg.GetComponent<Image>();
 
         pauseRect = pauseUI.GetComponent<RectTransform>();
+
+        soundEffect = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -78,6 +82,8 @@ public class UIManager : MonoBehaviour
         isPauseMoving = true;
         blackImage.SetActive(true);
         image.color = new Color(74 / 255f, 107 / 255f, 114 / 255f);
+
+        soundEffect.Play();
     }
     
     public void GameOver()//게임 종료
@@ -87,6 +93,10 @@ public class UIManager : MonoBehaviour
         pauseUI.gameObject.SetActive(false);
         blackImage.SetActive(true);
         image.color = new Color(74 / 255f, 107 / 255f, 114 / 255f);
+
+
+        soundEffect.Play();
+        Debug.Log("asd");
     }
 
     public void Restart()//게임 재시작
