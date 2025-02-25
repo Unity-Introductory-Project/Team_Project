@@ -8,7 +8,7 @@ using System.ComponentModel;
 public class SoundManager : MonoBehaviour
 {
     [SerializeField] AudioSource bgm;
-    //[SerializeField] AudioMixer audioMixer;
+    [SerializeField] AudioMixer audioMixer;
     [SerializeField] Slider bgmSlider;
     [SerializeField] GameObject loud;
     [SerializeField] GameObject mute;
@@ -31,7 +31,7 @@ public class SoundManager : MonoBehaviour
         else
             bgmSlider.value = 0.5f;
 
-        //audioMixer.SetFloat("BGM", Mathf.Log10(bgmSlider.value) * 20);
+        audioMixer.SetFloat("BGM", Mathf.Log10(bgmSlider.value) * 20);
     }
 
     public void Update()
@@ -64,8 +64,8 @@ public class SoundManager : MonoBehaviour
     }
 
     public void SoundSlider(float volume)//BGM 슬라이더 조절
-    {        
-        //audioMixer.SetFloat("BGM", Mathf.Log10(volume) * 20);
+    {
+        audioMixer.SetFloat("BGM", Mathf.Log10(volume) * 20);
 
         PlayerPrefs.SetFloat("Volume", bgmSlider.value);
     }
