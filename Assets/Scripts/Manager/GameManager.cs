@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     SoundManager soundManager;
 
-    float maxHP = 5;
+    float maxHP = 100;
     float hp;
     float score;
     bool isDead;
