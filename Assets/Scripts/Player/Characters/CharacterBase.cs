@@ -43,9 +43,14 @@ public abstract class CharacterBase : MonoBehaviour
             Dead();
         }//죽음 확인 위한 함수
 
-        Damaged(Time.deltaTime); //시간이 지나면 자동으로 체력 감소
+        Damaged(Time.deltaTime);
     }
-
+    private void ApplyAutoDamage()
+    {
+        float autoDamage = 1f; // 매 초마다 1의 체력 감소
+        Debug.Log($"자동 체력 감소: {autoDamage}");
+        life -= autoDamage;
+    }
 
     /// <summary>
     /// 자동 이동하는 속도 조절 함수. 지금은 시간에 따라 빨라짐
@@ -135,13 +140,18 @@ public abstract class CharacterBase : MonoBehaviour
                 }
             }
         }
-        
-        if(collision.gameObject.CompareTag("Obstacle"))
+    }
+
+    public virtual void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Obstacle"))
         {
+            Debug.Log("장애물(Obstacle) 충돌 감지됨!");
             Damaged(10f);
         }
-        if(collision.gameObject.CompareTag("Apple"))
+        if (collider.CompareTag("Apple"))
         {
+            Debug.Log("사과(Apple) 충돌 감지됨! 체력 회복!");
             Damaged(-10f);
         }
     }
@@ -182,7 +192,8 @@ public abstract class CharacterBase : MonoBehaviour
     /// <param name="damage"></param>
     public virtual void Damaged(float damage)
     {
-        if(life <= damage)
+        Debug.Log($" {gameObject.name}이(가) {damage} 데미지를 입음! 현재 체력: {life}");
+        if (life <= damage)
         {
             life = 0;
             Dead();

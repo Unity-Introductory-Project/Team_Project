@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1f;
         gameUI.gameObject.SetActive(true);
         pauseUI.gameObject.SetActive(false);
-        gameOverUI.gameObject.SetActive(false);
+        //gameOverUI.gameObject.SetActive(false);
     }
 
     public void Pause()//일시정지
