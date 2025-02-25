@@ -110,20 +110,49 @@ public abstract class CharacterBase : MonoBehaviour
 
     public virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground")) // "Ground" 태그 확인
+        if (collision.gameObject.CompareTag("Ground")) 
         {
-            isGround = true;
+            // 충돌 방향 확인
+            foreach (ContactPoint2D contact in collision.contacts)
+            {
+                // 충돌 방향이 아래쪽인 경우에만 isGround를 true로 설정
+                if (contact.normal.y > 0.7f)  // 0.7은 약간의 여유를 두기 위한 값
+                {
+                    isGround = true;
+                    break;
+                }
+            }
         }
+        
         if(collision.gameObject.CompareTag("Obstacle"))
         {
             Damaged(10f);
         }
     }
+    
     public virtual void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground")) // "Ground"에서 벗어날 때
+        if (collision.gameObject.CompareTag("Ground")) 
         {
-            isGround = false;
+            // 충돌 해제 시 바닥과의 접촉만 체크
+            bool stillOnGround = false;
+            
+            // 다른 Ground 오브젝트와 여전히 접촉 중인지 확인
+            Collider2D[] colliders = Physics2D.OverlapBoxAll(colider.bounds.center, colider.bounds.size, 0f);
+            foreach (Collider2D col in colliders)
+            {
+                if (col.CompareTag("Ground") && col.gameObject != collision.gameObject)
+                {
+                    // 다른 Ground와 접촉 중이면 바닥 상태 유지
+                    stillOnGround = true;
+                    break;
+                }
+            }
+            
+            if (!stillOnGround)
+            {
+                isGround = false;
+            }
         }
     }
 
