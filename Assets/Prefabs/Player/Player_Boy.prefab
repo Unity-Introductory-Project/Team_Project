@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 74571000521924031}
   - component: {fileID: 5553658093517805594}
   - component: {fileID: 5349137172979107191}
-  - component: {fileID: 7350993416103521115}
   - component: {fileID: 5526978303735540180}
+  - component: {fileID: -8130243866742132470}
   - component: {fileID: 1352208346521103459}
   m_Layer: 0
   m_Name: Player_Boy
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.5964293, y: 0.9353051, z: 0}
-  m_LocalScale: {x: 1.6, y: 1.6, z: 1}
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -109,19 +109,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7350993416103521115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6197778621717731042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2adf79217a7d49246949d88ddfb5d1e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpCount: 0
 --- !u!61 &5526978303735540180
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -167,6 +154,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-8130243866742132470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6197778621717731042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06f982e59f4a21345894d1240cebe048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  life: 100
+  speed: 5
+  jumpHeight: 5
+  jumpCount: 0
+  maxlife: 100
 --- !u!50 &1352208346521103459
 Rigidbody2D:
   serializedVersion: 4

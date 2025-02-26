@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using UnityEngine;
@@ -15,7 +15,7 @@ public class PlayerCameraFollow : MonoBehaviour
     {
         if (player != null)
         {
-            initialY = player.position.y + offset.y; // ½ÃÀÛ Y À§Ä¡¸¦ ¼³Á¤
+            initialY = player.position.y + offset.y; // ì‹œìž‘ Y ìœ„ì¹˜ë¥¼ ì„¤ì •
         }
     }
 
@@ -26,4 +26,12 @@ public class PlayerCameraFollow : MonoBehaviour
         Vector3 targetPosition = new Vector3(player.position.x + offset.x, initialY, player.position.z + offset.z);
         transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.deltaTime);
     }
+
+    public void SetTarget(Transform newPlayer)
+    {
+        player = newPlayer;
+        initialY = player.position.y + offset.y; // ì‹œìž‘ Y ìœ„ì¹˜ ì„¤ì •
+    }
+
 }
+
