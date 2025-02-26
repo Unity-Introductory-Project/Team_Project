@@ -48,22 +48,22 @@ public class SoundManagerTitle : MonoBehaviour
         }
     }
 
-    public void PlayBGM()//BGM Àç»ı
+    public void PlayBGM()//BGM ì¬ìƒ
     {
         bgm.Play();
     }
 
-    public void StopBGM()//BGM Á¤Áö
+    public void StopBGM()//BGM ì •ì§€
     {
         bgm.Stop();
     }
 
-    public void Soundbutton()//BGM Åä±Û Á¶Àı
+    public void Soundbutton()//BGM í† ê¸€ ì¡°ì •
     {
         bgm.volume = bgm.volume == 0 ? 1 : 0;
     }
 
-    public void SoundSlider(float volume)//BGM ½½¶óÀÌ´õ Á¶Àı
+    public void SoundSlider(float volume)//BGM ìŠ¬ë¼ì´ë“œ ì¡°ì ˆ
     {
         audioMixer.SetFloat("Title", Mathf.Log10(volume) * 20);
 
