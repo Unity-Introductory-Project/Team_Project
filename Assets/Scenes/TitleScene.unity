@@ -1039,8 +1039,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1091048269}
-        m_TargetAssemblyTypeName: SoundManagerTitle, Assembly-CSharp
-        m_MethodName: Soundbutton
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: ToggleBGM
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1621,7 +1621,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1091048269}
         m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
         m_MethodName: SoundSlider
         m_Mode: 4
@@ -2248,7 +2248,7 @@ AudioSource:
   m_GameObject: {fileID: 1091048265}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: 4bab379289776fd4fbb8c21704cd3dbc, type: 2}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 22e7513307a042a45b3741f9a65aa9c8, type: 2}
   m_audioClip: {fileID: 8300000, guid: e7a654ac0d60672479325cd0947a9bfc, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -2362,11 +2362,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2516132bb39640a4b87c03d0318f445d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgm: {fileID: 1091048266}
-  audioMixer: {fileID: 24100000, guid: 4bab379289776fd4fbb8c21704cd3dbc, type: 2}
+  bgmSource: {fileID: 1091048266}
+  sfxSource: {fileID: 1091048266}
+  audioMixer: {fileID: 24100000, guid: 22e7513307a042a45b3741f9a65aa9c8, type: 2}
   bgmSlider: {fileID: 829403504}
   loud: {fileID: 1451726709}
   mute: {fileID: 2147403526}
+  titleBGM: {fileID: 8300000, guid: e7a654ac0d60672479325cd0947a9bfc, type: 3}
+  inGameBGM: {fileID: 8300000, guid: 281954e697fb875499d8ddc6dc9264c5, type: 3}
+  jumpSFX: {fileID: 0}
+  slideSFX: {fileID: 0}
+  hitSFX: {fileID: 0}
+  itemSFX: {fileID: 0}
 --- !u!1 &1148025453
 GameObject:
   m_ObjectHideFlags: 0
@@ -4906,5 +4913,5 @@ SceneRoots:
   - {fileID: 1970520875}
   - {fileID: 1643189382}
   - {fileID: 821298149}
-  - {fileID: 451760851}
   - {fileID: 1091048268}
+  - {fileID: 451760851}
