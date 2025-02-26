@@ -47,12 +47,10 @@ public abstract class CharacterBase : MonoBehaviour
 
         CheckFalling();
 
-        if (life <= 0 && isDead == false)
+        if(!isDead)
         {
-            Dead();
-        }//죽음 확인 위한 함수
-
-        ChangeHp(-(Time.deltaTime));
+            ChangeHp(-(Time.deltaTime));
+        }
     }
 
     /// <summary>
@@ -219,7 +217,7 @@ public abstract class CharacterBase : MonoBehaviour
     /// <param name="damage"></param>
     public virtual void ChangeHp(float value)
     {
-        if (life <= value)
+        if (life <= value&&isDead==false)
         {
             life = 0;
             Dead();
