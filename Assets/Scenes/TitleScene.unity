@@ -2212,7 +2212,7 @@ AudioSource:
   m_GameObject: {fileID: 1091048265}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: 22e7513307a042a45b3741f9a65aa9c8, type: 2}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 4bab379289776fd4fbb8c21704cd3dbc, type: 2}
   m_audioClip: {fileID: 8300000, guid: e7a654ac0d60672479325cd0947a9bfc, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -2327,7 +2327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgm: {fileID: 1091048266}
-  audioMixer: {fileID: 24100000, guid: 22e7513307a042a45b3741f9a65aa9c8, type: 2}
+  audioMixer: {fileID: 24100000, guid: 4bab379289776fd4fbb8c21704cd3dbc, type: 2}
   bgmSlider: {fileID: 829403504}
   loud: {fileID: 1451726709}
   mute: {fileID: 2147403526}
