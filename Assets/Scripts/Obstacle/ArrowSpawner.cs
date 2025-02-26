@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -22,7 +22,7 @@ public class ArrowSpawner : MonoBehaviour
     void PrepareArrow()
     {
         if (!isPlayerSet || player == null) return;
-        Vector3 spawnPosition = GetRandomSpawnPosition();
+        Vector3 spawnPosition = GetValidSpawnPoint();
         Vector3 targetPosition = player.position;
 
         // 0.5초 후 화살 생성 (경로를 미리 보여준 후)
@@ -38,8 +38,21 @@ public class ArrowSpawner : MonoBehaviour
         GameObject arrow = Instantiate(arrowPrefab, spawnPosition, Quaternion.identity);
         arrow.GetComponent<Arrow>().SetTarget(targetPosition);   
     }
+
+    Vector3 GetValidSpawnPoint()
+    {
+        if (player == null) return Vector3.zero;
+
+        int maxAttempts = 5; // Ground 위에 생성되지 않도록 여러 번 시도
+        for (int i = 0; i < maxAttempts; i++)
+        {
+            Vector3 position = GetRandomSpawnPos();
+            if (!isGroundAtPos(position)) return position; // Ground가 없으면 유효한 위치로 사용
+        }
+        return Vector3.zero; // 모든 시도가 실패하면 생성하지 않음
+    }
     
-    Vector3 GetRandomSpawnPosition()
+    Vector3 GetRandomSpawnPos()
     {
         if (player == null) return Vector3.zero;
         Vector3 position = Vector3.zero;
@@ -63,6 +76,14 @@ public class ArrowSpawner : MonoBehaviour
         return new Vector3(cameraRight + spawnOffsetX, spawnY, 0);
 
     }
+
+    private bool isGroundAtPos(Vector3 position)
+    {
+        Collider2D hit = Physics2D.OverlapCircle(position, 0.1f);
+
+        return hit != null && hit.CompareTag("Ground");
+    }
+
     public void SetPlayerTarget(Transform newPlayer)
     {
         player = newPlayer;

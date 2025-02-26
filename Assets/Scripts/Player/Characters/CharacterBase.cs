@@ -10,15 +10,15 @@ public abstract class CharacterBase : MonoBehaviour
     private bool isSlide = false;
     public int jumpCount = 0;
     protected int fullJumpCount = 1;
-    private bool isGround = false;
+    protected bool isGround = false;
     public float maxlife = 100f;
-    private Rigidbody2D rb;
-    private Animator animator;
-    private BoxCollider2D colider;
+    protected Rigidbody2D rb;
+    protected Animator animator;
+    protected BoxCollider2D colider;
 
     // 업적 관련 변수
-    private AchieveManager achieveManager;
-    private bool slideTracked = false;
+    protected AchieveManager achieveManager;
+    protected bool slideTracked = false;
     
     public virtual void Start()
     {
@@ -38,8 +38,11 @@ public abstract class CharacterBase : MonoBehaviour
         AutoMove();
 
         if (Input.GetKeyDown(KeyCode.Space)) Jump();
-        if (isGround&&Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) Slide();
-        else StopSlide();
+        if (isGround) // 땅에 있을 때만 슬라이드 가능
+        {
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) Slide();
+            else StopSlide();
+        }
 
         CheckFalling();
 
