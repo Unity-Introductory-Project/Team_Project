@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,13 +17,14 @@ public class GameUI : MonoBehaviour
         UpdateScore(0);
     }
 
-    public void UpdateHPBar(float percentage)//Ã¼·Â ¹İ¿µ
+    public void UpdateHPBar(float percentage)//ì²´ë ¥ ë°˜ì˜
     {
         hpBar.value = 1 - percentage;
     }
 
-    public void UpdateScore(float score)//Á¡¼ö ¹İ¿µ
+    public void UpdateScore(float score)//ì ìˆ˜ ë°˜ì˜
     {
         scoreText.text = ((int)score).ToString();
     }
 }
+

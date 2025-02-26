@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class CharacterBase : MonoBehaviour
 {
     public float life = 100;
-    public float speed = 2f;
+    public float speed = 5f;
     public float jumpHeight = 5f;
     private bool isSlide = false;
     public int jumpCount = 0;
@@ -15,14 +15,18 @@ public abstract class CharacterBase : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private BoxCollider2D colider;
-    
+
+    // 업적 관련 변수
+    private AchieveManager achieveManager;
+    private bool slideTracked = false;
     
     public virtual void Start()
     {
-        life = maxlife;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         colider = GetComponent<BoxCollider2D>();
+
+        achieveManager = AchieveManager.Instance;
 
         if (rb == null) Debug.LogError("Rigidbody2D가 없습니다!");
         if (animator == null) Debug.LogError("Animator가 없습니다!");
@@ -52,6 +56,7 @@ public abstract class CharacterBase : MonoBehaviour
     /// </summary>
     protected virtual void AutoMove()
     {
+        speed += Time.deltaTime * 0.05f;
         transform.position += Vector3.right * speed * Time.deltaTime;
     }
 
@@ -68,6 +73,9 @@ public abstract class CharacterBase : MonoBehaviour
             jumpCount++;
             //animator.Play("jump", 0, 0);
             animator.SetBool("isJump", true);
+
+            // 업적 매니저에 점프 기록
+            if (achieveManager != null) achieveManager.AddJump();
         }
     }
 
@@ -81,6 +89,13 @@ public abstract class CharacterBase : MonoBehaviour
             isSlide = true;
             //animator.Play("StartSlide", 0, 0);
             animator.SetBool("isSlide", true);
+        }
+
+        // 한 번의 슬라이드에 한 번만 카운트
+        if (!slideTracked && achieveManager != null)
+        {
+            achieveManager.AddSlide();
+            slideTracked = true;
         }
 
         //animator.Play("KeepSlide", 0, 0);
@@ -147,8 +162,20 @@ public abstract class CharacterBase : MonoBehaviour
         if (collider.CompareTag("Apple"))
         {
             Debug.Log("사과(Apple) 충돌 감지됨! 체력 회복!");
-            ChangeHp(10f);
+            ChangeHp(0.5f);
+
+            // 업적 매니저에 사과 획득 기록
+            if (achieveManager != null)
+            {
+                achieveManager.AddApple();
+            }
         }
+        if (collider.CompareTag("PoisonApple"))
+        {
+            Debug.Log("독사과(PoisonApple) 충돌 감지됨! 체력 감소!");
+            ChangeHp(-2f);
+        }
+       
     }
 
     /// <summary>
@@ -187,13 +214,12 @@ public abstract class CharacterBase : MonoBehaviour
     /// <param name="damage"></param>
     public virtual void ChangeHp(float value)
     {
-        Debug.Log($" {gameObject.name}의 hp {value} 변동! 현재 체력: {life}");
         if (life <= value)
         {
             life = 0;
             Dead();
         }
-        else if(life == maxlife)
+        else if(life == maxlife&&value > 0)
         {
             life = maxlife;
         }
@@ -210,6 +236,9 @@ public abstract class CharacterBase : MonoBehaviour
     {
         speed = 0;
         animator.SetBool("isDead", true);
+
+        // 업적 매니저에 사망 기록
+        if (achieveManager != null) achieveManager.AddDeath();
     }
 
     protected virtual void Revive()

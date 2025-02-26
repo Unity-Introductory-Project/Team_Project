@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -7,8 +7,10 @@ public class ArrowSpawner : MonoBehaviour
 {
     public GameObject arrowPrefab;
     public Transform player;
+    public float playerSpeed = 5f;
     public float spawnInterval = 2f;
     public float spawnDistance = 10f;
+    private bool isPlayerSet = false;
 
 
     void Start()
@@ -16,40 +18,55 @@ public class ArrowSpawner : MonoBehaviour
         InvokeRepeating("PrepareArrow", 1f, spawnInterval);
     }
 
+   
     void PrepareArrow()
     {
+        if (!isPlayerSet || player == null) return;
         Vector3 spawnPosition = GetRandomSpawnPosition();
         Vector3 targetPosition = player.position;
 
-        // 0.5ÃÊ ÈÄ È­»ì »ı¼º (°æ·Î¸¦ ¹Ì¸® º¸¿©ÁØ ÈÄ)
+        // 0.5ì´ˆ í›„ í™”ì‚´ ìƒì„± (ê²½ë¡œë¥¼ ë¯¸ë¦¬ ë³´ì—¬ì¤€ í›„)
         StartCoroutine(SpawnArrowDelayed(spawnPosition, targetPosition, 0.5f));
     }
 
     IEnumerator SpawnArrowDelayed(Vector3 spawnPosition, Vector3 targetPosition, float delay)
     {
         yield return new WaitForSeconds(delay);
+        if (player == null) yield break;
 
-        // È­»ì »ı¼º
+        // í™”ì‚´ ìƒì„±
         GameObject arrow = Instantiate(arrowPrefab, spawnPosition, Quaternion.identity);
         arrow.GetComponent<Arrow>().SetTarget(targetPosition);   
     }
     
     Vector3 GetRandomSpawnPosition()
     {
+        if (player == null) return Vector3.zero;
         Vector3 position = Vector3.zero;
 
-        // Ä«¸Ş¶óÀÇ ¿À¸¥ÂÊ ³¡°ú À§ÂÊ ³¡ °¡Á®¿À±â
-        float cameraRight = Camera.main.ViewportToWorldPoint(new Vector3(1, 0.5f, 0)).x; // Ä«¸Ş¶ó ¿À¸¥ÂÊ °æ°è
-        float cameraTop = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 1, 0)).y; // Ä«¸Ş¶ó À§ÂÊ °æ°è
+        // ì¹´ë©”ë¼ì˜ ì˜¤ë¥¸ìª½ ëê³¼ ìœ„ìª½ ë ê°€ì ¸ì˜¤ê¸°
+        float cameraRight = Camera.main.ViewportToWorldPoint(new Vector3(1, 0.5f, 0)).x; // ì¹´ë©”ë¼ ì˜¤ë¥¸ìª½ ê²½ê³„
 
-        float spawnOffsetX = 2f; // È­¸é ¿À¸¥ÂÊ ¹Û¿¡¼­ µîÀåÇÒ °Å¸®
-        float spawnMinY = player.position.y; // ÃÖ¼Ò Y À§Ä¡ (ÇÃ·¹ÀÌ¾î ³ôÀÌ)
-        float spawnMaxY = cameraTop + 2f; // ÃÖ´ë Y À§Ä¡ (Ä«¸Ş¶ó À§ÂÊ + Ãß°¡ ³ôÀÌ)
+        float spawnOffsetX = playerSpeed; // í™”ë©´ ì˜¤ë¥¸ìª½ ë°–ì—ì„œ ë“±ì¥í•  ê±°ë¦¬
 
-        // Á¤¸é(¿À¸¥ÂÊ) ~ ¿À¸¥ÂÊ À§ 45µµ »çÀÌ¿¡¼­ ·£´ıÇÑ À§Ä¡¿¡¼­ »ı¼º
+        Collider2D playerCollider = player.GetComponent<Collider2D>();
+
+        float playerBottom = playerCollider.bounds.min.y;
+        float playerTop = playerCollider.bounds.max.y;
+        
+        float spawnMinY = playerBottom;
+        float spawnMaxY = playerTop + 1f;
+
         float spawnY = Random.Range(spawnMinY, spawnMaxY);
-        position = new Vector3(cameraRight + spawnOffsetX, spawnY, 0);
 
-        return position;
+
+        return new Vector3(cameraRight + spawnOffsetX, spawnY, 0);
+
+    }
+    public void SetPlayerTarget(Transform newPlayer)
+    {
+        player = newPlayer;
+        isPlayerSet = true;
     }
 }
+
