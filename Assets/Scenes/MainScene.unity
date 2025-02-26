@@ -6555,7 +6555,7 @@ GameObject:
   - component: {fileID: 1683122421}
   - component: {fileID: 1683122420}
   m_Layer: 0
-  m_Name: AppleSpawner
+  m_Name: ItemSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6575,10 +6575,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ApplePrefab: {fileID: 8966196246584700997, guid: 39688f1e62e74474cb8775e047a303e5, type: 3}
   PoisonApplePrefab: {fileID: 781177506018075039, guid: 7373a9b5b7355442a9b0fb7aa4e27d82, type: 3}
-  AppleParent: {fileID: 1683122421}
+  DashItemPrefab: {fileID: 6019295977056830012, guid: 6ff3da78813c7451ab938beef74540b2, type: 3}
+  ItemParent: {fileID: 0}
   ApplePerGround: 12
   AppleSpacing: 1.5
   PoisonAppleChance: 0.2
+  RunItemChance: 0.02
 --- !u!4 &1683122421
 Transform:
   m_ObjectHideFlags: 0
