@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -26,7 +26,7 @@ public class Arrow : MonoBehaviour
     {
         if (other.CompareTag("Player") || other.CompareTag("Ground")) // 플레이어나 땅과 충돌하면 삭제
         {
-            if (lineRenderer != null) Destroy(lineRenderer.gameObject);
+            if (lineRenderer != null) lineRenderer.enabled = false;
             Destroy(gameObject);
         }
     }
