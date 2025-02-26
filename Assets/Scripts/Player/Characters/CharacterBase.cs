@@ -15,6 +15,7 @@ public abstract class CharacterBase : MonoBehaviour
     protected Rigidbody2D rb;
     protected Animator animator;
     protected BoxCollider2D colider;
+    public bool isDead = false;
 
     // 업적 관련 변수
     protected AchieveManager achieveManager;
@@ -46,12 +47,10 @@ public abstract class CharacterBase : MonoBehaviour
 
         CheckFalling();
 
-        if(life <= 0)
+        if(!isDead)
         {
-            Dead();
-        }//죽음 확인 위한 함수
-
-        ChangeHp(-(Time.deltaTime));
+            ChangeHp(-(Time.deltaTime));
+        }
     }
 
     /// <summary>
@@ -69,11 +68,12 @@ public abstract class CharacterBase : MonoBehaviour
     protected virtual void Jump()
     {
         if (rb == null) return;
-
-        if (jumpCount < fullJumpCount && life > 0)
+        
+        if (jumpCount < fullJumpCount && life > 0) // 점프 횟수 제한
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
-            jumpCount++;
+            rb.velocity = new Vector2(rb.velocity.x, jumpHeight); // 점프
+            SoundManager.instance.PlaySFX(SoundManager.instance.jumpSFX);
+            jumpCount++; 
             //animator.Play("jump", 0, 0);
             animator.SetBool("isJump", true);
 
@@ -90,6 +90,7 @@ public abstract class CharacterBase : MonoBehaviour
         if (!isSlide) // 슬라이드 시작할 때만 실행
         {
             isSlide = true;
+            SoundManager.instance.PlaySFX(SoundManager.instance.slideSFX);
             //animator.Play("StartSlide", 0, 0);
             animator.SetBool("isSlide", true);
         }
@@ -111,6 +112,7 @@ public abstract class CharacterBase : MonoBehaviour
     {
         if (isSlide) 
         {
+            slideTracked = false;
             isSlide = false;
             animator.SetBool("isSlide", false);
         }
@@ -160,10 +162,12 @@ public abstract class CharacterBase : MonoBehaviour
         if (collider.CompareTag("Obstacle"))
         {
             ChangeHp(-10f);
+            SoundManager.instance.PlaySFX(SoundManager.instance.hitSFX);
         }
         if (collider.CompareTag("Apple"))
         {
             ChangeHp(0.5f);
+            SoundManager.instance.PlaySFX(SoundManager.instance.itemSFX);
 
             // 업적 매니저에 사과 획득 기록
             if (achieveManager != null)
@@ -174,6 +178,7 @@ public abstract class CharacterBase : MonoBehaviour
         if (collider.CompareTag("PoisonApple"))
         {
             ChangeHp(-2f);
+            SoundManager.instance.PlaySFX(SoundManager.instance.itemSFX);
         }
        
     }
@@ -214,7 +219,7 @@ public abstract class CharacterBase : MonoBehaviour
     /// <param name="damage"></param>
     public virtual void ChangeHp(float value)
     {
-        if (life <= value)
+        if (life <= value&&isDead==false)
         {
             life = 0;
             Dead();
@@ -234,6 +239,7 @@ public abstract class CharacterBase : MonoBehaviour
     /// </summary>
     protected virtual void Dead()
     {
+        isDead = true;
         speed = 0;
         animator.SetBool("isDead", true);
 
