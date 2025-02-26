@@ -13,10 +13,12 @@ public class GameManager : MonoBehaviour
     GameOverUI gameOverUI;
     AchieveManager achieveManager;
     SoundManager soundManager;
+    CharacterSelectUI characterSelectUI;
 
     float score;
     bool isDead;
     float time;
+    bool isCharacterSelected = false;
 
     private void Awake()
     {
@@ -35,7 +37,12 @@ public class GameManager : MonoBehaviour
         gameOverUI = FindObjectOfType<GameOverUI>(true);
         achieveManager = AchieveManager.Instance;
         soundManager = FindFirstObjectByType<SoundManager>();
-        Player = FindObjectOfType<CharacterBase>(true);
+
+        characterSelectUI = FindAnyObjectByType<CharacterSelectUI>();
+        if (characterSelectUI != null)
+        {
+            characterSelectUI.gameObject.SetActive(true);
+        }
         score = 0;
         isDead = false;
         time = 0;
@@ -50,7 +57,15 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-        if (Player == null || isDead) return;
+        if (!isCharacterSelected) return; // 캐릭터 선택 전에는 게임 진행 X
+
+        if (CharacterManager.Instance.currentPlayer == null || isDead) return;
+
+        if (CharacterManager.Instance.currentPlayer != null)
+        {
+            Player = CharacterManager.Instance.currentPlayer.GetComponent<CharacterBase>();
+        }
+
         ChangeScore(Time.deltaTime);
 
         gameUI.UpdateHPBar(Player.life / Player.maxlife);
@@ -73,6 +88,12 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    public void CharacterSelected()
+    {
+        isCharacterSelected = true;
+    }
+
 
     public void ExitGame()//타이틀로 돌아가기
     {

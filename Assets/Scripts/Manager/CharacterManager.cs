@@ -22,14 +22,6 @@ public class CharacterManager : MonoBehaviour
         else Destroy(gameObject);   
     }
 
-    private void Start()
-    {
-        if (currentPlayer == null)
-        {
-            Debug.LogWarning("초기 캐릭터가 없습니다. 기본 캐릭터를 생성합니다.");
-            ChangeCharacter(0); // 기본 캐릭터 설정 (워리어)
-        }
-    }
 
     public void ChangeCharacter(int index)
     {

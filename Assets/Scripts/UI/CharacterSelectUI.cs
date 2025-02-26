@@ -19,6 +19,16 @@ public class CharacterSelectUI : MonoBehaviour
     private void OnCharacterSelect(int index)
     {
         Debug.Log($"캐릭터 {index} 선택됨");
-        CharacterManager.Instance.ChangeCharacter(index);
+        if (CharacterManager.Instance != null)
+        {
+            CharacterManager.Instance.ChangeCharacter(index); // 캐릭터 생성
+        }
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.CharacterSelected(); // 게임 시작
+        }
+
+        gameObject.SetActive(false);
     }
 }

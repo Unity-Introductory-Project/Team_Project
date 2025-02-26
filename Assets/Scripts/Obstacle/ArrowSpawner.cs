@@ -10,6 +10,7 @@ public class ArrowSpawner : MonoBehaviour
     public float playerSpeed = 5f;
     public float spawnInterval = 2f;
     public float spawnDistance = 10f;
+    private bool isPlayerSet = false;
 
 
     void Start()
@@ -17,8 +18,10 @@ public class ArrowSpawner : MonoBehaviour
         InvokeRepeating("PrepareArrow", 1f, spawnInterval);
     }
 
+   
     void PrepareArrow()
     {
+        if (!isPlayerSet || player == null) return;
         Vector3 spawnPosition = GetRandomSpawnPosition();
         Vector3 targetPosition = player.position;
 
@@ -29,6 +32,7 @@ public class ArrowSpawner : MonoBehaviour
     IEnumerator SpawnArrowDelayed(Vector3 spawnPosition, Vector3 targetPosition, float delay)
     {
         yield return new WaitForSeconds(delay);
+        if (player == null) yield break;
 
         // 화살 생성
         GameObject arrow = Instantiate(arrowPrefab, spawnPosition, Quaternion.identity);
@@ -37,6 +41,7 @@ public class ArrowSpawner : MonoBehaviour
     
     Vector3 GetRandomSpawnPosition()
     {
+        if (player == null) return Vector3.zero;
         Vector3 position = Vector3.zero;
 
         // 카메라의 오른쪽 끝과 위쪽 끝 가져오기
@@ -61,5 +66,6 @@ public class ArrowSpawner : MonoBehaviour
     public void SetPlayerTarget(Transform newPlayer)
     {
         player = newPlayer;
+        isPlayerSet = true;
     }
 }
