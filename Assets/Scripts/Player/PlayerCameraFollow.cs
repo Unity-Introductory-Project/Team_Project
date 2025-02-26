@@ -26,4 +26,11 @@ public class PlayerCameraFollow : MonoBehaviour
         Vector3 targetPosition = new Vector3(player.position.x + offset.x, initialY, player.position.z + offset.z);
         transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.deltaTime);
     }
+
+    public void SetTarget(Transform newPlayer)
+    {
+        player = newPlayer;
+        initialY = player.position.y + offset.y; // 시작 Y 위치 설정
+    }
+
 }

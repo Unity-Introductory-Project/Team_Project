@@ -7,16 +7,19 @@ using UnityEngine.SocialPlatforms.Impl;
 public class GameManager : MonoBehaviour
 {   
     public static GameManager Instance { get; private set; }
-    CharacterBase Player;
+    public CharacterBase Player;
     UIManager uiManager;
     GameUI gameUI;
     GameOverUI gameOverUI;
     AchieveManager achieveManager;
     SoundManagerInGame soundManager;
 
+    CharacterSelectUI characterSelectUI;
+
     float score;
     bool isDead;
     float time;
+    bool isCharacterSelected = false;
 
     private void Awake()
     {
@@ -34,8 +37,18 @@ public class GameManager : MonoBehaviour
         gameUI = FindFirstObjectByType<GameUI>();
         gameOverUI = FindObjectOfType<GameOverUI>(true);
         achieveManager = AchieveManager.Instance;
+
         soundManager = FindFirstObjectByType<SoundManagerInGame>();
-        Player = FindObjectOfType<CharacterBase>(true);
+
+        characterSelectUI = FindAnyObjectByType<CharacterSelectUI>();
+        if (characterSelectUI != null)
+        {
+            characterSelectUI.gameObject.SetActive(true);
+        }
+        if(Player!= null)
+        {
+            isCharacterSelected = true;
+        }
         score = 0;
         isDead = false;
         time = 0;
@@ -47,8 +60,18 @@ public class GameManager : MonoBehaviour
         soundManager.PlayBGM();
     }
 
+
     public void Update()
     {
+        if (!isCharacterSelected) return; // 캐릭터 선택 전에는 게임 진행 X
+
+        if (CharacterManager.Instance.currentPlayer == null || isDead) return;
+
+        if (CharacterManager.Instance.currentPlayer != null)
+        {
+            Player = CharacterManager.Instance.currentPlayer.GetComponent<CharacterBase>();
+        }
+
         ChangeScore(Time.deltaTime);
 
         gameUI.UpdateHPBar(Player.life / Player.maxlife);
@@ -72,6 +95,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void CharacterSelected()
+    {
+        isCharacterSelected = true;
+    }
+
+
     public void ExitGame()//타이틀로 돌아가기
     {
         Debug.Log("ExitGame");
@@ -93,5 +122,9 @@ public class GameManager : MonoBehaviour
     public bool IsDead()
     {
         return isDead;
+    }
+    public void SetPlayer(CharacterBase newPlayer)
+    {
+        Player = newPlayer;
     }
 }
