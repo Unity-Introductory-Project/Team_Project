@@ -16,19 +16,17 @@ public class JumpCharacter : CharacterBase
 
     public override void Ability()
     {
-        Debug.Log($"현재 점프 가능 횟수: {fullJumpCount}");
+        
     }
 
     public void EatApple()
     {
         appleCount++;
-        Debug.Log($"사과 {appleCount}개 먹음!");
 
         // 사과 3개 먹을 때마다 점프 횟수 증가 (최대 5까지)
         if (appleCount % 3 == 0 && fullJumpCount < maxJumpCount)
         {
             fullJumpCount++;
-            Debug.Log($"점프 횟수 증가! 현재 최대 {fullJumpCount}단 점프 가능");
         }
     }
 
