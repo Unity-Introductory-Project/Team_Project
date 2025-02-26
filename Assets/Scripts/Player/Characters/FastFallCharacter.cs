@@ -18,9 +18,9 @@ public class FastFallCharacter : CharacterBase
 
     private void FastFall()
     {
-        if (!isFastFalling) // Áßº¹ ½ÇÇà ¹æÁö
+        if (!isFastFalling) // ì¤‘ë³µ ì‹¤í–‰ ë°©ì§€
         {
-            rb.velocity = new Vector2(rb.velocity.x, -jumpHeight * 1.5f); // ¾Æ·¡·Î ºü¸£°Ô ³«ÇÏ
+            rb.velocity = new Vector2(rb.velocity.x, -jumpHeight * 1.5f); // ì•„ë˜ë¡œ ë¹ ë¥´ê²Œ ë‚™í•˜
             isFastFalling = true;
             animator.SetBool("isFall", true);
         }
@@ -32,12 +32,12 @@ public class FastFallCharacter : CharacterBase
 
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isFastFalling = false; // ¶¥¿¡ ´êÀ¸¸é ´Ù½Ã ÃÊ±âÈ­
+            isFastFalling = false; // ë•…ì— ë‹¿ìœ¼ë©´ ë‹¤ì‹œ ì´ˆê¸°í™”
         }
     }
 
     public override void Ability()
     {
-        Debug.Log("½½¶óÀÌµå ½Ã ºü¸£°Ô ¶³¾îÁü");
+        Debug.Log("ìŠ¬ë¼ì´ë“œ ì‹œ ë¹ ë¥´ê²Œ ë–¨ì–´ì§");
     }
 }

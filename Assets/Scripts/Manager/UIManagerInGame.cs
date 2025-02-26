@@ -68,6 +68,7 @@ public class UIManager : MonoBehaviour
             if(pauseUI.gameObject.activeInHierarchy)
             {
                 InGame();
+                blackImage.gameObject.SetActive(false);
             }
             else
             {
@@ -87,15 +88,27 @@ public class UIManager : MonoBehaviour
 
     public void Pause()//일시정지
     {
-        Time.timeScale = 0f;
-        pauseUI.gameObject.SetActive(true);
+        if(pauseUI.gameObject.activeInHierarchy)
+        {
+            Time.timeScale = 1f;
+            gameUI.gameObject.SetActive(true);
+            pauseUI.gameObject.SetActive(false);
+            gameOverUI.gameObject.SetActive(false);
+            image.color = new Color(114 / 255f, 161 / 255f, 172 / 255f);
+            blackImage.SetActive(false);
+        }
+        else
+        {
+            Time.timeScale = 0f;
+            pauseUI.gameObject.SetActive(true);
 
-        pauseRect.anchoredPosition = new Vector2(pauseRect.anchoredPosition.x, Screen.height);
-        isPauseMoving = true;
-        blackImage.SetActive(true);
-        image.color = new Color(74 / 255f, 107 / 255f, 114 / 255f);
+            pauseRect.anchoredPosition = new Vector2(pauseRect.anchoredPosition.x, Screen.height);
+            isPauseMoving = true;
+            blackImage.SetActive(true);
+            image.color = new Color(74 / 255f, 107 / 255f, 114 / 255f);
 
-        soundEffect.Play();
+            soundEffect.Play();
+        }
     }
     
     public void GameOver()//게임 종료

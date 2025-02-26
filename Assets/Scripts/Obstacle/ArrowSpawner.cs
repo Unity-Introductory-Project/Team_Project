@@ -8,13 +8,18 @@ public class ArrowSpawner : MonoBehaviour
     public GameObject arrowPrefab;
     public Transform player;
     public float playerSpeed = 5f;
-    public float spawnInterval = 2f;
+    public float initialSpwanInterval = 5f;
+    public float spawnInterval;
+    public float minSpawnInterval = 0.5f;
     public float spawnDistance = 10f;
+    public float spawnIntervalDecreaseRate = 0.05f;
     private bool isPlayerSet = false;
 
 
     void Start()
     {
+        spawnInterval = initialSpwanInterval; // 초기 값 설정
+        StartCoroutine(AdjustSpawnRate());
         InvokeRepeating("PrepareArrow", 1f, spawnInterval);
     }
 
@@ -88,6 +93,23 @@ public class ArrowSpawner : MonoBehaviour
     {
         player = newPlayer;
         isPlayerSet = true;
+    }
+
+    /// <summary>
+    /// 시간이 지날수록 화살 생성 속도를 점점 빠르게 하는 로직
+    /// </summary>
+    IEnumerator AdjustSpawnRate()
+    {
+        while (spawnInterval > minSpawnInterval)
+        {
+            yield return new WaitForSeconds(10f); // 10초마다 난이도 증가
+            spawnInterval -= spawnIntervalDecreaseRate; // 점점 빠르게 생성
+            spawnInterval = Mathf.Max(spawnInterval, minSpawnInterval); // 최소 간격 제한
+
+            // 새롭게 `InvokeRepeating()`을 업데이트 (기존 반복 실행 취소 후 재시작)
+            CancelInvoke("PrepareArrow");
+            InvokeRepeating("PrepareArrow", 0f, spawnInterval);
+        }
     }
 }
 

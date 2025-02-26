@@ -1871,7 +1871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -2004,7 +2004,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -3626,10 +3626,10 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 789099035}
   - {fileID: 1441822370}
   - {fileID: 353802671}
   - {fileID: 1949516819}
-  - {fileID: 789099035}
   - {fileID: 1648400067}
   - {fileID: 1593000519}
   m_Father: {fileID: 0}
@@ -3754,7 +3754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -4311,7 +4311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -4444,7 +4444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -5784,7 +5784,7 @@ GameObject:
   - component: {fileID: 1575556953}
   - component: {fileID: 1575556952}
   m_Layer: 5
-  m_Name: DarkImage
+  m_Name: Deemed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7081,8 +7081,11 @@ MonoBehaviour:
   arrowPrefab: {fileID: 987083297778883385, guid: e5fc1ed075824704aaad9df90e1ff04e, type: 3}
   player: {fileID: 0}
   playerSpeed: 5
+  initialSpwanInterval: 5
   spawnInterval: 1
+  minSpawnInterval: 0.5
   spawnDistance: 10
+  spawnIntervalDecreaseRate: 0.05
 --- !u!4 &1817475837
 Transform:
   m_ObjectHideFlags: 0
@@ -7965,7 +7968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -8067,6 +8070,6 @@ SceneRoots:
   - {fileID: 1689971739}
   - {fileID: 188831125}
   - {fileID: 1108676999}
-  - {fileID: 1569646629}
   - {fileID: 1503161515}
   - {fileID: 1255410565}
+  - {fileID: 1569646629}
