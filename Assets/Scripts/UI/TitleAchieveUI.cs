@@ -154,7 +154,11 @@ public class TitleAchieveUI : MonoBehaviour
         // 각 업적에 대한 UI 항목 생성
         foreach (AchieveData achievement in achievements)
         {
-            CreateAchievementItem(achievement);
+            // 생존 시간 유형이 아닌 업적만 표시
+            if (achievement.type != AchieveType.SurviveTime)
+            {
+                CreateAchievementItem(achievement);
+            }
         }
     }
     
