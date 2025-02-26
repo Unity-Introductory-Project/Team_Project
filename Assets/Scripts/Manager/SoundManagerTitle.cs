@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Audio;
 using System.ComponentModel;
 
-public class SoundManager : MonoBehaviour
+public class SoundManagerTitle : MonoBehaviour
 {
     [SerializeField] AudioSource bgm;
     [SerializeField] AudioMixer audioMixer;

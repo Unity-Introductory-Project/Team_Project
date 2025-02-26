@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     GameUI gameUI;
     GameOverUI gameOverUI;
     AchieveManager achieveManager;
-    SoundManager soundManager;
+    SoundManagerInGame soundManager;
 
     float score;
     bool isDead;
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
         gameUI = FindFirstObjectByType<GameUI>();
         gameOverUI = FindObjectOfType<GameOverUI>(true);
         achieveManager = AchieveManager.Instance;
-        soundManager = FindFirstObjectByType<SoundManager>();
+        soundManager = FindFirstObjectByType<SoundManagerInGame>();
         Player = FindObjectOfType<CharacterBase>(true);
         score = 0;
         isDead = false;

@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] AudioSource soundEffect;
 
-    SoundManager soundManager;
+    SoundManagerInGame soundManager;
 
     GameUI gameUI;
     PauseUI pauseUI;
@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        soundManager = FindFirstObjectByType<SoundManager>();
+        soundManager = FindFirstObjectByType<SoundManagerInGame>();
 
         gameUI = FindFirstObjectByType<GameUI>();
         pauseUI = FindObjectOfType<PauseUI>(true);
