@@ -43,6 +43,10 @@ public class GameManager : MonoBehaviour
         {
             characterSelectUI.gameObject.SetActive(true);
         }
+        if(Player!= null)
+        {
+            isCharacterSelected = true;
+        }
         score = 0;
         isDead = false;
         time = 0;
