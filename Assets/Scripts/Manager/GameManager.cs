@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     GameUI gameUI;
     GameOverUI gameOverUI;
     AchieveManager achieveManager;
-    SoundManagerInGame soundManager;
+    SoundManager soundManager;
 
     CharacterSelectUI characterSelectUI;
 
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         gameOverUI = FindObjectOfType<GameOverUI>(true);
         achieveManager = AchieveManager.Instance;
 
-        soundManager = FindFirstObjectByType<SoundManagerInGame>();
+        soundManager = FindFirstObjectByType<SoundManager>();
 
         characterSelectUI = FindAnyObjectByType<CharacterSelectUI>();
         if (characterSelectUI != null)
@@ -57,7 +57,8 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         uiManager.InGame();
-        soundManager.PlayBGM();
+        AudioClip bgmClip = Resources.Load<AudioClip>("Path/To/Your/AudioClip");
+        soundManager.PlayBGM(bgmClip);
     }
 
 
