@@ -69,7 +69,7 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1f;
         gameUI.gameObject.SetActive(true);
         pauseUI.gameObject.SetActive(false);
-        //gameOverUI.gameObject.SetActive(false);
+        gameOverUI.gameObject.SetActive(false);
         image.color = new Color(114 / 255f, 161 / 255f, 172 / 255f);
     }
 
@@ -96,14 +96,12 @@ public class UIManager : MonoBehaviour
 
 
         soundEffect.Play();
-        Debug.Log("asd");
     }
 
     public void Restart()//게임 재시작
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainScene");
-        image.color = new Color(114 / 255f, 161 / 255f, 172 / 255f);
     }
 
     public void Resume()//게임 재개
