@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -48,25 +48,26 @@ public class SoundManagerInGame : MonoBehaviour
         }
     }
 
-    public void PlayBGM()//BGM Àç»ı
+    public void PlayBGM()//BGM ì¬ìƒ
     {
         bgm.Play();
     }
 
-    public void StopBGM()//BGM Á¤Áö
+    public void StopBGM()//BGM ì •ì§€
     {
         bgm.Stop();
     }
 
-    public void Soundbutton()//BGM Åä±Û Á¶Àı
+    public void Soundbutton()//BGM í† ê¸€ ì¡°ì ˆ
     {
         bgm.volume = bgm.volume == 0 ? 1 : 0;
     }
 
-    public void SoundSlider(float volume)//BGM ½½¶óÀÌ´õ Á¶Àı
+    public void SoundSlider(float volume)//BGM ìŠ¬ë¼ì´ë” ì¡°ì ˆ
     {
         audioMixer.SetFloat("BGM", Mathf.Log10(volume) * 20);
 
         PlayerPrefs.SetFloat("Volume", bgmSlider.value);
     }
 }
+

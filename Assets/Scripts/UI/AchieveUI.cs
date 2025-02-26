@@ -61,6 +61,9 @@ public class AchieveUI : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// 업적 달성 팝업 표시
+    /// <summary>
     public void ShowAchievement(string title, string description, Sprite icon = null)
     {
         StopAllCoroutines();
@@ -89,6 +92,9 @@ public class AchieveUI : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// 팝업 애니메이션 코루틴
+    /// <summary>
     private IEnumerator ShowPopupAnimation()
     {
         // 팝업 활성화 및 초기 위치 설정
@@ -99,26 +105,29 @@ public class AchieveUI : MonoBehaviour
         float elapsedTime = 0f;
         while (elapsedTime < slideInTime)
         {
-            float t = elapsedTime / slideInTime;
+            float t = elapsedTime / slideInTime; // 0~1 사이 값
             popupRect.anchoredPosition = Vector2.Lerp(hiddenPosition, visiblePosition, t);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
         
+        // 최종 위치 설정
         popupRect.anchoredPosition = visiblePosition;
         
+        // 표시 지속 시간 만큼 대기
         yield return new WaitForSeconds(showDuration);
         
         // 슬라이드 아웃 애니메이션
         elapsedTime = 0f;
         while (elapsedTime < slideOutTime)
         {
-            float t = elapsedTime / slideOutTime;
+            float t = elapsedTime / slideOutTime; // 0~1 사이 값
             popupRect.anchoredPosition = Vector2.Lerp(visiblePosition, hiddenPosition, t);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
         
+        // 최종 위치 설정 및 비활성화화
         popupRect.anchoredPosition = hiddenPosition;
         achievePopup.SetActive(false);
     }

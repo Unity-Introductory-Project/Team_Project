@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,7 +14,8 @@ public class JumpCharacter : CharacterBase
 
     public override void Ability()
     {
-        Debug.Log("3´Ü Á¡ÇÁ °¡´É");
+        Debug.Log("3ë‹¨ ì í”„ ê°€ëŠ¥");
     }
 
 }
+

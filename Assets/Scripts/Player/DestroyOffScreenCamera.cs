@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,7 +29,7 @@ public class DestroyOffScreenObjects : MonoBehaviour
     }
     private void Update()
     {
-        // Ä«¸Ş¶ó À§Ä¡¸¦ µû¶ó°¡µµ·Ï ¼³Á¤
+        // ì¹´ë©”ë¼ ìœ„ì¹˜ë¥¼ ë”°ë¼ê°€ë„ë¡ ì„¤ì •
         if (mainCamera != null)
         {
             transform.position = mainCamera.transform.position;
@@ -53,3 +53,4 @@ public class DestroyOffScreenObjects : MonoBehaviour
         }
     }
 }
+
