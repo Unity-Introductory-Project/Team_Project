@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Ground
   - Obstacle
+  - Mute
+  - Loud
+  - Apple
+  - Fill
+  - PoisonApple
   layers:
   - Default
   - TransparentFX

@@ -5,28 +5,37 @@ using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
-{
+{   
+    public static GameManager Instance { get; private set; }
+    CharacterBase Player;
     UIManager uiManager;
     GameUI gameUI;
     GameOverUI gameOverUI;
-
+    AchieveManager achieveManager;
     SoundManager soundManager;
 
-    float maxHP = 10;
-    float hp;
     float score;
     bool isDead;
     float time;
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogError("GameManagerÍ∞Ä Ïù¥ÎØ∏ Ï°¥Ïû¨Ìï©ÎãàÎã§!");
+            Destroy(gameObject);
+        }
+        
         uiManager = FindFirstObjectByType<UIManager>();
         gameUI = FindFirstObjectByType<GameUI>();
         gameOverUI = FindObjectOfType<GameOverUI>(true);
-
+        achieveManager = AchieveManager.Instance;
         soundManager = FindFirstObjectByType<SoundManager>();
-
-        hp = maxHP;
+        Player = FindObjectOfType<CharacterBase>(true);
         score = 0;
         isDead = false;
         time = 0;
@@ -40,37 +49,49 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-        ChangeHP(Time.deltaTime);
         ChangeScore(Time.deltaTime);
 
-        gameUI.UpdateHPBar(hp / maxHP);
+        gameUI.UpdateHPBar(Player.life / Player.maxlife);
         gameUI.UpdateScore(score);
 
         time += Time.deltaTime;
 
-        if (hp <= 0)
+        if (Player.life <= 0 && isDead == false)
         {
             isDead = true;
             uiManager.GameOver();
             gameOverUI.PlayTime(time);
             gameOverUI.Score(score);
             soundManager.StopBGM();
+
+            // ÏóÖÏ†Å Îß§ÎãàÏ†ÄÏóê ÏÇ¨Îßù ÏïåÎ¶º
+            if (achieveManager != null)
+            {
+                achieveManager.AddDeath();
+            }
         }
     }
 
-    public void ExitGame()//≈∏¿Ã∆≤∑Œ µπæ∆∞°±‚
+    public void ExitGame()//ÌÉÄÏù¥ÌãÄÎ°ú ÎèåÏïÑÍ∞ÄÍ∏∞
     {
         Debug.Log("ExitGame");
-        //SceneManager.LoadScene("TitleScene");
+        SceneManager.LoadScene("TitleScene");
     }
-
-    public void ChangeHP(float currentHP)//√º∑¬ ∫Ø∞Ê
-    {
-        hp -= currentHP;
-    }
-
-    public void ChangeScore(float currentScore)//¡°ºˆ ∫Ø∞Ê
+    public void ChangeScore(float currentScore)//Ï†êÏàò Ï¶ùÍ∞Ä
     {
         score += currentScore;
+    }
+    public float GetScore()
+    {
+        return score;
+    }
+    public float GetTime()
+    {
+        return time;
+    }
+    
+    public bool IsDead()
+    {
+        return isDead;
     }
 }

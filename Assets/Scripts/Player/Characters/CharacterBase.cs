@@ -4,23 +4,29 @@ using UnityEngine;
 
 public abstract class CharacterBase : MonoBehaviour
 {
-    public float life = 100f;
+    public float life = 100;
     public float speed = 2f;
     public float jumpHeight = 5f;
     private bool isSlide = false;
     public int jumpCount = 0;
     protected int fullJumpCount = 1;
     private bool isGround = false;
-
+    public float maxlife = 100f;
     private Rigidbody2D rb;
     private Animator animator;
     private BoxCollider2D colider;
+
+    // 업적 관련 변수
+    private AchieveManager achieveManager;
+    private bool slideTracked = false;
     
     public virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         colider = GetComponent<BoxCollider2D>();
+
+        achieveManager = AchieveManager.Instance;
 
         if (rb == null) Debug.LogError("Rigidbody2D가 없습니다!");
         if (animator == null) Debug.LogError("Animator가 없습니다!");
@@ -37,11 +43,14 @@ public abstract class CharacterBase : MonoBehaviour
 
         CheckFalling();
 
-        /*if(life <= 0)
+        if(life <= 0)
         {
             Dead();
-        }*/ //죽음 확인 위한 함수
+        }//죽음 확인 위한 함수
+
+        ChangeHp(-(Time.deltaTime));
     }
+
     /// <summary>
     /// 자동 이동하는 속도 조절 함수. 지금은 시간에 따라 빨라짐
     /// </summary>
@@ -49,6 +58,7 @@ public abstract class CharacterBase : MonoBehaviour
     {
         transform.position += Vector3.right * speed * Time.deltaTime;
     }
+
     /// <summary>
     /// 점프 함수.
     /// </summary>
@@ -62,8 +72,12 @@ public abstract class CharacterBase : MonoBehaviour
             jumpCount++;
             //animator.Play("jump", 0, 0);
             animator.SetBool("isJump", true);
+
+            // 업적 매니저에 점프 기록
+            if (achieveManager != null) achieveManager.AddJump();
         }
     }
+
     /// <summary>
     /// 슬라이딩 함수 계속 누르면 계속 슬라이드하도록 설정
     /// </summary>
@@ -76,8 +90,16 @@ public abstract class CharacterBase : MonoBehaviour
             animator.SetBool("isSlide", true);
         }
 
+        // 한 번의 슬라이드에 한 번만 카운트
+        if (!slideTracked && achieveManager != null)
+        {
+            achieveManager.AddSlide();
+            slideTracked = true;
+        }
+
         //animator.Play("KeepSlide", 0, 0);
     }
+
     /// <summary>
     /// 슬라이드 버튼을 그만 눌렀을 때 원래대로 돌아오도록 만드는 함수
     /// </summary>
@@ -89,6 +111,7 @@ public abstract class CharacterBase : MonoBehaviour
             animator.SetBool("isSlide", false);
         }
     }
+
     /// <summary>
     /// 점프 후 떨어지고 있는지 확인하여 떨어지고 있으면 그에 맞는 애니메이션 상태 설정.
     /// </summary>
@@ -107,22 +130,80 @@ public abstract class CharacterBase : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 충돌 확인 메서드
+    /// </summary>
+    /// <param name="collision"></param>
     public virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground")) // "Ground" 태그 확인
+        if (collision.gameObject.CompareTag("Ground")) 
         {
-            isGround = true;
-        }
-        if(collision.gameObject.CompareTag("Obstacle"))
-        {
-            Damaged(10f);
+            // 충돌 방향 확인
+            foreach (ContactPoint2D contact in collision.contacts)
+            {
+                // 충돌 방향이 아래쪽인 경우에만 isGround를 true로 설정
+                if (contact.normal.y > 0.7f)  // 0.7은 약간의 여유를 두기 위한 값
+                {
+                    isGround = true;
+                    break;
+                }
+            }
         }
     }
+
+    public virtual void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Obstacle"))
+        {
+            Debug.Log("장애물(Obstacle) 충돌 감지됨!");
+            ChangeHp(-10f);
+        }
+        if (collider.CompareTag("Apple"))
+        {
+            Debug.Log("사과(Apple) 충돌 감지됨! 체력 회복!");
+            ChangeHp(0.5f);
+
+            // 업적 매니저에 사과 획득 기록
+            if (achieveManager != null)
+            {
+                achieveManager.AddApple();
+            }
+        }
+        if (collider.CompareTag("PoisonApple"))
+        {
+            Debug.Log("독사과(PoisonApple) 충돌 감지됨! 체력 감소!");
+            ChangeHp(-2f);
+        }
+       
+    }
+
+    /// <summary>
+    /// 땅에서 벗어남 확인 메서드
+    /// </summary>
+    /// <param name="collision"></param>
     public virtual void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground")) // "Ground"에서 벗어날 때
+        if (collision.gameObject.CompareTag("Ground")) 
         {
-            isGround = false;
+            // 충돌 해제 시 바닥과의 접촉만 체크
+            bool stillOnGround = false;
+            
+            // 다른 Ground 오브젝트와 여전히 접촉 중인지 확인
+            Collider2D[] colliders = Physics2D.OverlapBoxAll(colider.bounds.center, colider.bounds.size, 0f);
+            foreach (Collider2D col in colliders)
+            {
+                if (col.CompareTag("Ground") && col.gameObject != collision.gameObject)
+                {
+                    // 다른 Ground와 접촉 중이면 바닥 상태 유지
+                    stillOnGround = true;
+                    break;
+                }
+            }
+            
+            if (!stillOnGround)
+            {
+                isGround = false;
+            }
         }
     }
 
@@ -130,16 +211,20 @@ public abstract class CharacterBase : MonoBehaviour
     /// 데미지 계산 함수
     /// </summary>
     /// <param name="damage"></param>
-    protected virtual void Damaged(float damage)
+    public virtual void ChangeHp(float value)
     {
-        if(life <= damage)
+        if (life <= value)
         {
             life = 0;
             Dead();
         }
+        else if(life == maxlife&&value > 0)
+        {
+            life = maxlife;
+        }
         else
         {
-            life -= damage;
+            life += value;
         }
     }
 
@@ -150,6 +235,9 @@ public abstract class CharacterBase : MonoBehaviour
     {
         speed = 0;
         animator.SetBool("isDead", true);
+
+        // 업적 매니저에 사망 기록
+        if (achieveManager != null) achieveManager.AddDeath();
     }
 
     protected virtual void Revive()

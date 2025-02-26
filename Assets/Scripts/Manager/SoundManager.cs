@@ -64,7 +64,7 @@ public class SoundManager : MonoBehaviour
     }
 
     public void SoundSlider(float volume)//BGM 슬라이더 조절
-    {        
+    {
         audioMixer.SetFloat("BGM", Mathf.Log10(volume) * 20);
 
         PlayerPrefs.SetFloat("Volume", bgmSlider.value);

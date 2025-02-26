@@ -362,12 +362,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 213711f067e9f7a428eb5e68f3e21c3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  restartButton: {fileID: 205948841}
-  exitButton: {fileID: 1550183566}
-  playMinuteText: {fileID: 1251867273}
-  playSecondText: {fileID: 716741705}
-  scoreText: {fileID: 1987666694}
-  highScoreText: {fileID: 1175976797}
 --- !u!1 &127393679
 GameObject:
   m_ObjectHideFlags: 0
@@ -3289,7 +3283,7 @@ RectTransform:
   m_Father: {fileID: 367301092}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0.00030003, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3887,9 +3881,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d27205d9b4f2646a81c22c898eecb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseBotton: {fileID: 142028525}
-  scoreText: {fileID: 1875179585}
-  hpBar: {fileID: 1667523484}
 --- !u!1 &1567682157
 GameObject:
   m_ObjectHideFlags: 0
@@ -4295,8 +4286,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1463672427}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.00030003, y: 0}
+  m_AnchorMax: {x: 0.00030003, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
