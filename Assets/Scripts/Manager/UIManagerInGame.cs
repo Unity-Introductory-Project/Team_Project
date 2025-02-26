@@ -41,6 +41,45 @@ public class UIManager : MonoBehaviour
         soundEffect = GetComponent<AudioSource>();
     }
 
+    private void Start()
+    {
+        // 사운드 버튼 초기 설정
+        SetupSoundButton();
+    }
+
+    private void SetupSoundButton()
+    {
+        if (pauseUI != null && soundManager != null)
+        {
+            // 사운드 버튼 찾기
+            Button soundButton = pauseUI.transform.Find("SoundButton")?.GetComponent<Button>();
+            if (soundButton != null)
+            {
+                soundButton.onClick.RemoveAllListeners();
+                soundButton.onClick.AddListener(() => {
+                    soundManager.ToggleBGM();
+                });
+            }
+            else
+            {
+                // 정확한 버튼을 찾지 못했을 경우 대안 방법 시도
+                
+                // 버튼의 정확한 경로를 모르는 경우를 위한 대안
+                Button[] allButtons = pauseUI.GetComponentsInChildren<Button>(true);
+                foreach (Button btn in allButtons)
+                {
+                    if (btn.name.Contains("Sound") || btn.name.Contains("소리") || btn.name.Contains("볼륨"))
+                    {
+                        btn.onClick.RemoveAllListeners();
+                        btn.onClick.AddListener(() => {
+                            soundManager.ToggleBGM();
+                        });
+                    }
+                }
+            }
+        }
+    }
+
     private void Update()
     {
         if(isPauseMoving)
@@ -108,6 +147,9 @@ public class UIManager : MonoBehaviour
             image.color = new Color(74 / 255f, 107 / 255f, 114 / 255f);
 
             soundEffect.Play();
+            
+            // 일시정지 UI가 활성화될 때 버튼 이벤트 다시 설정
+            SetupSoundButton();
         }
     }
     
@@ -118,7 +160,6 @@ public class UIManager : MonoBehaviour
         pauseUI.gameObject.SetActive(false);
         blackImage.SetActive(true);
         image.color = new Color(74 / 255f, 107 / 255f, 114 / 255f);
-
 
         soundEffect.Play();
     }
