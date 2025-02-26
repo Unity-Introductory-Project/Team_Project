@@ -72,8 +72,6 @@ public class GameManager : MonoBehaviour
             Player = CharacterManager.Instance.currentPlayer.GetComponent<CharacterBase>();
         }
 
-        ChangeScore(Time.deltaTime);
-
         gameUI.UpdateHPBar(Player.life / Player.maxlife);
         gameUI.UpdateScore(score);
 
@@ -92,6 +90,11 @@ public class GameManager : MonoBehaviour
             {
                 achieveManager.AddDeath();
             }
+        }
+
+        if(score < 0)
+        {
+            score = 0;
         }
     }
 
