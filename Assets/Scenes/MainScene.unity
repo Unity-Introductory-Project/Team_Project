@@ -6225,6 +6225,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1617343328}
+  - component: {fileID: 1617343329}
   - component: {fileID: 1617343327}
   - component: {fileID: 1617343326}
   m_Layer: 0
@@ -6337,7 +6338,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1617343325}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1288849fcd63df84cac5d8df35e8d193, type: 3}
   m_Name: 
@@ -6362,6 +6363,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1388561092}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1617343329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1617343325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da67d130301aa5e48914381904e3a1d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgm: {fileID: 1617343326}
+  audioMixer: {fileID: 24100000, guid: 22e7513307a042a45b3741f9a65aa9c8, type: 2}
+  bgmSlider: {fileID: 806894137}
+  loud: {fileID: 1990837640}
+  mute: {fileID: 967086642}
+  mixerParameter: BGM
+  volumePrefsKey: Volume
 --- !u!1 &1638234006
 GameObject:
   m_ObjectHideFlags: 0
