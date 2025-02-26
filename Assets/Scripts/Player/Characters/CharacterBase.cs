@@ -15,6 +15,7 @@ public abstract class CharacterBase : MonoBehaviour
     protected Rigidbody2D rb;
     protected Animator animator;
     protected BoxCollider2D colider;
+    public bool isDead = false;
 
     // 업적 관련 변수
     protected AchieveManager achieveManager;
@@ -46,12 +47,10 @@ public abstract class CharacterBase : MonoBehaviour
 
         CheckFalling();
 
-        if(life <= 0)
+        if(!isDead)
         {
-            Dead();
-        }//죽음 확인 위한 함수
-
-        ChangeHp(-(Time.deltaTime));
+            ChangeHp(-(Time.deltaTime));
+        }
     }
 
     /// <summary>
@@ -111,6 +110,7 @@ public abstract class CharacterBase : MonoBehaviour
     {
         if (isSlide) 
         {
+            slideTracked = false;
             isSlide = false;
             animator.SetBool("isSlide", false);
         }
@@ -217,7 +217,7 @@ public abstract class CharacterBase : MonoBehaviour
     /// <param name="damage"></param>
     public virtual void ChangeHp(float value)
     {
-        if (life <= value)
+        if (life <= value&&isDead==false)
         {
             life = 0;
             Dead();
@@ -237,6 +237,7 @@ public abstract class CharacterBase : MonoBehaviour
     /// </summary>
     protected virtual void Dead()
     {
+        isDead = true;
         speed = 0;
         animator.SetBool("isDead", true);
 
