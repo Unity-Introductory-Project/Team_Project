@@ -76,8 +76,9 @@ public class AllRounderCharacter : CharacterBase
     {
         if (actionCount > 0)
         {
+            animator.SetTrigger("Attack");
             actionCount--;
-
+            StartCoroutine(ResetAttackTrigger());
             Collider2D[] hitObjects = Physics2D.OverlapCircleAll(transform.position + Vector3.right * 1.5f, 1f);
             foreach (Collider2D obj in hitObjects)
             {
@@ -104,6 +105,7 @@ public class AllRounderCharacter : CharacterBase
                 actionCount++;
                 Debug.Log($"행동 개수 +1 증가! 현재 행동 개수: {actionCount}/{maxActionCount}");
             }
+
             appleCount = 0;
         }
     }
@@ -123,5 +125,13 @@ public class AllRounderCharacter : CharacterBase
     public override void Ability()
     {
         Debug.Log($"현재 행동 개수: {actionCount}/{maxActionCount}");
+    }
+    /// <summary>
+    /// 일정 시간이 지나면 Attack 트리거를 해제 (애니메이션 실행 후 자동 초기화)
+    /// </summary>
+    private IEnumerator ResetAttackTrigger()
+    {
+        yield return new WaitForSeconds(0.5f); // 애니메이션이 충분히 실행될 시간을 줌
+        animator.ResetTrigger("Attack"); // 트리거 초기화
     }
 }
