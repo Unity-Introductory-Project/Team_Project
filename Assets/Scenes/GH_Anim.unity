@@ -976,6 +976,7 @@ GameObject:
   - component: {fileID: 496146293}
   - component: {fileID: 496146292}
   - component: {fileID: 496146291}
+  - component: {fileID: 496146296}
   m_Layer: 5
   m_Name: Achieve Canvas
   m_TagString: Untagged
@@ -1065,6 +1066,7 @@ MonoBehaviour:
   showDuration: 3
   slideInTime: 0.5
   slideOutTime: 0.5
+  achievementClip: {fileID: 8300000, guid: 900af884c0067e54f9c866046445177a, type: 3}
 --- !u!224 &496146295
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1088,6 +1090,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &496146296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496146290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21767a04330eed3458695cafbae3b297, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  achieveButton: {fileID: 2069477274}
+  achievePanel: {fileID: 516689402}
+  closeButton: {fileID: 2012756085}
+  resetButton: {fileID: 1580900162}
+  contentTransform: {fileID: 457169395}
+  achieveItemPrefab: {fileID: 6742999073937372700, guid: d1f59699c619bdb46a5cc5abab091af3, type: 3}
+  confirmResetPanel: {fileID: 126316393}
+  confirmButton: {fileID: 366136606}
+  cancelButton: {fileID: 832313721}
+  itemSpacing: 20
 --- !u!1 &516689402
 GameObject:
   m_ObjectHideFlags: 0
