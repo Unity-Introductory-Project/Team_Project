@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class CharacterBase : MonoBehaviour
 {
-    public float life = 100;
+    public float life = 100f;
     public float speed = 5f;
     public float jumpHeight = 5f;
     private bool isSlide = false;
