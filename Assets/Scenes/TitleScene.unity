@@ -2370,10 +2370,10 @@ MonoBehaviour:
   mute: {fileID: 2147403526}
   titleBGM: {fileID: 8300000, guid: e7a654ac0d60672479325cd0947a9bfc, type: 3}
   inGameBGM: {fileID: 8300000, guid: 281954e697fb875499d8ddc6dc9264c5, type: 3}
-  jumpSFX: {fileID: 0}
-  slideSFX: {fileID: 0}
-  hitSFX: {fileID: 0}
-  itemSFX: {fileID: 0}
+  jumpSFX: {fileID: 8300000, guid: cf708da682cc98a449b36a311860d20a, type: 3}
+  slideSFX: {fileID: 8300000, guid: 7379df98637402c4095b59c262cdbe57, type: 3}
+  hitSFX: {fileID: 8300000, guid: ab5049bae4453dc47b1de940d63162bc, type: 3}
+  itemSFX: {fileID: 8300000, guid: 7edb38da1a4405140a2db238cf8a418d, type: 3}
 --- !u!1 &1148025453
 GameObject:
   m_ObjectHideFlags: 0
