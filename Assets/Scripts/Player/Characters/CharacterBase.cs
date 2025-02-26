@@ -16,6 +16,7 @@ public abstract class CharacterBase : MonoBehaviour
     protected Animator animator;
     protected BoxCollider2D colider;
     public bool isDead = false;
+    private bool isInvincible = false;
 
     // 업적 관련 변수
     protected AchieveManager achieveManager;
@@ -47,7 +48,7 @@ public abstract class CharacterBase : MonoBehaviour
 
         CheckFalling();
 
-        if(!isDead)
+        if(!isDead && !isInvincible)
         {
             ChangeHp(-(Time.deltaTime));
         }
@@ -159,7 +160,7 @@ public abstract class CharacterBase : MonoBehaviour
 
     public virtual void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Obstacle"))
+        if (collider.CompareTag("Obstacle") && !isInvincible)
         {
             ChangeHp(-10f);
             SoundManager.instance.PlaySFX(SoundManager.instance.hitSFX);
@@ -175,12 +176,31 @@ public abstract class CharacterBase : MonoBehaviour
                 achieveManager.AddApple();
             }
         }
-        if (collider.CompareTag("PoisonApple"))
+        if (collider.CompareTag("PoisonApple") && !isInvincible)
         {
             ChangeHp(-2f);
             SoundManager.instance.PlaySFX(SoundManager.instance.itemSFX);
         }
+        if (collider.CompareTag("DashItem"))
+        {
+            StartCoroutine(ActivateDashMode());
+            Destroy(collider.gameObject); // 아이템 제거
+        }
        
+    }
+
+    /// <summary>
+    /// 5초 동안 무적 + 속도 2배
+    /// </summary>
+    private IEnumerator ActivateDashMode()
+    {
+        isInvincible = true; //  무적 상태 ON
+        speed *= 2; // 속도 2배 증가
+
+        yield return new WaitForSeconds(5f); // 5초 후 원래 상태로 복구
+
+        isInvincible = false; // 무적 상태 OFF
+        speed /= 2; // 원래 속도로 복구
     }
 
     /// <summary>
