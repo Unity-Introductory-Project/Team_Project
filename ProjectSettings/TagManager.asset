@@ -12,6 +12,7 @@ TagManager:
   - Fill
   - Undefined
   - PoisonApple
+  - Tutorial
   layers:
   - Default
   - TransparentFX
