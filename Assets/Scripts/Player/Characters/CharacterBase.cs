@@ -68,11 +68,12 @@ public abstract class CharacterBase : MonoBehaviour
     protected virtual void Jump()
     {
         if (rb == null) return;
-
-        if (jumpCount < fullJumpCount && life > 0)
+        
+        if (jumpCount < fullJumpCount && life > 0) // 점프 횟수 제한
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
-            jumpCount++;
+            rb.velocity = new Vector2(rb.velocity.x, jumpHeight); // 점프
+            SoundManager.instance.PlaySFX(SoundManager.instance.jumpSFX);
+            jumpCount++; 
             //animator.Play("jump", 0, 0);
             animator.SetBool("isJump", true);
 
@@ -89,6 +90,7 @@ public abstract class CharacterBase : MonoBehaviour
         if (!isSlide) // 슬라이드 시작할 때만 실행
         {
             isSlide = true;
+            SoundManager.instance.PlaySFX(SoundManager.instance.slideSFX);
             //animator.Play("StartSlide", 0, 0);
             animator.SetBool("isSlide", true);
         }
@@ -161,11 +163,13 @@ public abstract class CharacterBase : MonoBehaviour
         {
             Debug.Log("장애물(Obstacle) 충돌 감지됨!");
             ChangeHp(-10f);
+            SoundManager.instance.PlaySFX(SoundManager.instance.hitSFX);
         }
         if (collider.CompareTag("Apple"))
         {
             Debug.Log("사과(Apple) 충돌 감지됨! 체력 회복!");
             ChangeHp(0.5f);
+            SoundManager.instance.PlaySFX(SoundManager.instance.itemSFX);
 
             // 업적 매니저에 사과 획득 기록
             if (achieveManager != null)
@@ -177,6 +181,7 @@ public abstract class CharacterBase : MonoBehaviour
         {
             Debug.Log("독사과(PoisonApple) 충돌 감지됨! 체력 감소!");
             ChangeHp(-2f);
+            SoundManager.instance.PlaySFX(SoundManager.instance.itemSFX);
         }
        
     }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PauseUI : MonoBehaviour
 {
-    SoundManagerInGame soundManager;
+    SoundManager soundManager;
 
     [SerializeField] Button resumeButton;
     [SerializeField] Button exitButton;
