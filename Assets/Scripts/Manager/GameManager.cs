@@ -99,8 +99,6 @@ public class GameManager : MonoBehaviour
     {
         isCharacterSelected = true;
     }
-
-
     public void ExitGame()//타이틀로 돌아가기
     {
         Debug.Log("ExitGame");
@@ -110,15 +108,10 @@ public class GameManager : MonoBehaviour
     {
         score += currentScore;
     }
-    public float GetScore()
-    {
-        return score;
-    }
     public float GetTime()
     {
         return time;
     }
-    
     public bool IsDead()
     {
         return isDead;
