@@ -2368,6 +2368,7 @@ MonoBehaviour:
   bgmSlider: {fileID: 829403504}
   loud: {fileID: 1451726709}
   mute: {fileID: 2147403526}
+  SoundButton: {fileID: 545685335}
   titleBGM: {fileID: 8300000, guid: e7a654ac0d60672479325cd0947a9bfc, type: 3}
   inGameBGM: {fileID: 8300000, guid: 281954e697fb875499d8ddc6dc9264c5, type: 3}
   jumpSFX: {fileID: 8300000, guid: cf708da682cc98a449b36a311860d20a, type: 3}

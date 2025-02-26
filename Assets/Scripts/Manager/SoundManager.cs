@@ -14,6 +14,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] Slider bgmSlider;
     [SerializeField] GameObject loud;
     [SerializeField] GameObject mute;
+    [SerializeField] GameObject SoundButton;
     
     public AudioClip titleBGM;
     public AudioClip inGameBGM;
@@ -69,7 +70,16 @@ public class SoundManager : MonoBehaviour
                 bgmSlider.onValueChanged.AddListener(SoundSlider);
             }
         }
-
+        if (SoundButton == null)
+        {
+            SoundButton = GameObject.Find("SoundButton"); // 버튼의 정확한 이름 확인 필요
+            if (SoundButton != null)
+            {
+                SoundButton = SoundButton.transform.GetChild(0).gameObject; // 버튼의 자식 오브젝트 찾기
+                SoundButton.GetComponent<Button>().onClick.RemoveAllListeners(); // 중복 방지
+                SoundButton.GetComponent<Button>().onClick.AddListener(ToggleBGM); // 버튼에 이벤트 추가
+            }
+        }
         if (loud == null)
             loud = GameObject.Find("Loud");  // UI 오브젝트 이름 확인 필요
 
@@ -97,12 +107,18 @@ public class SoundManager : MonoBehaviour
         GameObject sliderObj = GameObject.Find("SoundBar"); // 슬라이더의 정확한 이름 확인 필요
         if (sliderObj != null)
         {
-            bgmSlider = sliderObj.GetComponent<Slider>();
+            bgmSlider = sliderObj.GetComponent<Slider>(); // 슬라이더 컴포넌트 찾기
             bgmSlider.onValueChanged.RemoveListener(SoundSlider); // 중복 방지
-            bgmSlider.onValueChanged.AddListener(SoundSlider);
-            bgmSlider.value = PlayerPrefs.HasKey("Volume") ? PlayerPrefs.GetFloat("Volume") : 0.5f;
+            bgmSlider.onValueChanged.AddListener(SoundSlider); // 이벤트 추가
+            bgmSlider.value = PlayerPrefs.HasKey("Volume") ? PlayerPrefs.GetFloat("Volume") : 0.5f; // 볼륨 설정
         }
-
+        GameObject SoundButton = GameObject.Find("SoundButton"); // 버튼의 정확한 이름 확인 필요
+        if (SoundButton != null)
+        {
+            SoundButton = SoundButton.transform.GetChild(0).gameObject; // 버튼의 자식 오브젝트 찾기
+            SoundButton.GetComponent<Button>().onClick.RemoveAllListeners(); // 중복 방지
+            SoundButton.GetComponent<Button>().onClick.AddListener(ToggleBGM); // 버튼에 이벤트 추가
+        }
         // Mute 오브젝트를 다시 찾기
         if (mute == null)
         {
