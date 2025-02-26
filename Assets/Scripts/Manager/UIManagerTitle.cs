@@ -10,6 +10,9 @@ public class UIManagerTitle : MonoBehaviour
     GameObject tutorial1;
     GameObject tutorial2;
     GameObject tutorial3;
+    GameObject tutorialMotion;
+    GameObject jumpMotion;
+    GameObject slideMotion;
 
     private void Awake()
     {
@@ -18,6 +21,9 @@ public class UIManagerTitle : MonoBehaviour
         tutorial1 = canvas.gameObject.transform.GetChild(9).gameObject;
         tutorial2 = canvas.gameObject.transform.GetChild(10).gameObject;
         tutorial3 = canvas.gameObject.transform.GetChild(11).gameObject;
+        tutorialMotion = GameObject.FindGameObjectWithTag("Tutorial");
+        jumpMotion = tutorialMotion.transform.GetChild(0).gameObject;
+        slideMotion = tutorialMotion.transform.GetChild(1).gameObject;
     }
     public void Game()
     {
@@ -39,11 +45,15 @@ public class UIManagerTitle : MonoBehaviour
     {
         tutorial2.SetActive(false);
         tutorial3.SetActive(true);
+        jumpMotion.SetActive(true);
+        slideMotion.SetActive(true);
     }
 
     public void ExitTutorial()
     {
         tutorial3.SetActive(false);
+        jumpMotion.SetActive(false);
+        slideMotion.SetActive(false);
     }
 
     public void Setting()

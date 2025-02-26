@@ -49,7 +49,6 @@ public class AchieveManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
             LoadStats();
             LoadAchievements();
             
