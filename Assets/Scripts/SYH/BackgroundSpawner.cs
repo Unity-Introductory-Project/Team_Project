@@ -51,4 +51,9 @@ public class BackgroundSpawner : MonoBehaviour
         Destroy(backgroundList[0]);
         backgroundList.RemoveAt(0);
     }
+
+    public void SetPlayer(Transform newPlayer)
+    {
+        player = newPlayer;
+    }
 }

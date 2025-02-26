@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] AudioSource soundEffect;
 
-    SoundManager soundManager;
+    SoundManagerInGame soundManager;
 
     GameUI gameUI;
     PauseUI pauseUI;
@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        soundManager = FindFirstObjectByType<SoundManager>();
+        soundManager = FindFirstObjectByType<SoundManagerInGame>();
 
         gameUI = FindFirstObjectByType<GameUI>();
         pauseUI = FindObjectOfType<PauseUI>(true);
@@ -69,7 +69,7 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1f;
         gameUI.gameObject.SetActive(true);
         pauseUI.gameObject.SetActive(false);
-        gameOverUI.gameObject.SetActive(false);
+        //gameOverUI.gameObject.SetActive(false);
         image.color = new Color(114 / 255f, 161 / 255f, 172 / 255f);
     }
 
