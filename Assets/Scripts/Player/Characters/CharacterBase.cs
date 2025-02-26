@@ -159,12 +159,10 @@ public abstract class CharacterBase : MonoBehaviour
     {
         if (collider.CompareTag("Obstacle"))
         {
-            Debug.Log("장애물(Obstacle) 충돌 감지됨!");
             ChangeHp(-10f);
         }
         if (collider.CompareTag("Apple"))
         {
-            Debug.Log("사과(Apple) 충돌 감지됨! 체력 회복!");
             ChangeHp(0.5f);
 
             // 업적 매니저에 사과 획득 기록
@@ -175,7 +173,6 @@ public abstract class CharacterBase : MonoBehaviour
         }
         if (collider.CompareTag("PoisonApple"))
         {
-            Debug.Log("독사과(PoisonApple) 충돌 감지됨! 체력 감소!");
             ChangeHp(-2f);
         }
        

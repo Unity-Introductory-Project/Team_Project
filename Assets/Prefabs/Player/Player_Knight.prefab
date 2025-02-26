@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 6579743216954338881}
   - component: {fileID: 1114830226239548010}
   - component: {fileID: 506545829589307768}
-  - component: {fileID: 3302155716302682027}
   - component: {fileID: 3444353622886577878}
   - component: {fileID: 5364428407119584230}
+  - component: {fileID: 737640553683748470}
   m_Layer: 0
   m_Name: Player_Knight
   m_TagString: Player
@@ -109,23 +109,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3302155716302682027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7815033665325022169}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bdf1093b2d32894f8462a1c57e3f22a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  life: 100
-  speed: 5
-  jumpHeight: 5
-  jumpCount: 0
-  maxlife: 100
 --- !u!61 &3444353622886577878
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -198,3 +181,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &737640553683748470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7815033665325022169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f47ee8ca97262f4e91f51e836af28ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  life: 100
+  speed: 5
+  jumpHeight: 5
+  jumpCount: 0
+  maxlife: 100
+  isDead: 0
+  needed: 10
