@@ -16,10 +16,14 @@ public class AchieveUI : MonoBehaviour
     [SerializeField] private float showDuration = 3f;     // 팝업 표시 지속 시간
     [SerializeField] private float slideInTime = 0.5f;    // 왼쪽으로 슬라이드 인 시간
     [SerializeField] private float slideOutTime = 0.5f;   // 오른쪽으로 슬라이드 아웃 시간
+
+    [Header("사운드 설정")]
+    [SerializeField] private AudioClip achievementClip;   // 업적 달성 사운드
     
     private RectTransform popupRect;                      // 팝업의 RectTransform
     private Vector2 hiddenPosition;                       // 숨겨진 위치 (화면 오른쪽 바깥)
     private Vector2 visiblePosition;                      // 보이는 위치 (화면 내부)
+    private AudioSource audioSource;                      // 오디오 소스 컴포넌트
     
     private void Awake()
     {
@@ -27,17 +31,21 @@ public class AchieveUI : MonoBehaviour
         if (achievePopup != null)
         {
             popupRect = achievePopup.GetComponent<RectTransform>();
-        }
-        
-        // 초기 상태 설정
-        if (achievePopup != null)
-        {
             achievePopup.SetActive(false);
+        }
+
+        // AudioSource 컴포넌트 가져오기
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
         }
     }
     
     private void Start()
     {
+        Time.timeScale = 1.0f;
+        
         // 위치 초기화
         if (popupRect != null)
         {
@@ -55,13 +63,9 @@ public class AchieveUI : MonoBehaviour
     
     /// <summary>
     /// 업적 달성 팝업 표시
-    /// </summary>
-    /// <param name="title">업적 제목</param>
-    /// <param name="description">업적 설명</param>
-    /// <param name="icon">업적 아이콘 (선택적)</param>
+    /// <summary>
     public void ShowAchievement(string title, string description, Sprite icon = null)
     {
-        // 이미 실행 중인 팝업 애니메이션이 있으면 중지
         StopAllCoroutines();
         
         // 텍스트 및 아이콘 설정
@@ -80,11 +84,17 @@ public class AchieveUI : MonoBehaviour
         
         // 팝업 애니메이션 시작
         StartCoroutine(ShowPopupAnimation());
+
+        // 사운드 재생 (null 체크 추가)
+        if (audioSource != null && achievementClip != null)
+        {
+            audioSource.PlayOneShot(achievementClip);
+        }
     }
     
     /// <summary>
     /// 팝업 애니메이션 코루틴
-    /// </summary>
+    /// <summary>
     private IEnumerator ShowPopupAnimation()
     {
         // 팝업 활성화 및 초기 위치 설정
@@ -104,7 +114,7 @@ public class AchieveUI : MonoBehaviour
         // 최종 위치 설정
         popupRect.anchoredPosition = visiblePosition;
         
-        // 표시 지속 시간만큼 대기
+        // 표시 지속 시간 만큼 대기
         yield return new WaitForSeconds(showDuration);
         
         // 슬라이드 아웃 애니메이션
@@ -117,7 +127,7 @@ public class AchieveUI : MonoBehaviour
             yield return null;
         }
         
-        // 최종 위치 설정 및 비활성화
+        // 최종 위치 설정 및 비활성화화
         popupRect.anchoredPosition = hiddenPosition;
         achievePopup.SetActive(false);
     }

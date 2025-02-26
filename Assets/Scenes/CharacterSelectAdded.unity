@@ -2401,7 +2401,7 @@ Transform:
   m_GameObject: {fileID: 623092086}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 1, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5805,6 +5805,7 @@ MonoBehaviour:
   showDuration: 3
   slideInTime: 0.5
   slideOutTime: 0.5
+  achievementClip: {fileID: 0}
 --- !u!224 &1569646629
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6432,7 +6433,7 @@ Transform:
   m_GameObject: {fileID: 1691249322}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.7, y: 0.21, z: 0}
+  m_LocalPosition: {x: -4.2, y: 0.21, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7316,6 +7317,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 965b9a48c0c79ca4b898cdb190819b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  restartButton: {fileID: 0}
+  exitButton: {fileID: 0}
+  playMinuteText: {fileID: 0}
+  playSecondText: {fileID: 0}
+  scoreText: {fileID: 0}
+  highScoreText: {fileID: 0}
 --- !u!114 &1949516821
 MonoBehaviour:
   m_ObjectHideFlags: 0

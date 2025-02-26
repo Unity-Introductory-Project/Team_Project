@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
     GameUI gameUI;
     GameOverUI gameOverUI;
     AchieveManager achieveManager;
-    SoundManager soundManager;
+    SoundManagerInGame soundManager;
+
     CharacterSelectUI characterSelectUI;
 
     float score;
@@ -36,7 +37,8 @@ public class GameManager : MonoBehaviour
         gameUI = FindFirstObjectByType<GameUI>();
         gameOverUI = FindObjectOfType<GameOverUI>(true);
         achieveManager = AchieveManager.Instance;
-        soundManager = FindFirstObjectByType<SoundManager>();
+
+        soundManager = FindFirstObjectByType<SoundManagerInGame>();
 
         characterSelectUI = FindAnyObjectByType<CharacterSelectUI>();
         if (characterSelectUI != null)
@@ -97,8 +99,6 @@ public class GameManager : MonoBehaviour
     {
         isCharacterSelected = true;
     }
-
-
     public void ExitGame()//타이틀로 돌아가기
     {
         Debug.Log("ExitGame");
@@ -108,15 +108,10 @@ public class GameManager : MonoBehaviour
     {
         score += currentScore;
     }
-    public float GetScore()
-    {
-        return score;
-    }
     public float GetTime()
     {
         return time;
     }
-    
     public bool IsDead()
     {
         return isDead;
