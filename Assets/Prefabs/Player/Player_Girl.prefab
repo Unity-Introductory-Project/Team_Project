@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6544930631523333233}
   m_Layer: 0
   m_Name: Player_Girl
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,9 +122,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   life: 100
-  speed: 2
+  speed: 5
   jumpHeight: 5
   jumpCount: 0
+  maxlife: 100
 --- !u!61 &6957103709636111930
 BoxCollider2D:
   m_ObjectHideFlags: 0

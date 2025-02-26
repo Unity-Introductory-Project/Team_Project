@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Audio;
 using System.ComponentModel;
 
-public class SoundManager : MonoBehaviour
+public class SoundManagerTitle : MonoBehaviour
 {
     [SerializeField] AudioSource bgm;
     [SerializeField] AudioMixer audioMixer;
@@ -23,15 +23,15 @@ public class SoundManager : MonoBehaviour
     private void Start()
     {
         bgmSlider.onValueChanged.AddListener(SoundSlider);
-        if (PlayerPrefs.HasKey("Volume"))
+        if (PlayerPrefs.HasKey("VolumeTitle"))
         {
 
-            bgmSlider.value = PlayerPrefs.GetFloat("Volume");
+            bgmSlider.value = PlayerPrefs.GetFloat("VolumeTitle");
         }
         else
             bgmSlider.value = 0.5f;
 
-        audioMixer.SetFloat("BGM", Mathf.Log10(bgmSlider.value) * 20);
+        audioMixer.SetFloat("Title", Mathf.Log10(bgmSlider.value) * 20);
     }
 
     public void Update()
@@ -65,8 +65,8 @@ public class SoundManager : MonoBehaviour
 
     public void SoundSlider(float volume)//BGM 슬라이더 조절
     {
-        audioMixer.SetFloat("BGM", Mathf.Log10(volume) * 20);
+        audioMixer.SetFloat("Title", Mathf.Log10(volume) * 20);
 
-        PlayerPrefs.SetFloat("Volume", bgmSlider.value);
+        PlayerPrefs.SetFloat("VolumeTitle", bgmSlider.value);
     }
 }
