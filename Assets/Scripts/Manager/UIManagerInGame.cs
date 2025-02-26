@@ -62,6 +62,18 @@ public class UIManager : MonoBehaviour
                 isPauseMoving = false;
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(pauseUI.gameObject.activeInHierarchy)
+            {
+                InGame();
+            }
+            else
+            {
+                Pause();
+            }
+        }
     }
 
     public void InGame()//게임 중
