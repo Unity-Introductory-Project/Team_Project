@@ -74,7 +74,9 @@ public class SoundManager : MonoBehaviour
             loud = GameObject.Find("Loud");  // UI 오브젝트 이름 확인 필요
 
         if (mute == null)
-            mute = GameObject.Find("Mute");  // UI 오브젝트 이름 확인 필요
+        {
+            mute = FindInactiveObjectByTag("Mute");  // 비활성화된 오브젝트 찾기
+        }
 
         // UI가 null이 아니어야 SetActive() 호출 가능
         if (bgmSource.volume == 0 || (bgmSlider != null && bgmSlider.value <= 0.001))
@@ -99,6 +101,12 @@ public class SoundManager : MonoBehaviour
             bgmSlider.onValueChanged.RemoveListener(SoundSlider); // 중복 방지
             bgmSlider.onValueChanged.AddListener(SoundSlider);
             bgmSlider.value = PlayerPrefs.HasKey("Volume") ? PlayerPrefs.GetFloat("Volume") : 0.5f;
+        }
+
+        // Mute 오브젝트를 다시 찾기
+        if (mute == null)
+        {
+            mute = FindInactiveObjectByTag("Mute"); // 비활성화된 오브젝트 찾기
         }
 
         // 씬에 따라 BGM 설정
@@ -149,5 +157,18 @@ public class SoundManager : MonoBehaviour
         {
             sfxSource.PlayOneShot(clip);
         }
+    }
+
+    private GameObject FindInactiveObjectByTag(string tag)
+    {
+        GameObject[] objs = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (GameObject obj in objs)
+        {
+            if (obj.CompareTag(tag) && !obj.activeInHierarchy)
+            {
+                return obj;
+            }
+        }
+        return null;
     }
 }
