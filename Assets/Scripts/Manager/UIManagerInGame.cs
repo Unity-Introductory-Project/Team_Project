@@ -68,6 +68,7 @@ public class UIManager : MonoBehaviour
             if(pauseUI.gameObject.activeInHierarchy)
             {
                 InGame();
+                blackImage.gameObject.SetActive(false);
             }
             else
             {
