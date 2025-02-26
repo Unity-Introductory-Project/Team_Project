@@ -1,23 +1,23 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterManager : MonoBehaviour
 {
-    public static CharacterManager Instance; // ½Ì±ÛÅÏ ÆĞÅÏ Àû¿ë
+    public static CharacterManager Instance; // ì‹±ê¸€í„´ íŒ¨í„´ ì ìš©
 
-    public GameObject[] characterPrefabs; // Ä³¸¯ÅÍ ÇÁ¸®ÆÕ ¸®½ºÆ®
-    public Transform spawnPoint; // »ı¼º À§Ä¡
-    public GameObject currentPlayer; // ÇöÀç Ä³¸¯ÅÍ ¿ÀºêÁ§Æ®
+    public GameObject[] characterPrefabs; // ìºë¦­í„° í”„ë¦¬íŒ¹ ë¦¬ìŠ¤íŠ¸
+    public Transform spawnPoint; // ìƒì„± ìœ„ì¹˜
+    public GameObject currentPlayer; // í˜„ì¬ ìºë¦­í„° ì˜¤ë¸Œì íŠ¸
 
-    public PlayerCameraFollow cameraFollow; // Ä«¸Ş¶ó
-    public ArrowSpawner arrowSpawner; // È­»ì »ı¼º±â
+    public PlayerCameraFollow cameraFollow; // ì¹´ë©”ë¼
+    public ArrowSpawner arrowSpawner; // í™”ì‚´ ìƒì„±ê¸°
     public GroundSpawner groundSpawner;
     public BackgroundSpawner BGSpawner;
     private void Awake()
     {
-        // ½Ì±ÛÅÏ Àû¿ë (°ÔÀÓ¿¡¼­ ´Ü ÇÏ³ªÀÇ ÀÎ½ºÅÏ½º¸¸ À¯Áö)
+        // ì‹±ê¸€í„´ ì ìš© (ê²Œì„ì—ì„œ ë‹¨ í•˜ë‚˜ì˜ ì¸ìŠ¤í„´ìŠ¤ë§Œ ìœ ì§€)
         if (Instance == null) Instance = this;
         else Destroy(gameObject);   
     }
@@ -27,27 +27,27 @@ public class CharacterManager : MonoBehaviour
     {
         if (index < 0 || index >= characterPrefabs.Length)
         {
-            Debug.LogError("Àß¸øµÈ Ä³¸¯ÅÍ ÀÎµ¦½ºÀÔ´Ï´Ù.");
+            Debug.LogError("ì˜ëª»ëœ ìºë¦­í„° ì¸ë±ìŠ¤ì…ë‹ˆë‹¤.");
             return;
         }
 
-        // ±âÁ¸ Ä³¸¯ÅÍ »èÁ¦
+        // ê¸°ì¡´ ìºë¦­í„° ì‚­ì œ
         if (currentPlayer != null)
         {
             Destroy(currentPlayer);
         }
 
-        // »õ·Î¿î Ä³¸¯ÅÍ »ı¼º
+        // ìƒˆë¡œìš´ ìºë¦­í„° ìƒì„±
         currentPlayer = Instantiate(characterPrefabs[index], spawnPoint.position, Quaternion.identity);
-        Debug.Log($"{characterPrefabs[index].name} Ä³¸¯ÅÍ »ı¼º ¿Ï·á!");
+        Debug.Log($"{characterPrefabs[index].name} ìºë¦­í„° ìƒì„± ì™„ë£Œ!");
 
-        // Ä«¸Ş¶ó Å¸°Ù º¯°æ
+        // ì¹´ë©”ë¼ íƒ€ê²Ÿ ë³€ê²½
         if (cameraFollow != null)
         {
             cameraFollow.SetTarget(currentPlayer.transform);
         }
 
-        // È­»ì ½ºÆ÷³Ê Å¸°Ù º¯°æ
+        // í™”ì‚´ ìŠ¤í¬ë„ˆ íƒ€ê²Ÿ ë³€ê²½
         if (arrowSpawner != null)
         {
             arrowSpawner.SetPlayerTarget(currentPlayer.transform);
@@ -69,4 +69,5 @@ public class CharacterManager : MonoBehaviour
         }
     }
 }
+
 

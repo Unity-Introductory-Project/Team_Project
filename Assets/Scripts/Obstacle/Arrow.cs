@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -24,7 +24,7 @@ public class Arrow : MonoBehaviour
     }
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Ground")) // ÇÃ·¹ÀÌ¾î³ª ¶¥°ú Ãæµ¹ÇÏ¸é »èÁ¦
+        if (other.CompareTag("Player") || other.CompareTag("Ground")) // í”Œë ˆì´ì–´ë‚˜ ë•…ê³¼ ì¶©ëŒí•˜ë©´ ì‚­ì œ
         {
             if (lineRenderer != null) Destroy(lineRenderer.gameObject);
             Destroy(gameObject);
@@ -33,7 +33,7 @@ public class Arrow : MonoBehaviour
 
     private void ShowTrajectory(Vector3 targetPosition)
     {
-        // »õ·Î¿î LineRenderer¸¦ »ı¼ºÇÏ°í È­»ì¿¡ Ãß°¡
+        // ìƒˆë¡œìš´ LineRendererë¥¼ ìƒì„±í•˜ê³  í™”ì‚´ì— ì¶”ê°€
         GameObject lineObject = new GameObject("ArrowTrajectory");
         lineRenderer = lineObject.AddComponent<LineRenderer>();
 
@@ -44,10 +44,11 @@ public class Arrow : MonoBehaviour
         lineRenderer.endColor = Color.red;
         lineRenderer.positionCount = 2;
 
-        lineRenderer.SetPosition(0, transform.position); // È­»ì Ãâ¹ß À§Ä¡
-        lineRenderer.SetPosition(1, transform.position + (Vector3.left * 10f)); // ¿ŞÂÊ ¹æÇâÀ¸·Î ÀÌµ¿ °æ·Î Ç¥½Ã
+        lineRenderer.SetPosition(0, transform.position); // í™”ì‚´ ì¶œë°œ ìœ„ì¹˜
+        lineRenderer.SetPosition(1, transform.position + (Vector3.left * 10f)); // ì™¼ìª½ ë°©í–¥ìœ¼ë¡œ ì´ë™ ê²½ë¡œ í‘œì‹œ
 
-        // 0.5ÃÊ ÈÄ ¶óÀÎ »èÁ¦
+        // 0.5ì´ˆ í›„ ë¼ì¸ ì‚­ì œ
         Destroy(lineObject, 0.5f);
     }
 }
+

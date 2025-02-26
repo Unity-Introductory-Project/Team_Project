@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,10 +8,10 @@ public class CharacterSelectUI : MonoBehaviour
     public Button[] characterButtons;
     private void Start()
     {
-        // ¹öÆ°¿¡ Å¬¸¯ ÀÌº¥Æ® Ãß°¡
+        // ë²„íŠ¼ì— í´ë¦­ ì´ë²¤íŠ¸ ì¶”ê°€
         for (int i = 0; i < characterButtons.Length; i++)
         {
-            int index = i; // ¶÷´Ù Ä¸Ã³ ¹®Á¦ ÇØ°áÀ» À§ÇÑ Áö¿ª º¯¼ö »ç¿ë
+            int index = i; // ëŒë‹¤ ìº¡ì²˜ ë¬¸ì œ í•´ê²°ì„ ìœ„í•œ ì§€ì—­ ë³€ìˆ˜ ì‚¬ìš©
             characterButtons[i].onClick.AddListener(() => OnCharacterSelect(index));
 
         }
@@ -19,17 +19,18 @@ public class CharacterSelectUI : MonoBehaviour
 
     private void OnCharacterSelect(int index)
     {
-        Debug.Log($"Ä³¸¯ÅÍ {index} ¼±ÅÃµÊ");
+        Debug.Log($"ìºë¦­í„° {index} ì„ íƒë¨");
         if (CharacterManager.Instance != null)
         {
-            CharacterManager.Instance.ChangeCharacter(index); // Ä³¸¯ÅÍ »ı¼º
+            CharacterManager.Instance.ChangeCharacter(index); // ìºë¦­í„° ìƒì„±
         }
 
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.CharacterSelected(); // °ÔÀÓ ½ÃÀÛ
+            GameManager.Instance.CharacterSelected(); // ê²Œì„ ì‹œì‘
         }
 
         gameObject.SetActive(false);
     }
 }
+

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +6,7 @@ public class DefaultCharacter : CharacterBase
 {
     public override void Ability()
     {
-        Debug.Log("´É·Â ¾øÀ½");
+        Debug.Log("ëŠ¥ë ¥ ì—†ìŒ");
     }
 }
+

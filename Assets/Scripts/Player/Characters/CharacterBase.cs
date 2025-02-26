@@ -56,6 +56,7 @@ public abstract class CharacterBase : MonoBehaviour
     /// </summary>
     protected virtual void AutoMove()
     {
+        speed += Time.deltaTime * 0.05f;
         transform.position += Vector3.right * speed * Time.deltaTime;
     }
 
