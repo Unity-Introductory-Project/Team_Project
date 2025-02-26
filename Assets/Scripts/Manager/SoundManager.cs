@@ -14,7 +14,6 @@ public class SoundManager : MonoBehaviour
     [SerializeField] Slider bgmSlider;
     [SerializeField] GameObject loud;
     [SerializeField] GameObject mute;
-    [SerializeField] GameObject SoundButton;
     
     public AudioClip titleBGM;
     public AudioClip inGameBGM;
@@ -68,16 +67,6 @@ public class SoundManager : MonoBehaviour
             {
                 bgmSlider.onValueChanged.RemoveListener(SoundSlider); // 중복 방지
                 bgmSlider.onValueChanged.AddListener(SoundSlider);
-            }
-        }
-        if (SoundButton == null)
-        {
-            SoundButton = GameObject.Find("SoundButton"); // 버튼의 정확한 이름 확인 필요
-            if (SoundButton != null)
-            {
-                SoundButton = SoundButton.transform.GetChild(0).gameObject; // 버튼의 자식 오브젝트 찾기
-                SoundButton.GetComponent<Button>().onClick.RemoveAllListeners(); // 중복 방지
-                SoundButton.GetComponent<Button>().onClick.AddListener(ToggleBGM); // 버튼에 이벤트 추가
             }
         }
         if (loud == null)
