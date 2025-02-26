@@ -155,6 +155,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3de401f8af41443b9e81ce80d707dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreValue: -1
+  scoreValue: -10
   lifetime: 10
-  isPoison: 1
