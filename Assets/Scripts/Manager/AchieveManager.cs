@@ -199,8 +199,8 @@ public class AchieveManager : MonoBehaviour
         achievements.Add(new AchieveData
         {
             id = "death_9",
-            title = "그라운드호그 기사",
-            description = "9번 사망 후에도 계속하기. '매일 같은 날이 반복되는 것 같아...'",
+            title = "엣지 오브 기사",
+            description = "9번 사망 후에도 계속하기. 'Live. Die. Repeat. 다시 시작해!'",
             type = AchieveType.DeathCount,
             requiredAmount = 9,
             unlocked = false
