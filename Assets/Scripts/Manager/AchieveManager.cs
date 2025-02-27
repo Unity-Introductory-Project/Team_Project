@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 // 업적 데이터 클래스
 [System.Serializable]
@@ -409,5 +410,17 @@ public class AchieveManager : MonoBehaviour
     public List<AchieveData> GetAchievements()
     {
         return achievements;
+    }
+
+    public bool IsAchievementUnlocked(string achievementID)
+    {
+        foreach (AchieveData achievement in achievements)
+        {
+            if (achievement.id == achievementID)
+            {
+                return achievement.unlocked;
+            }
+        }
+        return false;
     }
 }
