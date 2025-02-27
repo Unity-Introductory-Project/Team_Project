@@ -1230,7 +1230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalLight: {fileID: 0}
   duration: 240
-  maxIntensity: 1
+  maxIntensity: 5
 --- !u!1 &282435959
 GameObject:
   m_ObjectHideFlags: 0
@@ -1845,7 +1845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalLight: {fileID: 0}
   duration: 240
-  maxIntensity: 1
+  maxIntensity: 5
 --- !u!1 &408597886
 GameObject:
   m_ObjectHideFlags: 0
@@ -5391,8 +5391,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalLight: {fileID: 0}
-  duration: 180
-  minIntensity: 0.1
+  duration: 100
+  minIntensity: 0.7
 --- !u!1 &1240836231
 GameObject:
   m_ObjectHideFlags: 0
@@ -5970,7 +5970,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalLight: {fileID: 0}
   duration: 240
-  maxIntensity: 1
+  maxIntensity: 5
 --- !u!1 &1330024102
 GameObject:
   m_ObjectHideFlags: 0
@@ -6143,7 +6143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalLight: {fileID: 0}
   duration: 240
-  maxIntensity: 1
+  maxIntensity: 5
 --- !u!1 &1351414384
 GameObject:
   m_ObjectHideFlags: 0
@@ -6560,7 +6560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalLight: {fileID: 0}
   duration: 240
-  maxIntensity: 1
+  maxIntensity: 5
 --- !u!1 &1415053094
 GameObject:
   m_ObjectHideFlags: 0
@@ -7602,7 +7602,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalLight: {fileID: 0}
   duration: 240
-  maxIntensity: 1
+  maxIntensity: 5
 --- !u!1 &1575556950
 GameObject:
   m_ObjectHideFlags: 0
@@ -9589,7 +9589,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalLight: {fileID: 0}
   duration: 240
-  maxIntensity: 1
+  maxIntensity: 5
 --- !u!1 &1886331137
 GameObject:
   m_ObjectHideFlags: 0
