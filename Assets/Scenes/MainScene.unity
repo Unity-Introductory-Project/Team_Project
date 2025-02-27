@@ -1229,7 +1229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalLight: {fileID: 0}
-  duration: 240
+  duration: 300
   maxIntensity: 5
 --- !u!1 &282435959
 GameObject:
@@ -5391,8 +5391,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalLight: {fileID: 0}
-  duration: 100
-  minIntensity: 0.7
+  duration: 120
+  minIntensity: 0.1
 --- !u!1 &1240836231
 GameObject:
   m_ObjectHideFlags: 0
