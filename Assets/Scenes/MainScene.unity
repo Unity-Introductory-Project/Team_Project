@@ -6212,6 +6212,7 @@ MonoBehaviour:
   slideInTime: 0.5
   slideOutTime: 0.5
   achievementClip: {fileID: 8300000, guid: 900af884c0067e54f9c866046445177a, type: 3}
+  soundVolume: 0.1
 --- !u!224 &1569646629
 RectTransform:
   m_ObjectHideFlags: 0
