@@ -9,13 +9,12 @@ public abstract class CharacterBase : MonoBehaviour
 
     public float speed = 5f;
     public float jumpHeight = 5f;
-    private float dashTimer = 0f;
     private bool isSlide = false;
     public int jumpCount = 0;
     protected int fullJumpCount = 1;
 
     protected bool isGround = false;
-
+    protected float dashTimer = 0f;
     private bool isInvincible = false;
     private float minY = -3f;
 
@@ -268,18 +267,23 @@ public abstract class CharacterBase : MonoBehaviour
     /// <param name="damage"></param>
     public virtual void ChangeHp(float value)
     {
-        if (life <= value&&isDead==false)
+        if (life <= value && isDead == false)
         {
             life = 0;
             Dead();
         }
-        else if(life == maxlife&&value > 0)
+        else if (value > 0 && life >= maxlife)
         {
             life = maxlife;
         }
         else
         {
             life += value;
+            // 추가: 회복 후 최대체력 초과 시 최대체력으로 제한
+            if (life > maxlife)
+            {
+                life = maxlife;
+            }
         }
     }
 
