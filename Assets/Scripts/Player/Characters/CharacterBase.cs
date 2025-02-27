@@ -4,21 +4,34 @@ using UnityEngine;
 
 public abstract class CharacterBase : MonoBehaviour
 {
-    public float life = 100;
+    public float life = 100f;
+    public float maxlife = 100f;
+
     public float speed = 5f;
     public float jumpHeight = 5f;
     private bool isSlide = false;
     public int jumpCount = 0;
     protected int fullJumpCount = 1;
-    private bool isGround = false;
-    public float maxlife = 100f;
-    private Rigidbody2D rb;
-    private Animator animator;
-    private BoxCollider2D colider;
+
+    protected bool isGround = false;
+    protected float dashTimer = 0f;
+    private bool isInvincible = false;
+    private float minY = -3f;
+
+
+    public bool isDead = false;
+
+
+
+    protected Rigidbody2D rb;
+    protected Animator animator;
+    protected BoxCollider2D colider;
+    
+
 
     // 업적 관련 변수
-    private AchieveManager achieveManager;
-    private bool slideTracked = false;
+    protected AchieveManager achieveManager;
+    protected bool slideTracked = false;
     
     public virtual void Start()
     {
@@ -38,17 +51,24 @@ public abstract class CharacterBase : MonoBehaviour
         AutoMove();
 
         if (Input.GetKeyDown(KeyCode.Space)) Jump();
-        if (isGround&&Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) Slide();
-        else StopSlide();
+        if (isGround) // 땅에 있을 때만 슬라이드 가능
+        {
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) Slide();
+            else StopSlide();
+        }
 
         CheckFalling();
 
-        if(life <= 0)
+        if(!isDead && !isInvincible)
         {
-            Dead();
-        }//죽음 확인 위한 함수
+            ChangeHp(-(Time.deltaTime));
+        }
 
-        ChangeHp(-(Time.deltaTime));
+        if(isInvincible && transform.position.y < minY)
+        {
+            transform.position = new Vector3(transform.position.x, minY, transform.position.z); // Y 좌표 고정
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, 0)); // 아래로 떨어지는 속도 제거
+        }
     }
 
     /// <summary>
@@ -66,11 +86,12 @@ public abstract class CharacterBase : MonoBehaviour
     protected virtual void Jump()
     {
         if (rb == null) return;
-
-        if (jumpCount < fullJumpCount && life > 0)
+        
+        if (jumpCount < fullJumpCount && life > 0) // 점프 횟수 제한
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
-            jumpCount++;
+            rb.velocity = new Vector2(rb.velocity.x, jumpHeight); // 점프
+            SoundManager.instance.PlaySFX(SoundManager.instance.jumpSFX);
+            jumpCount++; 
             //animator.Play("jump", 0, 0);
             animator.SetBool("isJump", true);
 
@@ -87,6 +108,7 @@ public abstract class CharacterBase : MonoBehaviour
         if (!isSlide) // 슬라이드 시작할 때만 실행
         {
             isSlide = true;
+            SoundManager.instance.PlaySFX(SoundManager.instance.slideSFX);
             //animator.Play("StartSlide", 0, 0);
             animator.SetBool("isSlide", true);
         }
@@ -108,6 +130,7 @@ public abstract class CharacterBase : MonoBehaviour
     {
         if (isSlide) 
         {
+            slideTracked = false;
             isSlide = false;
             animator.SetBool("isSlide", false);
         }
@@ -154,15 +177,15 @@ public abstract class CharacterBase : MonoBehaviour
 
     public virtual void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Obstacle"))
+        if (collider.CompareTag("Obstacle") && !isInvincible)
         {
-            Debug.Log("장애물(Obstacle) 충돌 감지됨!");
             ChangeHp(-10f);
+            SoundManager.instance.PlaySFX(SoundManager.instance.hitSFX);
         }
         if (collider.CompareTag("Apple"))
         {
-            Debug.Log("사과(Apple) 충돌 감지됨! 체력 회복!");
             ChangeHp(0.5f);
+            SoundManager.instance.PlaySFX(SoundManager.instance.itemSFX);
 
             // 업적 매니저에 사과 획득 기록
             if (achieveManager != null)
@@ -170,12 +193,42 @@ public abstract class CharacterBase : MonoBehaviour
                 achieveManager.AddApple();
             }
         }
-        if (collider.CompareTag("PoisonApple"))
+        if (collider.CompareTag("PoisonApple") && !isInvincible)
         {
-            Debug.Log("독사과(PoisonApple) 충돌 감지됨! 체력 감소!");
             ChangeHp(-2f);
+            SoundManager.instance.PlaySFX(SoundManager.instance.itemSFX);
+        }
+        if (collider.CompareTag("DashItem"))
+        {
+            StartCoroutine(ActivateDashMode());
+            Destroy(collider.gameObject); // 아이템 제거
         }
        
+    }
+
+    /// <summary>
+    /// 5초 동안 무적 + 속도 2배
+    /// </summary>
+    private IEnumerator ActivateDashMode()
+    {
+        if(isInvincible)
+        {
+            dashTimer = 5f;
+            yield break;
+        }
+
+        isInvincible = true; //  무적 상태 ON
+        speed *= 2; // 속도 2배 증가
+        dashTimer = 5f; // 대시 타이머 초기화
+
+        while (dashTimer > 0)
+        {
+            dashTimer -= Time.deltaTime;
+            yield return null; // 한 프레임 대기
+        }
+
+        isInvincible = false; // 무적 상태 OFF
+        speed /= 2; // 원래 속도로 복구
     }
 
     /// <summary>
@@ -214,18 +267,23 @@ public abstract class CharacterBase : MonoBehaviour
     /// <param name="damage"></param>
     public virtual void ChangeHp(float value)
     {
-        if (life <= value)
+        if (life <= value && isDead == false)
         {
             life = 0;
             Dead();
         }
-        else if(life == maxlife&&value > 0)
+        else if (value > 0 && life >= maxlife)
         {
             life = maxlife;
         }
         else
         {
             life += value;
+            // 추가: 회복 후 최대체력 초과 시 최대체력으로 제한
+            if (life > maxlife)
+            {
+                life = maxlife;
+            }
         }
     }
 
@@ -234,6 +292,7 @@ public abstract class CharacterBase : MonoBehaviour
     /// </summary>
     protected virtual void Dead()
     {
+        isDead = true;
         speed = 0;
         animator.SetBool("isDead", true);
 

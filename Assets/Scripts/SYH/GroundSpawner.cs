@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class GroundSpawner : MonoBehaviour
 {
-    public AppleSpawner appleSpawner; // 코인 스포너 참조 추가
+    public ItemSpawner appleSpawner; // 코인 스포너 참조 추가
     public GameObject groundPrefab; // 생성할 Ground 프리팹
     public Transform groundParent; // Ground를 저장할 Grid 오브젝트
     public int count = 0; // 처음 생성할 Ground 개수

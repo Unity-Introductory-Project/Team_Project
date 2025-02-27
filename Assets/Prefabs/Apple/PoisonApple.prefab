@@ -157,4 +157,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreValue: -1
   lifetime: 10
-  isPoison: 1
