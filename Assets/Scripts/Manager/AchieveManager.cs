@@ -126,7 +126,7 @@ public class AchieveManager : MonoBehaviour
         achievements.Add(new AchieveData
         {
             id = "apple_100",
-            title = "Genius Bar",
+            title = "Genius Bar I",
             description = "사과 100개 모으기. 프리미엄 사과만 취급합니다.",
             type = AchieveType.AppleCount,
             requiredAmount = 100,
@@ -136,7 +136,7 @@ public class AchieveManager : MonoBehaviour
         achievements.Add(new AchieveData
         {
             id = "apple_200",
-            title = "Genius Bar",
+            title = "Genius Bar II",
             description = "사과 200개 모으기. 프리미엄 사과만 취급합니다.",
             type = AchieveType.AppleCount,
             requiredAmount = 200,
