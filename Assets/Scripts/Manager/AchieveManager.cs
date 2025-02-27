@@ -96,9 +96,9 @@ public class AchieveManager : MonoBehaviour
         {
             id = "survive_30",
             title = "초보 생존자",
-            description = "30초 동안 살아남기. 아직 시작일 뿐이다.",
+            description = "60초 동안 살아남기. 아직 시작일 뿐이다.",
             type = AchieveType.SurviveTime,
-            requiredAmount = 30,
+            requiredAmount = 60,
             unlocked = false
         });
 
@@ -106,9 +106,9 @@ public class AchieveManager : MonoBehaviour
         {
             id = "survive_60",
             title = "끈질긴 바퀴벌레",
-            description = "1분 동안 살아남기. 핵폭발에도 살아남는다는데...",
+            description = "3분 동안 살아남기. 핵폭발에도 살아남는다는데...",
             type = AchieveType.SurviveTime,
-            requiredAmount = 60,
+            requiredAmount = 180,
             unlocked = false
         });
 
