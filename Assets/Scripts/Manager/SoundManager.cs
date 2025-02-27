@@ -11,9 +11,12 @@ public class SoundManager : MonoBehaviour
     [SerializeField] AudioSource bgmSource;
     [SerializeField] AudioSource sfxSource;
     [SerializeField] AudioMixer audioMixer;
-    [SerializeField] Slider bgmSlider;
-    [SerializeField] GameObject loud;
-    [SerializeField] GameObject mute;
+    
+    // UI 참조
+    private Slider bgmSlider;
+    private GameObject loud;
+    private GameObject mute;
+    private GameObject soundButton;
     
     public AudioClip titleBGM;
     public AudioClip inGameBGM;
@@ -22,12 +25,22 @@ public class SoundManager : MonoBehaviour
     public AudioClip hitSFX;
     public AudioClip itemSFX;
 
+    private float currentVolume = 0.5f;
+    private bool initialized = false;
+
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            
+            // AudioSource가 없으면 추가
+            if (bgmSource == null)
+                bgmSource = gameObject.AddComponent<AudioSource>();
+                
+            if (sfxSource == null)
+                sfxSource = gameObject.AddComponent<AudioSource>();
         }
         else
         {
@@ -38,103 +51,130 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
+        // 저장된 볼륨 불러오기
         if (PlayerPrefs.HasKey("Volume"))
         {
-            bgmSlider.value = PlayerPrefs.GetFloat("Volume");
-        }
-        else
-        {
-            bgmSlider.value = 0.5f;
+            currentVolume = PlayerPrefs.GetFloat("Volume");
         }
         
-        audioMixer.SetFloat("BGM", Mathf.Log10(bgmSlider.value) * 20);
-        bgmSlider.onValueChanged.AddListener(SoundSlider);
+        // 초기 믹서 볼륨 설정
+        if (audioMixer != null)
+        {
+            audioMixer.SetFloat("BGM", Mathf.Log10(currentVolume) * 20);
+        }
 
+        // 씬 로딩 콜백 추가
         SceneManager.sceneLoaded += OnSceneLoaded;
+        
+        // 현재 씬에서 UI 요소 찾기
+        FindAndSetupUIElements();
+        initialized = true;
+    }
+
+    private void OnDestroy()
+    {
+        // 소멸 시 콜백 제거
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    // UI 요소 찾기 및 설정
+    private void FindAndSetupUIElements()
+    {
+        // 슬라이더 찾기
+        GameObject sliderObj = GameObject.Find("SoundBar");
+        if (sliderObj != null)
+        {
+            bgmSlider = sliderObj.GetComponent<Slider>();
+            if (bgmSlider != null)
+            {
+                bgmSlider.onValueChanged.RemoveAllListeners(); // 리스너 중복 방지
+                bgmSlider.onValueChanged.AddListener(SoundSlider);
+                bgmSlider.value = currentVolume; // 현재 볼륨 값 설정
+            }
+        }
+
+        // 사운드 버튼 찾기
+        GameObject soundButtonObj = GameObject.Find("SoundButton");
+        if (soundButtonObj != null)
+        {
+            if (soundButtonObj.transform.childCount > 0)
+            {
+                soundButton = soundButtonObj.transform.GetChild(0).gameObject;
+                Button btn = soundButton.GetComponent<Button>();
+                if (btn != null)
+                {
+                    btn.onClick.RemoveAllListeners(); // 리스너 중복 방지
+                    btn.onClick.AddListener(ToggleBGM);
+                }
+            }
+        }
+
+        // Loud와 Mute 찾기
+        loud = GameObject.Find("Loud");
+        
+        // 비활성화된 Mute 찾기
+        if (mute == null)
+        {
+            mute = FindInactiveObjectByTag("Mute");
+        }
+
+        // UI 상태 업데이트
+        UpdateVolumeUI();
+    }
+
+    // 볼륨 UI 상태 업데이트
+    private void UpdateVolumeUI()
+    {
+        bool isMuted = bgmSource.volume <= 0.001f || (bgmSlider != null && bgmSlider.value <= 0.001f);
+        
+        if (loud != null) loud.SetActive(!isMuted);
+        if (mute != null) mute.SetActive(isMuted);
     }
 
     public void Update()
     {
-        // UI 오브젝트가 사라졌다면 다시 찾기
-        if (bgmSlider == null)
+        if (!initialized) return;
+        
+        // UI 요소가 없으면 다시 찾기
+        if (bgmSlider == null || loud == null || mute == null)
         {
-            GameObject sliderObj = GameObject.Find("SoundBar"); // 슬라이더의 정확한 이름 확인 필요
-            if (sliderObj != null)
-                bgmSlider = sliderObj.GetComponent<Slider>();
-                
-
-            if (bgmSlider != null)
-            {
-                bgmSlider.onValueChanged.RemoveListener(SoundSlider); // 중복 방지
-                bgmSlider.onValueChanged.AddListener(SoundSlider);
-            }
-        }
-        if (loud == null)
-            loud = GameObject.Find("Loud");  // UI 오브젝트 이름 확인 필요
-
-        if (mute == null)
-        {
-            mute = FindInactiveObjectByTag("Mute");  // 비활성화된 오브젝트 찾기
+            FindAndSetupUIElements();
         }
 
-        // UI가 null이 아니어야 SetActive() 호출 가능
-        if (bgmSource.volume == 0 || (bgmSlider != null && bgmSlider.value <= 0.001))
-        {
-            if (loud != null) loud.SetActive(false);
-            if (mute != null) mute.SetActive(true);
-        }
-        else
-        {
-            if (loud != null) loud.SetActive(true);
-            if (mute != null) mute.SetActive(false);
-        }
+        // 볼륨 상태에 따라 UI 업데이트
+        UpdateVolumeUI();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // 씬이 로드될 때마다 bgmSlider를 다시 찾고 설정
-        GameObject sliderObj = GameObject.Find("SoundBar"); // 슬라이더의 정확한 이름 확인 필요
-        if (sliderObj != null)
-        {
-            bgmSlider = sliderObj.GetComponent<Slider>(); // 슬라이더 컴포넌트 찾기
-            bgmSlider.onValueChanged.RemoveListener(SoundSlider); // 중복 방지
-            bgmSlider.onValueChanged.AddListener(SoundSlider); // 이벤트 추가
-            bgmSlider.value = PlayerPrefs.HasKey("Volume") ? PlayerPrefs.GetFloat("Volume") : 0.5f; // 볼륨 설정
-        }
-        GameObject SoundButton = GameObject.Find("SoundButton"); // 버튼의 정확한 이름 확인 필요
-        if (SoundButton != null)
-        {
-            SoundButton = SoundButton.transform.GetChild(0).gameObject; // 버튼의 자식 오브젝트 찾기
-            SoundButton.GetComponent<Button>().onClick.RemoveAllListeners(); // 중복 방지
-            SoundButton.GetComponent<Button>().onClick.AddListener(ToggleBGM); // 버튼에 이벤트 추가
-        }
-        // Mute 오브젝트를 다시 찾기
-        if (mute == null)
-        {
-            mute = FindInactiveObjectByTag("Mute"); // 비활성화된 오브젝트 찾기
-        }
+        // 씬이 완전히 로드될 시간을 주기
+        StartCoroutine(SetupAfterSceneLoad(scene));
+    }
 
-        // 씬에 따라 BGM 설정
+    private IEnumerator SetupAfterSceneLoad(Scene scene)
+    {
+        // 모든 오브젝트가 초기화될 수 있도록 한 프레임 대기
+        yield return null;
+        
+        // UI 요소 찾기 및 설정
+        FindAndSetupUIElements();
+        
+        // 씬별 BGM 설정
         if (scene.name == "TitleScene")
         {
             PlayBGM(titleBGM);
         }
         else if (scene.name == "MainScene")
         {
-            // 약간의 지연을 두고 사운드 설정을 시도
-            StartCoroutine(PlayBGMWithDelay(inGameBGM));
+            PlayBGM(inGameBGM);
         }
-    }
-
-    private IEnumerator PlayBGMWithDelay(AudioClip clip)
-    {
-        yield return new WaitForSeconds(0.1f); // 아주 짧은 지연 시간
-        PlayBGM(clip);
     }
 
     public void PlayBGM(AudioClip clip)
     {
-        if (bgmSource.clip == clip) return;
+        if (clip == null || bgmSource == null) return;
+        
+        if (bgmSource.clip == clip && bgmSource.isPlaying) return;
         
         bgmSource.clip = clip;
         bgmSource.Play();
@@ -142,23 +182,42 @@ public class SoundManager : MonoBehaviour
 
     public void StopBGM()
     {
-        bgmSource.Stop();
+        if (bgmSource != null)
+            bgmSource.Stop();
     }
 
     public void ToggleBGM()
     {
-        bgmSource.volume = bgmSource.volume == 0 ? 1 : 0;
+        if (bgmSource == null) return;
+        
+        if (bgmSource.volume > 0)
+        {
+            bgmSource.volume = 0;
+        }
+        else
+        {
+            bgmSource.volume = 1;
+        }
+        
+        UpdateVolumeUI();
     }
 
     public void SoundSlider(float volume)
     {
-        audioMixer.SetFloat("BGM", Mathf.Log10(volume) * 20);
-        PlayerPrefs.SetFloat("Volume", bgmSlider.value);
+        currentVolume = volume;
+        
+        if (audioMixer != null)
+        {
+            audioMixer.SetFloat("BGM", Mathf.Log10(Mathf.Max(0.001f, volume)) * 20);
+        }
+        
+        PlayerPrefs.SetFloat("Volume", volume);
+        UpdateVolumeUI();
     }
 
     public void PlaySFX(AudioClip clip)
     {
-        if (clip != null)
+        if (clip != null && sfxSource != null)
         {
             sfxSource.PlayOneShot(clip);
         }
@@ -169,7 +228,7 @@ public class SoundManager : MonoBehaviour
         GameObject[] objs = Resources.FindObjectsOfTypeAll<GameObject>();
         foreach (GameObject obj in objs)
         {
-            if (obj.CompareTag(tag) && !obj.activeInHierarchy)
+            if (obj.CompareTag(tag))
             {
                 return obj;
             }

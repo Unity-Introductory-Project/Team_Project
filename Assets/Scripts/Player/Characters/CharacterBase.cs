@@ -9,6 +9,7 @@ public abstract class CharacterBase : MonoBehaviour
 
     public float speed = 5f;
     public float jumpHeight = 5f;
+    private float dashTimer = 0f;
     private bool isSlide = false;
     public int jumpCount = 0;
     protected int fullJumpCount = 1;
@@ -212,10 +213,21 @@ public abstract class CharacterBase : MonoBehaviour
     /// </summary>
     private IEnumerator ActivateDashMode()
     {
+        if(isInvincible)
+        {
+            dashTimer = 5f;
+            yield break;
+        }
+
         isInvincible = true; //  무적 상태 ON
         speed *= 2; // 속도 2배 증가
+        dashTimer = 5f; // 대시 타이머 초기화
 
-        yield return new WaitForSeconds(5f); // 5초 후 원래 상태로 복구
+        while (dashTimer > 0)
+        {
+            dashTimer -= Time.deltaTime;
+            yield return null; // 한 프레임 대기
+        }
 
         isInvincible = false; // 무적 상태 OFF
         speed /= 2; // 원래 속도로 복구

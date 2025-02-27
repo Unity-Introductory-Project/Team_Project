@@ -94,42 +94,52 @@ public class AchieveManager : MonoBehaviour
         // 생존 시간 업적
         achievements.Add(new AchieveData
         {
-            id = "survive_30",
+            id = "survive_60",
             title = "초보 생존자",
-            description = "30초 동안 살아남기. 아직 시작일 뿐이다.",
+            description = "60초 동안 살아남기. 아직 시작일 뿐이다.",
             type = AchieveType.SurviveTime,
-            requiredAmount = 30,
+            requiredAmount = 60,
             unlocked = false
         });
 
         achievements.Add(new AchieveData
         {
-            id = "survive_60",
+            id = "survive_180",
             title = "끈질긴 바퀴벌레",
-            description = "1분 동안 살아남기. 핵폭발에도 살아남는다는데...",
+            description = "3분 동안 살아남기. 핵폭발에도 살아남는다는데...",
             type = AchieveType.SurviveTime,
-            requiredAmount = 60,
+            requiredAmount = 180,
             unlocked = false
         });
 
         // 사과 수집 업적 (아이폰 패러디)
         achievements.Add(new AchieveData
         {
-            id = "apple_10",
+            id = "apple_50",
             title = "iCollector",
-            description = "사과 10개 모으기. 혁신적인 컬렉션.",
+            description = "사과 50개 모으기. 혁신적인 컬렉션.",
             type = AchieveType.AppleCount,
-            requiredAmount = 10,
+            requiredAmount = 50,
             unlocked = false
         });
 
         achievements.Add(new AchieveData
         {
-            id = "apple_20",
+            id = "apple_100",
             title = "Genius Bar",
-            description = "사과 20개 모으기. 프리미엄 사과만 취급합니다.",
+            description = "사과 100개 모으기. 프리미엄 사과만 취급합니다.",
             type = AchieveType.AppleCount,
-            requiredAmount = 20,
+            requiredAmount = 100,
+            unlocked = false
+        });
+
+        achievements.Add(new AchieveData
+        {
+            id = "apple_200",
+            title = "Genius Bar",
+            description = "사과 200개 모으기. 프리미엄 사과만 취급합니다.",
+            type = AchieveType.AppleCount,
+            requiredAmount = 200,
             unlocked = false
         });
 
