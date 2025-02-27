@@ -652,6 +652,9 @@ MonoBehaviour:
   player: {fileID: 0}
   initialCount: 3
   backgroundWidth: 15
+  initialDarkness: 0
+  darknessIncrement: 0.01
+  maxDarkness: 0.7
 --- !u!4 &83044222
 Transform:
   m_ObjectHideFlags: 0

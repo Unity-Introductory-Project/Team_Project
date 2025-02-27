@@ -9,9 +9,21 @@ public class BackgroundSpawner : MonoBehaviour
     public int initialCount = 0; // 처음 생성할 Ground 개수
     public float backgroundWidth = 0f; // 배경의 넓이
     private List<GameObject> backgroundList = new List<GameObject>(); // 생성된 Ground 오브젝트를 저장할 리스트
+    
+    [Header("Darkness Settings")]
+    [Range(0f, 1f)]
+    public float initialDarkness = 0f; // 초기 어두움 정도 (0: 원래색, 1: 완전히 어두움)
+    [Range(0f, 0.1f)]
+    public float darknessIncrement = 0.05f; // 배경을 생성할 때마다 증가할 어두움 정도
+    [Range(0f, 1f)]
+    public float maxDarkness = 0.7f; // 최대 어두움 정도
+    
+    private float currentDarkness; // 현재 어두움 정도
 
     void Start()
     {
+        currentDarkness = initialDarkness;
+        
         // 이후 Ground는 랜덤한 Y 위치로 생성
         for (int i = 0; i < initialCount; i++)
         {
@@ -44,6 +56,30 @@ public class BackgroundSpawner : MonoBehaviour
     {
         GameObject bg = Instantiate(backgroundPrefab, new Vector3(xPos, 0, 0), Quaternion.identity, backgroundParent);
         backgroundList.Add(bg);
+        
+        // 배경의 모든 자식 스프라이트 렌더러를 찾아서 어둡게 만듦
+        ApplyDarknessToSprites(bg);
+        
+        // 다음 배경은 더 어둡게 생성
+        currentDarkness = Mathf.Min(currentDarkness + darknessIncrement, maxDarkness);
+    }
+
+    void ApplyDarknessToSprites(GameObject background)
+    {
+        // 배경 자신과 모든 자식들의 SpriteRenderer 컴포넌트 가져오기
+        SpriteRenderer[] spriteRenderers = background.GetComponentsInChildren<SpriteRenderer>(true);
+        
+        foreach (SpriteRenderer sr in spriteRenderers)
+        {
+            Color originalColor = sr.color;
+            // 색상을 어둡게 조절 (RGB 값을 낮춤)
+            sr.color = new Color(
+                originalColor.r * (1 - currentDarkness),
+                originalColor.g * (1 - currentDarkness),
+                originalColor.b * (1 - currentDarkness),
+                originalColor.a // 알파 값은 유지
+            );
+        }
     }
 
     void DestroyOldestBackground()
