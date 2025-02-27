@@ -419,7 +419,6 @@ public class AchieveManager : MonoBehaviour
         {
             if (achievement.id.Equals(achievementID))
             {
-                Debug.Log($"id : {achievement.unlocked}");
                 return achievement.unlocked;
             }
         }
