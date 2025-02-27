@@ -95,8 +95,8 @@ public class AchieveManager : MonoBehaviour
         achievements.Add(new AchieveData
         {
             id = "survive_60",
-            title = "초보 생존자",
-            description = "60초 동안 살아남기. 아직 시작일 뿐이다.",
+            title = "과수원 신입",
+            description = "60초 동안 살아남기. '넌 마법사가 아니야, 해리!'",
             type = AchieveType.SurviveTime,
             requiredAmount = 60,
             unlocked = false
@@ -105,19 +105,19 @@ public class AchieveManager : MonoBehaviour
         achievements.Add(new AchieveData
         {
             id = "survive_180",
-            title = "끈질긴 바퀴벌레",
-            description = "3분 동안 살아남기. 핵폭발에도 살아남는다는데...",
+            title = "마법 저항자",
+            description = "3분 동안 살아남기. '내 마법은 너에게 통하지 않는다!'",
             type = AchieveType.SurviveTime,
             requiredAmount = 180,
             unlocked = false
         });
 
-        // 사과 수집 업적 (아이폰 패러디)
+        // 사과 수집 업적
         achievements.Add(new AchieveData
         {
             id = "apple_50",
-            title = "iCollector",
-            description = "사과 50개 모으기. 혁신적인 컬렉션.",
+            title = "스티브의 제자",
+            description = "사과 50개 모으기. 하루 한 개씩 먹으면 의사가 멀어진다는데...",
             type = AchieveType.AppleCount,
             requiredAmount = 50,
             unlocked = false
@@ -126,8 +126,8 @@ public class AchieveManager : MonoBehaviour
         achievements.Add(new AchieveData
         {
             id = "apple_100",
-            title = "Genius Bar I",
-            description = "사과 100개 모으기. 프리미엄 사과만 취급합니다.",
+            title = "뉴턴의 악몽",
+            description = "사과 100개 모으기. 중력의 비밀을 간직한 사과들!",
             type = AchieveType.AppleCount,
             requiredAmount = 100,
             unlocked = false
@@ -136,8 +136,8 @@ public class AchieveManager : MonoBehaviour
         achievements.Add(new AchieveData
         {
             id = "apple_200",
-            title = "Genius Bar II",
-            description = "사과 200개 모으기. 프리미엄 사과만 취급합니다.",
+            title = "금단의 열매 수집가",
+            description = "사과 200개 모으기. '이 많은 사과로 파이를 만들 수 있을까요?'",
             type = AchieveType.AppleCount,
             requiredAmount = 200,
             unlocked = false
@@ -147,8 +147,8 @@ public class AchieveManager : MonoBehaviour
         achievements.Add(new AchieveData
         {
             id = "jump_20",
-            title = "차가운 발바닥",
-            description = "20번 점프하기. 바닥이 용암인가요?",
+            title = "슈퍼 마리기사",
+            description = "20번 점프하기. 파이프는 없지만 공주는 구할 수 있어!",
             type = AchieveType.JumpCount,
             requiredAmount = 20,
             unlocked = false
@@ -157,8 +157,8 @@ public class AchieveManager : MonoBehaviour
         achievements.Add(new AchieveData
         {
             id = "jump_50",
-            title = "중력 부정론자",
-            description = "50번 점프하기. 뉴턴이 사과를 보면 화낼 거예요.",
+            title = "매트릭스의 선택받은 자",
+            description = "50번 점프하기. '중력 같은 건 없어. 마음을 비우면 돼.'",
             type = AchieveType.JumpCount,
             requiredAmount = 50,
             unlocked = false
@@ -168,8 +168,8 @@ public class AchieveManager : MonoBehaviour
         achievements.Add(new AchieveData
         {
             id = "slide_15",
-            title = "미끄럼틀 마스터",
-            description = "15번 슬라이드하기. 바지가 닳아 버렸어요.",
+            title = "인디아나 기사",
+            description = "15번 슬라이드하기. '왜 날아오는 화살을 피하는거지?'",
             type = AchieveType.SlideCount,
             requiredAmount = 15,
             unlocked = false
@@ -178,8 +178,8 @@ public class AchieveManager : MonoBehaviour
         achievements.Add(new AchieveData
         {
             id = "slide_30",
-            title = "완벽한 슬라이딩",
-            description = "30번 슬라이드하기. 야구 선수들도 부러워할 실력!",
+            title = "미션 임파서블",
+            description = "30번 슬라이드하기. '레이저 감지기를 통과하는 것 같은 느낌이야!'",
             type = AchieveType.SlideCount,
             requiredAmount = 30,
             unlocked = false
@@ -189,8 +189,8 @@ public class AchieveManager : MonoBehaviour
         achievements.Add(new AchieveData
         {
             id = "death_3",
-            title = "불사신의 첫 걸음",
-            description = "3번 사망 후에도 계속하기. 죽음은 그저 작은 불편함일 뿐.",
+            title = "다크 소울 견습생",
+            description = "3번 사망 후에도 계속하기. 'YOU DIED... 하지만 계속 도전!'",
             type = AchieveType.DeathCount,
             requiredAmount = 3,
             unlocked = false
@@ -199,8 +199,8 @@ public class AchieveManager : MonoBehaviour
         achievements.Add(new AchieveData
         {
             id = "death_9",
-            title = "고양이 보스",
-            description = "9번 사망 후에도 계속하기. 아홉 개의 목숨을 모두 썼네요!",
+            title = "엣지 오브 기사",
+            description = "9번 사망 후에도 계속하기. 'Live. Die. Repeat. 다시 시작해!'",
             type = AchieveType.DeathCount,
             requiredAmount = 9,
             unlocked = false

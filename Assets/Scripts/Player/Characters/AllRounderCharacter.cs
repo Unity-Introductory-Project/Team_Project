@@ -17,7 +17,6 @@ public class AllRounderCharacter : CharacterBase
     public override void Start()
     {
         base.Start();
-        fullJumpCount = 2;
         UpdateUI();
     }
 
@@ -25,58 +24,10 @@ public class AllRounderCharacter : CharacterBase
     {
         base.Update();
 
-        // 특수 커맨드 입력 감지
-        if (Input.GetKeyDown(KeyCode.Space)) Jump(); // 점프 추가
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isGround && actionCount > 0) FastFallAction(); // 빠른 낙하
         if (Input.GetKeyDown(KeyCode.F) && actionCount > 0) AttackAction(); // 공격 (장애물 제거)
 
         UpdateUI();
     }
-
-    /// <summary>
-    /// 기본 점프 (행동 개수 소모 X)
-    /// </summary>
-    protected override void Jump()
-    {
-        if (jumpCount < fullJumpCount) // 기본 점프 횟수 내에서는 행동 개수 소모 X
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
-            jumpCount++;
-            Debug.Log($"기본 점프! 현재 점프 횟수: {jumpCount}/{fullJumpCount}");
-        }
-        else if (actionCount > 0) // 기본 점프 횟수를 초과하면 추가 점프로 처리 (행동 개수 소모)
-        {
-            JumpAction();
-        }
-    }
-
-    /// <summary>
-    /// 행동 개수를 하나 소모해서 추가 점프 가능 (fullJumpCount 초과 시에만 사용됨)
-    /// </summary>
-    private void JumpAction()
-    {
-        if (actionCount > 0)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
-            jumpCount++;
-            actionCount--; // 행동 개수 감소
-            Debug.Log($"추가 점프 사용! 남은 행동 개수: {actionCount}");
-        }
-    }
-
-    /// <summary>
-    /// 행동 개수를 하나 소모하여 공중에서 빠르게 떨어질 수 있음.
-    /// </summary>
-    private void FastFallAction()
-    {
-        if (actionCount > 0)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, -jumpHeight * 2); // 빠른 낙하
-            actionCount--; // 행동 개수 감소
-            Debug.Log($"빠른 낙하 사용! 남은 행동 개수: {actionCount}");
-        }
-    }
-
 
     /// <summary>
     /// 0.5초 동안 공격 판정을 유지하며 적 제거
