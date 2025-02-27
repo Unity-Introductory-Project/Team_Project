@@ -155,13 +155,21 @@ public class UIManager : MonoBehaviour
     
     public void GameOver()//게임 종료
     {
-        Time.timeScale = 0f;
+        gameUI.gameObject.SetActive(false);
         gameOverUI.gameObject.SetActive(true);
         pauseUI.gameObject.SetActive(false);
         blackImage.SetActive(true);
         image.color = new Color(74 / 255f, 107 / 255f, 114 / 255f);
-
         soundEffect.Play();
+        StartCoroutine(DelayedTimeStop());
+    }
+    private IEnumerator DelayedTimeStop()
+    {
+        // 업적 애니메이션 등이 실행될 시간 제공
+        yield return new WaitForSeconds(1.0f); // 필요한 딜레이 시간으로 조정
+        
+        // 딜레이 후 타임스케일을 0으로 설정
+        Time.timeScale = 0f;
     }
 
     public void Restart()//게임 재시작
