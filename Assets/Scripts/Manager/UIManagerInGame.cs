@@ -104,14 +104,14 @@ public class UIManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(pauseUI.gameObject.activeInHierarchy)
+            if(!pauseUI.gameObject.activeInHierarchy && !gameOverUI.gameObject.activeInHierarchy)
+            {
+                Pause();
+            }
+            else if(pauseUI.gameObject.activeInHierarchy)
             {
                 InGame();
                 blackImage.gameObject.SetActive(false);
-            }
-            else
-            {
-                Pause();
             }
         }
     }
@@ -136,7 +136,7 @@ public class UIManager : MonoBehaviour
             image.color = new Color(114 / 255f, 161 / 255f, 172 / 255f);
             blackImage.SetActive(false);
         }
-        else
+        else if(!gameOverUI.gameObject.activeInHierarchy)
         {
             Time.timeScale = 0f;
             pauseUI.gameObject.SetActive(true);
