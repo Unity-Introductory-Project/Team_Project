@@ -18,8 +18,8 @@ public class GroundSpawner : MonoBehaviour
     void Start()
     {
         // 첫 번째 Ground는 Y = 0 고정
-        CreateGround(0f, true);
         currentIntensity = 0f; // 게임 다시 시작하면 초기화
+        CreateGround(0f, true);
 
         // 이후 Ground는 랜덤한 Y 위치로 생성
         for (int i = 1; i < count; i++)
@@ -55,8 +55,8 @@ public class GroundSpawner : MonoBehaviour
     {
         float yPos = isFirstGround ? 0f : new float[] { 0f, 2f }[Random.Range(0, 2)]; // 첫 번째 Ground는 Y=0 고정
 
-        GameObject ground = Instantiate(groundPrefab, new Vector3(xPos, yPos, 0), Quaternion.identity, groundParent);
-        groundList.Add(ground);
+        GameObject ground = Instantiate(groundPrefab, new Vector3(xPos, yPos, 0), Quaternion.identity, groundParent); // Ground 생성
+        groundList.Add(ground); // 생성된 Ground를 리스트에 추가
 
         // 🔥 모든 자식 Light2D에 적용 (GetComponentsInChildren 사용)
         Light2D[] childLights = ground.GetComponentsInChildren<Light2D>();  
@@ -66,7 +66,11 @@ public class GroundSpawner : MonoBehaviour
         }
         
         currentIntensity = Mathf.Min(currentIntensity + 0.1f, 10.0f); // 다음 Ground를 위해 증가 (최대 10 제한)
-
+        // 첫번째 Ground 밝기 0으로 설정
+        if (isFirstGround)
+        {
+            currentIntensity = 0f;
+        }
         if (!isFirstGround && appleSpawner != null)
         {
             appleSpawner.SpawnApples(ground.transform.position, offsetX);
