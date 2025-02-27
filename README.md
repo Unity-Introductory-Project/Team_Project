@@ -13,5 +13,3 @@ https://creativecommons.org/licenses/by/4.0/
 
 Icons made by - Delapouite, https://delapouite.com
 Icons made by - Guard13007, https://guard13007.com
-
-xbox360_power.m4a by MiscPractice -- https://freesound.org/s/662693/ -- License: Attribution 4.0
