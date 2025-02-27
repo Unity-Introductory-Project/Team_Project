@@ -193,8 +193,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bdf1093b2d32894f8462a1c57e3f22a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 100
+  life: 10
+  maxlife: 100
   speed: 5
   jumpHeight: 5
   jumpCount: 0
-  maxlife: 100
+  isDead: 0
