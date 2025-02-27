@@ -19,11 +19,24 @@ public class AchieveUI : MonoBehaviour
 
     [Header("사운드 설정")]
     [SerializeField] private AudioClip achievementClip;   // 업적 달성 사운드
+    [SerializeField] private float soundVolume = 0.1f;    // 업적 사운드 볼륨 (0.0 ~ 1.0)
+
+    // 항상 표시할 업적 제목 목록 (생존 시간 관련 업적)
+    private readonly string[] alwaysShowAchievements = {
+        "초보 생존자", 
+        "끈질긴 바퀴벌레"
+    };
     
     private RectTransform popupRect;                      // 팝업의 RectTransform
     private Vector2 hiddenPosition;                       // 숨겨진 위치 (화면 오른쪽 바깥)
     private Vector2 visiblePosition;                      // 보이는 위치 (화면 내부)
     private AudioSource audioSource;                      // 오디오 소스 컴포넌트
+    
+    // 이미 표시된 업적을 추적하기 위한 HashSet
+    private HashSet<string> displayedAchievements = new HashSet<string>();
+    
+    // 이번 게임 세션에서 달성한 업적 추적용
+    private HashSet<string> sessionAchievements = new HashSet<string>();
     
     private void Awake()
     {
@@ -40,6 +53,9 @@ public class AchieveUI : MonoBehaviour
         {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
+        
+        // 표시된 업적 로드
+        LoadDisplayedAchievements();
     }
     
     private void Start()
@@ -60,12 +76,45 @@ public class AchieveUI : MonoBehaviour
             popupRect.anchoredPosition = hiddenPosition;
         }
     }
+
+    /// <summary>
+    /// 항상 표시해야 하는 업적인지 확인
+    /// </summary>
+    private bool IsAlwaysShowAchievement(string title)
+    {
+        foreach (string achievementTitle in alwaysShowAchievements)
+        {
+            if (title == achievementTitle)
+                return true;
+        }
+        return false;
+    }
     
     /// <summary>
     /// 업적 달성 팝업 표시
     /// <summary>
     public void ShowAchievement(string title, string description, Sprite icon = null)
     {
+        // 항상 표시하는 업적은 별도 처리
+        bool isAlwaysShow = IsAlwaysShowAchievement(title);
+        
+        // 현재 세션에서 이미 표시했다면 중복 표시 방지 (항상 표시 업적 제외)
+        if (!isAlwaysShow && sessionAchievements.Contains(title))
+        {
+            Debug.Log("현재 세션에서 이미 표시된 업적 (건너뜀): " + title);
+            return;
+        }
+        
+        // 이미 영구적으로 표시된 업적이고, 현재 세션에서 아직 표시되지 않았다면 (항상 표시 업적 제외)
+        if (!isAlwaysShow && displayedAchievements.Contains(title) && !sessionAchievements.Contains(title))
+        {
+            Debug.Log("이미 표시된 업적이지만 이번 세션에 기록합니다: " + title);
+            sessionAchievements.Add(title);
+            return;
+        }
+        
+        Debug.Log("업적 표시: " + title);
+        
         StopAllCoroutines();
         
         // 텍스트 및 아이콘 설정
@@ -85,10 +134,21 @@ public class AchieveUI : MonoBehaviour
         // 팝업 애니메이션 시작
         StartCoroutine(ShowPopupAnimation());
 
-        // 사운드 재생 (null 체크 추가)
+        // 사운드 재생 (볼륨 조정 및 null 체크 추가)
         if (audioSource != null && achievementClip != null)
         {
-            audioSource.PlayOneShot(achievementClip);
+            audioSource.PlayOneShot(achievementClip, soundVolume);
+        }
+        
+        // 현재 세션에 표시된 업적으로 기록
+        sessionAchievements.Add(title);
+        
+        // 영구 표시된 업적 목록에 추가 (항상 표시 업적은 저장하지 않음)
+        if (!isAlwaysShow && !displayedAchievements.Contains(title))
+        {
+            displayedAchievements.Add(title);
+            // 영구 목록 저장
+            SaveDisplayedAchievements();
         }
     }
     
@@ -130,5 +190,64 @@ public class AchieveUI : MonoBehaviour
         // 최종 위치 설정 및 비활성화화
         popupRect.anchoredPosition = hiddenPosition;
         achievePopup.SetActive(false);
+    }
+    
+    /// <summary>
+    /// 표시된 업적 목록 저장
+    /// </summary>
+    private void SaveDisplayedAchievements()
+    {
+        // 업적 수 저장
+        PlayerPrefs.SetInt("DisplayedAchievements_Count", displayedAchievements.Count);
+        
+        // 각 업적 제목 저장
+        int index = 0;
+        foreach (string title in displayedAchievements)
+        {
+            PlayerPrefs.SetString("DisplayedAchievement_" + index, title);
+            index++;
+        }
+        
+        PlayerPrefs.Save();
+    }
+    
+    /// <summary>
+    /// 표시된 업적 목록 로드
+    /// </summary>
+    private void LoadDisplayedAchievements()
+    {
+        displayedAchievements.Clear();
+        
+        int count = PlayerPrefs.GetInt("DisplayedAchievements_Count", 0);
+        
+        for (int i = 0; i < count; i++)
+        {
+            string title = PlayerPrefs.GetString("DisplayedAchievement_" + i, "");
+            if (!string.IsNullOrEmpty(title))
+            {
+                displayedAchievements.Add(title);
+            }
+        }
+        
+        Debug.Log($"이전에 표시된 업적 {displayedAchievements.Count}개 로드됨");
+    }
+    
+    /// <summary>
+    /// 모든 표시된 업적 기록 초기화 (테스트용)
+    /// </summary>
+    public void ResetAllAchievements()
+    {
+        displayedAchievements.Clear();
+        sessionAchievements.Clear();
+        
+        // PlayerPrefs에서 업적 관련 키 모두 삭제
+        PlayerPrefs.DeleteKey("DisplayedAchievements_Count");
+        for (int i = 0; i < 50; i++)  // 충분히 큰 숫자로 설정
+        {
+            PlayerPrefs.DeleteKey("DisplayedAchievement_" + i);
+        }
+        PlayerPrefs.Save();
+        
+        Debug.Log("모든 업적 표시 기록이 초기화되었습니다.");
     }
 }
