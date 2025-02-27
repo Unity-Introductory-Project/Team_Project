@@ -22,8 +22,24 @@ public class GameOverUI : MonoBehaviour
 
     public void PlayTime(float time)
     {
-        playMinuteText.text = ((int)(time/60)).ToString();
-        playSecondText.text = ((int)(time%60)).ToString();
+        if((int)(time / 60) >= 10)
+        {
+            playMinuteText.text = ((int)(time / 60)).ToString();
+        }
+        else
+        {
+            playMinuteText.text = "0" + ((int)(time / 60)).ToString();
+        }
+
+        if((int)(time % 60) >= 10)
+        {
+            playSecondText.text = ((int)(time % 60)).ToString();
+        }
+        else
+        {
+            playSecondText.text = "0" + ((int)(time % 60)).ToString();
+        }
+
     }
 
     public void Score(float score)
