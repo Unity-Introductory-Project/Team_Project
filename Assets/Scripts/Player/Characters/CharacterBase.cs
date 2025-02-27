@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class CharacterBase : MonoBehaviour
 {
@@ -21,8 +22,7 @@ public abstract class CharacterBase : MonoBehaviour
 
 
     public bool isDead = false;
-
-
+    public Slider dashGauge;
 
     protected Rigidbody2D rb;
     protected Animator animator;
@@ -45,6 +45,13 @@ public abstract class CharacterBase : MonoBehaviour
         if (rb == null) Debug.LogError("Rigidbody2D가 없습니다!");
         if (animator == null) Debug.LogError("Animator가 없습니다!");
         if (colider == null) Debug.LogError("BoxCollider2D가 없습니다!");
+
+        if (dashGauge != null)
+        {
+            dashGauge.maxValue = 5f;
+            dashGauge.value = 0f;
+            dashGauge.gameObject.SetActive(false);
+        }
     }
 
     public virtual void Update()
@@ -233,7 +240,9 @@ public abstract class CharacterBase : MonoBehaviour
     /// </summary>
     private IEnumerator ActivateDashMode()
     {
-        if(isInvincible)
+        
+
+        if (isInvincible)
         {
             dashTimer = 5f;
             yield break;
@@ -243,14 +252,28 @@ public abstract class CharacterBase : MonoBehaviour
         speed *= 2; // 속도 2배 증가
         dashTimer = 5f; // 대시 타이머 초기화
 
+        if (dashGauge != null)
+        {
+            dashGauge.gameObject.SetActive(true);
+        }
+
         while (dashTimer > 0)
         {
             dashTimer -= Time.deltaTime;
+            if (dashGauge != null)
+            {
+                dashGauge.value = dashTimer;
+            }
             yield return null; // 한 프레임 대기
         }
 
         isInvincible = false; // 무적 상태 OFF
         speed /= 2; // 원래 속도로 복구
+
+        if (dashGauge != null)
+        {
+            dashGauge.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>
