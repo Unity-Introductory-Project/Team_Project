@@ -222,6 +222,7 @@ public abstract class CharacterBase : MonoBehaviour
         if (collider.CompareTag("DashItem"))
         {
             StartCoroutine(ActivateDashMode());
+            SoundManager.instance.PlaySFX(SoundManager.instance.DashSFX);
             Destroy(collider.gameObject); // 아이템 제거
         }
        

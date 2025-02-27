@@ -4143,6 +4143,7 @@ MonoBehaviour:
   slideSFX: {fileID: 8300000, guid: 7379df98637402c4095b59c262cdbe57, type: 3}
   hitSFX: {fileID: 8300000, guid: ab5049bae4453dc47b1de940d63162bc, type: 3}
   itemSFX: {fileID: 8300000, guid: 7edb38da1a4405140a2db238cf8a418d, type: 3}
+  DashSFX: {fileID: 8300000, guid: 21cdf6b6e041bf248ad22bbb82be12df, type: 3}
 --- !u!1 &1148025453
 GameObject:
   m_ObjectHideFlags: 0
