@@ -19,12 +19,12 @@ public class AchieveUI : MonoBehaviour
 
     [Header("사운드 설정")]
     [SerializeField] private AudioClip achievementClip;   // 업적 달성 사운드
-    [SerializeField] private float soundVolume = 0.1f;    // 업적 사운드 볼륨 (0.0 ~ 1.0)
-
+    [SerializeField] private float soundVolume = 0.3f;    // 업적 사운드 볼륨 (0.0 ~ 1.0)
+    
     // 항상 표시할 업적 제목 목록 (생존 시간 관련 업적)
     private readonly string[] alwaysShowAchievements = {
-        "초보 생존자", 
-        "끈질긴 바퀴벌레"
+        "과수원 신입", 
+        "마법 저항자자"
     };
     
     private RectTransform popupRect;                      // 팝업의 RectTransform
@@ -76,7 +76,7 @@ public class AchieveUI : MonoBehaviour
             popupRect.anchoredPosition = hiddenPosition;
         }
     }
-
+    
     /// <summary>
     /// 항상 표시해야 하는 업적인지 확인
     /// </summary>
@@ -101,19 +101,15 @@ public class AchieveUI : MonoBehaviour
         // 현재 세션에서 이미 표시했다면 중복 표시 방지 (항상 표시 업적 제외)
         if (!isAlwaysShow && sessionAchievements.Contains(title))
         {
-            Debug.Log("현재 세션에서 이미 표시된 업적 (건너뜀): " + title);
             return;
         }
         
         // 이미 영구적으로 표시된 업적이고, 현재 세션에서 아직 표시되지 않았다면 (항상 표시 업적 제외)
         if (!isAlwaysShow && displayedAchievements.Contains(title) && !sessionAchievements.Contains(title))
         {
-            Debug.Log("이미 표시된 업적이지만 이번 세션에 기록합니다: " + title);
             sessionAchievements.Add(title);
             return;
         }
-        
-        Debug.Log("업적 표시: " + title);
         
         StopAllCoroutines();
         
@@ -228,12 +224,10 @@ public class AchieveUI : MonoBehaviour
                 displayedAchievements.Add(title);
             }
         }
-        
-        Debug.Log($"이전에 표시된 업적 {displayedAchievements.Count}개 로드됨");
     }
     
     /// <summary>
-    /// 모든 표시된 업적 기록 초기화 (테스트용)
+    /// 모든 표시된 업적 기록 초기화
     /// </summary>
     public void ResetAllAchievements()
     {
@@ -247,7 +241,5 @@ public class AchieveUI : MonoBehaviour
             PlayerPrefs.DeleteKey("DisplayedAchievement_" + i);
         }
         PlayerPrefs.Save();
-        
-        Debug.Log("모든 업적 표시 기록이 초기화되었습니다.");
     }
 }
