@@ -77,9 +77,10 @@ public class AchieveManager : MonoBehaviour
     
     private void Update()
     {
-        // 게임 진행 중일 때만 생존 시간 증가 (타임스케일이 0이 아닐 때)
-        if (Time.timeScale > 0)
+        // CharacterManager가 있고 캐릭터가 선택되었을 때 시간 측정
+        if (CharacterManager.Instance != null && CharacterManager.Instance.currentPlayer != null)
         {
+            // 시간 증가
             surviveTime += Time.deltaTime;
         }
         
