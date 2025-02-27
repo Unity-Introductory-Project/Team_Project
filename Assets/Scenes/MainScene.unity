@@ -407,7 +407,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 00
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fa16cad19accb447c898e2cb9608023a, type: 2}
   m_sharedMaterial: {fileID: 3307798974639949123, guid: fa16cad19accb447c898e2cb9608023a, type: 2}
@@ -2904,7 +2904,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -10}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &641598181
@@ -3210,7 +3210,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 00
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fa16cad19accb447c898e2cb9608023a, type: 2}
   m_sharedMaterial: {fileID: 3307798974639949123, guid: fa16cad19accb447c898e2cb9608023a, type: 2}
@@ -9045,7 +9045,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -159.99985, y: 120}
+  m_AnchoredPosition: {x: -159.99988, y: 120}
   m_SizeDelta: {x: -1700, y: -780}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1851136643
@@ -9380,8 +9380,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 965b9a48c0c79ca4b898cdb190819b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  restartButton: {fileID: 0}
-  exitButton: {fileID: 0}
+  restartButton: {fileID: 1149348814}
+  exitButton: {fileID: 494769602}
   playMinuteText: {fileID: 33367404}
   playSecondText: {fileID: 668840289}
   scoreText: {fileID: 540071642}
