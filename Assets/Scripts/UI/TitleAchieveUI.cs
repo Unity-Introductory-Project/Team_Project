@@ -109,47 +109,15 @@ public class TitleAchieveUI : MonoBehaviour
             // 업적 매니저의 데이터 초기화
             achieveManager.ResetAllAchievements();
             
-            // ===== 표시된 업적 완전 초기화 =====
-            Debug.Log("===== 업적 표시 기록 초기화 시작 =====");
-            
-            // 1. 현재 저장된 업적 표시 개수 확인
-            int oldCount = PlayerPrefs.GetInt("DisplayedAchievements_Count", 0);
-            Debug.Log($"삭제 전 저장된 업적 표시 개수: {oldCount}");
-            
-            // 2. 모든 관련 키 출력 및 삭제
-            Debug.Log("삭제할 키 목록:");
-            Debug.Log("- DisplayedAchievements_Count");
+            // 표시된 업적 완전 초기화
+            PlayerPrefs.DeleteKey("DisplayedAchievements_Count");
             for (int i = 0; i < 100; i++) // 더 많은 범위 커버
             {
-                string key = "DisplayedAchievement_" + i;
-                string value = PlayerPrefs.GetString(key, "");
-                if (!string.IsNullOrEmpty(value))
-                {
-                    Debug.Log($"- {key}: {value}");
-                }
-                // 값이 없어도 키 자체를 삭제
-                PlayerPrefs.DeleteKey(key);
+                PlayerPrefs.DeleteKey("DisplayedAchievement_" + i);
             }
             
-            // 3. 카운트 키 삭제
-            PlayerPrefs.DeleteKey("DisplayedAchievements_Count");
-            
-            // 4. 저장
+            // 저장
             PlayerPrefs.Save();
-            
-            // 5. 모든 PlayerPrefs 저장
-            // 이 방법은 극단적이지만 문제 해결을 위해 시도
-            PlayerPrefs.Save();
-            
-            // 6. 검증: 정말로 삭제되었는지 확인
-            int newCount = PlayerPrefs.GetInt("DisplayedAchievements_Count", 0);
-            Debug.Log($"삭제 후 저장된 업적 표시 개수: {newCount}");
-            
-            // 7. 검증: 첫 번째 키가 정말로 비어있는지 확인
-            string testValue = PlayerPrefs.GetString("DisplayedAchievement_0", "");
-            Debug.Log($"삭제 후 첫 번째 업적 키 값: '{testValue}'");
-            
-            Debug.Log("===== 업적 표시 기록 초기화 완료 =====");
             
             // UI 업데이트
             UpdateAchievementList();
