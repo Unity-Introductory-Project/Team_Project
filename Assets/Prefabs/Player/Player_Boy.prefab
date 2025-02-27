@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f982e59f4a21345894d1240cebe048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 10
+  life: 100
   maxlife: 100
   speed: 5
   jumpHeight: 5
