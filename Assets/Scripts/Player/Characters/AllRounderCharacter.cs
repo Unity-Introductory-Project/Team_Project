@@ -1,6 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AllRounderCharacter : CharacterBase
 {
@@ -9,10 +10,15 @@ public class AllRounderCharacter : CharacterBase
     private int appleCount = 0;
     public int needed = 10;
 
+    public Slider actionGauge;
+    public TextMeshProUGUI actionCountText;
+
+
     public override void Start()
     {
         base.Start();
         fullJumpCount = 2;
+        UpdateUI();
     }
 
     public override void Update()
@@ -23,6 +29,8 @@ public class AllRounderCharacter : CharacterBase
         if (Input.GetKeyDown(KeyCode.Space)) Jump(); // 점프 추가
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isGround && actionCount > 0) FastFallAction(); // 빠른 낙하
         if (Input.GetKeyDown(KeyCode.F) && actionCount > 0) AttackAction(); // 공격 (장애물 제거)
+
+        UpdateUI();
     }
 
     /// <summary>
@@ -69,6 +77,34 @@ public class AllRounderCharacter : CharacterBase
         }
     }
 
+
+    /// <summary>
+    /// 0.5초 동안 공격 판정을 유지하며 적 제거
+    /// </summary>
+    private IEnumerator AttackCoroutine()
+    {
+        float attackDuration = 0.5f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < attackDuration)
+        {
+            Collider2D[] hitObjects = Physics2D.OverlapCircleAll(transform.position + Vector3.right * 1.5f, 1f);
+            foreach (Collider2D obj in hitObjects)
+            {
+                if (obj.CompareTag("PoisonApple") || obj.CompareTag("Obstacle"))
+                {
+                    Destroy(obj.gameObject);
+                    Debug.Log($"공격 성공! {obj.tag} 제거!");
+                }
+            }
+
+            yield return new WaitForSeconds(0.1f); // 0.1초마다 반복 실행 (더 부드러운 공격 효과)
+            elapsedTime += 0.1f;
+        }
+
+        animator.ResetTrigger("Attack"); // 공격 종료 후 애니메이션 리셋
+    }
+
     /// <summary>
     /// 행동 개수를 하나 소모해서 공격! 장애물(Obstacle)과 독사과(PoisonApple) 제거
     /// </summary>
@@ -78,16 +114,7 @@ public class AllRounderCharacter : CharacterBase
         {
             animator.SetTrigger("Attack");
             actionCount--;
-            StartCoroutine(ResetAttackTrigger());
-            Collider2D[] hitObjects = Physics2D.OverlapCircleAll(transform.position + Vector3.right * 1.5f, 1f);
-            foreach (Collider2D obj in hitObjects)
-            {
-                if (obj.CompareTag("PoisonApple") || obj.CompareTag("Obstacle"))
-                {
-                    Destroy(obj.gameObject);
-                    Debug.Log($"공격 성공! {obj.tag} 제거! 남은 행동 개수: {actionCount}");
-                }
-            }
+            StartCoroutine(AttackCoroutine());
         }
     }
 
@@ -96,18 +123,23 @@ public class AllRounderCharacter : CharacterBase
     /// </summary>
     public void EatApple()
     {
-        appleCount++;
-
-        if(appleCount >= needed)
+        if (actionCount < maxActionCount)
         {
-            if(actionCount < maxActionCount)
+            appleCount++;
+            if (appleCount >= needed)
             {
                 actionCount++;
                 Debug.Log($"행동 개수 +1 증가! 현재 행동 개수: {actionCount}/{maxActionCount}");
+                appleCount = 0;
             }
-
-            appleCount = 0;
         }
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        actionGauge.value = (float)appleCount / needed;
+        actionCountText.text = actionCount.ToString();
     }
     /// <summary>
     /// 사과를 먹으면 행동 개수가 증가하도록 `OnTriggerEnter2D` 재정의
