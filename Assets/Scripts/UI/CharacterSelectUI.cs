@@ -14,8 +14,12 @@ public class CharacterSelectUI : MonoBehaviour
         {
             int index = i; // 람다 캡처 문제 해결을 위한 지역 변수 사용
             characterButtons[i].onClick.AddListener(() => OnCharacterSelect(index));
-
         }
+    }
+
+    private void Update()
+    {
+        UpdateCharacterSelectionUI();
     }
 
     private void UpdateCharacterSelectionUI()

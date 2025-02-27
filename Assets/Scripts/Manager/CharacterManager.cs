@@ -65,10 +65,10 @@ public class CharacterManager : MonoBehaviour
                 return true; // 기본 캐릭터는 무조건 선택 가능
 
             case "Player_Girl":
-                return AchieveManager.Instance.IsAchievementUnlocked("jump_20"); // 점프 업적 해금 시 선택 가능
+                return AchieveManager.Instance.IsAchievementUnlocked("jump_50"); // 점프 업적 해금 시 선택 가능
 
             case "Player_Knight":
-                return AchieveManager.Instance.IsAchievementUnlocked("apple_50"); // 사과 업적 해금 시 선택 가능
+                return AchieveManager.Instance.IsAchievementUnlocked("apple_200"); // 사과 업적 해금 시 선택 가능
 
             case "Player_Boy":
                 return AchieveManager.Instance.IsAchievementUnlocked("death_3"); // 사망 업적 해금 시 선택 가능

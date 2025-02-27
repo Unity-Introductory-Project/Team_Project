@@ -14,7 +14,7 @@ public abstract class CharacterBase : MonoBehaviour
     protected int fullJumpCount = 1;
 
     protected bool isGround = false;
-
+    protected float dashTimer = 0f;
     private bool isInvincible = false;
     private float minY = -3f;
 

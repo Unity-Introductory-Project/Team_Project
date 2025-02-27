@@ -416,8 +416,9 @@ public class AchieveManager : MonoBehaviour
     {
         foreach (AchieveData achievement in achievements)
         {
-            if (achievement.id == achievementID)
+            if (achievement.id.Equals(achievementID))
             {
+                Debug.Log($"id : {achievement.unlocked}");
                 return achievement.unlocked;
             }
         }
