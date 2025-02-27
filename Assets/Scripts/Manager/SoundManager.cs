@@ -1,9 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Audio;
-using UnityEngine.SceneManagement;
+using System.Collections.Generic; // 제네릭 컬렉션을 사용하기 위한 네임스페이스
+using UnityEngine;  // 유니티 엔진 코드 참조
+using UnityEngine.UI; // UI를 위한 네임스페이스
+using UnityEngine.Audio; // 오디오 믹서를 위한 네임스페이스
+using UnityEngine.SceneManagement; // 씬 관리를 위한 네임스페이스
 
 public class SoundManager : MonoBehaviour
 {
@@ -24,6 +24,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip slideSFX;
     public AudioClip hitSFX;
     public AudioClip itemSFX;
+    public AudioClip DashSFX;
 
     private float currentVolume = 0.5f;
     private bool initialized = false;

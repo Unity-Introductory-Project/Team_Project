@@ -707,11 +707,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f47ee8ca97262f4e91f51e836af28ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 100
+  life: 10
+  maxlife: 100
   speed: 5
   jumpHeight: 5
   jumpCount: 0
-  maxlife: 100
   isDead: 0
   needed: 10
   actionGauge: {fileID: 3438692063209829526}

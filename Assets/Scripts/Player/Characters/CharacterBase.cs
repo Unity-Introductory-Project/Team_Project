@@ -17,6 +17,7 @@ public abstract class CharacterBase : MonoBehaviour
     protected float dashTimer = 0f;
     private bool isInvincible = false;
     private float minY = -3f;
+    private float maxY = 4f;
 
 
     public bool isDead = false;
@@ -50,24 +51,44 @@ public abstract class CharacterBase : MonoBehaviour
     {
         AutoMove();
 
-        if (Input.GetKeyDown(KeyCode.Space)) Jump();
-        if (isGround) // 땅에 있을 때만 슬라이드 가능
-        {
-            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) Slide();
-            else StopSlide();
-        }
-
-        CheckFalling();
-
-        if(!isDead && !isInvincible)
+        if (!isDead && !isInvincible)
         {
             ChangeHp(-(Time.deltaTime));
         }
 
-        if(isInvincible && transform.position.y < minY)
+        if (transform.position.y > maxY)
         {
-            transform.position = new Vector3(transform.position.x, minY, transform.position.z); // Y 좌표 고정
-            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, 0)); // 아래로 떨어지는 속도 제거
+            transform.position = new Vector3(transform.position.x, maxY, transform.position.z);
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, 0));
+        }
+
+        if (isInvincible)
+        {
+            if (Input.GetKey(KeyCode.Space)) // Space를 누르고 있으면
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
+            }
+            else
+            {
+                if (transform.position.y < minY)
+                {
+                    transform.position = new Vector3(transform.position.x, minY, transform.position.z); // Y 좌표 고정
+                    rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, 0));
+                }
+                // Space를 떼면 떨어지지 않도록 설정
+            } 
+        }
+        else
+        {
+
+            if (Input.GetKeyDown(KeyCode.Space)) Jump();
+            if (isGround) // 땅에 있을 때만 슬라이드 가능
+            {
+                if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) Slide();
+                else StopSlide();
+            }
+
+            CheckFalling();
         }
     }
 
@@ -201,6 +222,7 @@ public abstract class CharacterBase : MonoBehaviour
         if (collider.CompareTag("DashItem"))
         {
             StartCoroutine(ActivateDashMode());
+            SoundManager.instance.PlaySFX(SoundManager.instance.DashSFX);
             Destroy(collider.gameObject); // 아이템 제거
         }
        

@@ -77,9 +77,10 @@ public class AchieveManager : MonoBehaviour
     
     private void Update()
     {
-        // 게임 진행 중일 때만 생존 시간 증가 (타임스케일이 0이 아닐 때)
-        if (Time.timeScale > 0)
+        // CharacterManager가 있고 캐릭터가 선택되었을 때 시간 측정
+        if (CharacterManager.Instance != null && CharacterManager.Instance.currentPlayer != null)
         {
+            // 시간 증가
             surviveTime += Time.deltaTime;
         }
         
@@ -138,7 +139,7 @@ public class AchieveManager : MonoBehaviour
         {
             id = "apple_200",
             title = "금단의 열매 수집가",
-            description = "사과 200개 모으기. '이 많은 사과로 파이를 만들 수 있을까요?'",
+            description = "200개의 마법 사과를 모아 이계의 여전사를 소환했다.",
             type = AchieveType.AppleCount,
             requiredAmount = 200,
             unlocked = false
@@ -159,7 +160,7 @@ public class AchieveManager : MonoBehaviour
         {
             id = "jump_50",
             title = "매트릭스의 선택받은 자",
-            description = "50번 점프하기. '중력 같은 건 없어. 마음을 비우면 돼.'",
+            description = "50번의 도약으로 동방제국 암살자의 경지에 도달했다.",
             type = AchieveType.JumpCount,
             requiredAmount = 50,
             unlocked = false
@@ -191,7 +192,7 @@ public class AchieveManager : MonoBehaviour
         {
             id = "death_3",
             title = "다크 소울 견습생",
-            description = "3번 사망 후에도 계속하기. 'YOU DIED... 하지만 계속 도전!'",
+            description = "3번의 죽음을 극복하고 동방제국 전사의 의지를 얻었다.",
             type = AchieveType.DeathCount,
             requiredAmount = 3,
             unlocked = false
@@ -418,7 +419,6 @@ public class AchieveManager : MonoBehaviour
         {
             if (achievement.id.Equals(achievementID))
             {
-                Debug.Log($"id : {achievement.unlocked}");
                 return achievement.unlocked;
             }
         }
