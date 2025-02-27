@@ -5,18 +5,30 @@ using UnityEngine;
 public abstract class CharacterBase : MonoBehaviour
 {
     public float life = 100f;
+    public float maxlife = 100f;
+
     public float speed = 5f;
     public float jumpHeight = 5f;
     private bool isSlide = false;
     public int jumpCount = 0;
     protected int fullJumpCount = 1;
+
     protected bool isGround = false;
-    public float maxlife = 100f;
+
+    private float dashTimer = 0f;
+    private bool isInvincible = false;
+    private float minY = -2.3f;
+
+
+    public bool isDead = false;
+
+
+
     protected Rigidbody2D rb;
     protected Animator animator;
     protected BoxCollider2D colider;
-    public bool isDead = false;
-    private bool isInvincible = false;
+    
+
 
     // 업적 관련 변수
     protected AchieveManager achieveManager;
@@ -51,6 +63,12 @@ public abstract class CharacterBase : MonoBehaviour
         if(!isDead && !isInvincible)
         {
             ChangeHp(-(Time.deltaTime));
+        }
+
+        if(isInvincible && transform.position.y < minY)
+        {
+            transform.position = new Vector3(transform.position.x, minY, transform.position.z); // Y 좌표 고정
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, 0)); // 아래로 떨어지는 속도 제거
         }
     }
 
