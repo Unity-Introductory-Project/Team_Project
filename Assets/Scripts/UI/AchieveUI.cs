@@ -23,8 +23,8 @@ public class AchieveUI : MonoBehaviour
     
     // 항상 표시할 업적 제목 목록 (생존 시간 관련 업적)
     private readonly string[] alwaysShowAchievements = {
-        "견습 기사", 
-        "왕실 근위대"
+        "과수원 신입", 
+        "마법 저항자자"
     };
     
     private RectTransform popupRect;                      // 팝업의 RectTransform
