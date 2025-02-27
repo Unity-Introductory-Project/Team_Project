@@ -11,7 +11,7 @@ public class JumpCharacter : CharacterBase
     public override void Start()
     {
         base.Start();
-        fullJumpCount = 3;
+        fullJumpCount = 2;
     }
 
     public override void Ability()
@@ -23,8 +23,8 @@ public class JumpCharacter : CharacterBase
     {
         appleCount++;
 
-        // 사과 3개 먹을 때마다 점프 횟수 증가 (최대 5까지)
-        if (appleCount % 3 == 0 && fullJumpCount < maxJumpCount)
+        // 사과 5개 먹을 때마다 점프 횟수 증가 (최대 5까지)
+        if (appleCount % 5 == 0 && fullJumpCount < maxJumpCount)
         {
             fullJumpCount++;
         }

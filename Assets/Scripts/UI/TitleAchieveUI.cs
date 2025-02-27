@@ -106,7 +106,20 @@ public class TitleAchieveUI : MonoBehaviour
     {
         if (achieveManager != null)
         {
+            // 업적 매니저의 데이터 초기화
             achieveManager.ResetAllAchievements();
+            
+            // 표시된 업적 완전 초기화
+            PlayerPrefs.DeleteKey("DisplayedAchievements_Count");
+            for (int i = 0; i < 100; i++) // 더 많은 범위 커버
+            {
+                PlayerPrefs.DeleteKey("DisplayedAchievement_" + i);
+            }
+            
+            // 저장
+            PlayerPrefs.Save();
+            
+            // UI 업데이트
             UpdateAchievementList();
         }
         
