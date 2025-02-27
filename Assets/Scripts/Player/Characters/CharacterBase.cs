@@ -16,9 +16,8 @@ public abstract class CharacterBase : MonoBehaviour
 
     protected bool isGround = false;
 
-    private float dashTimer = 0f;
     private bool isInvincible = false;
-    private float minY = -2.3f;
+    private float minY = -3f;
 
 
     public bool isDead = false;
