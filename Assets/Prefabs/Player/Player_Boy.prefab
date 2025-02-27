@@ -166,11 +166,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f982e59f4a21345894d1240cebe048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 100
+  life: 10
+  maxlife: 100
   speed: 5
   jumpHeight: 5
   jumpCount: 0
-  maxlife: 100
+  isDead: 0
 --- !u!50 &1352208346521103459
 Rigidbody2D:
   serializedVersion: 4
